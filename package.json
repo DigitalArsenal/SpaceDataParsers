@@ -1,0 +1,31 @@
+{
+  "name": "spacedataparsers",
+  "version": "1.0.0",
+  "description": "Parsers for Space Data Messages",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon test/test.mjs -w test/test.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DigitalArsenal/SpaceDataParsers.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DigitalArsenal/SpaceDataParsers/issues"
+  },
+  "homepage": "https://github.com/DigitalArsenal/SpaceDataParsers#readme",
+  "dependencies": {
+    "btoa": "^1.2.1",
+    "xml2js": "^0.4.23"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "type": "module"
+}
