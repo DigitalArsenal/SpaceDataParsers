@@ -13,6 +13,5 @@
 "_removeEntity",
 "_getSatAzElRange",
 "_getSatAzElRangeForInterval",
-"_getPassAndVisibilityForInterval",
 "_getSatAzElRangePositionForInterval"
 ]

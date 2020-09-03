@@ -8,9 +8,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon test/test.mjs -w test/test.mjs",
+    "dev": "nodemon  --experimental-wasm-modules test/test.mjs -w test/test.mjs",
     "update:schema": "./node_modules/.bin/ajv migrate -s ./test/_root_IDLDocument.schema.json",
-    "build:sgp4:wasm":"cd ./src/SGP4Propagator && npm run build:clang++:wasm"
+    "build:sgp4:wasm":"cd ./src/SGP4Propagator && npm run build"
   },
   "repository": {
     "type": "git",
