@@ -45,23 +45,22 @@ globalThis.__dirname = "";
       null
     );
     console.log(pointer);
-    console.log(sizeOfsatelliteCatalog());
-    
+    let _e = sizeOfsatelliteCatalog();
+    let _now = new Date().getTime();
     propagate(_now, true);
 
-    let flatArrayPointer = this._wasmModule.propagate(_now, true);
+    let flatArrayPointer = propagate(_now, true);
 
     let flatArray = new Float64Array(
       HEAP8.buffer,
       flatArrayPointer,
       _e.length * 3
     );
-    let _c = new Cartesian3();
-
+      console.log(_e)
     for (let e = 0; e < 1; e++) {
       if (_e[e]) {
         //race condition for removal, eventual consistency
-        Cartesian3.fromArray(flatArray, e * 3, _c);
+        console.log(_c);
         _e[e].position = _c;
       }
     }
