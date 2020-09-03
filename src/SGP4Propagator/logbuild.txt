@@ -1,0 +1,273 @@
+
+> external@1.0.0 build /home/tj/software/ytterbium/src/SGP4Propagator
+> emcc -v -flto --llvm-lto 1 -lm -O3 astmath/astMath/astMath.cpp asttime/astTime/astTime.cpp SGP4/SGP4/SGP4.cpp coordfk5/coordFK5/coordFK5.cpp sgp4sdp4/sgp4sdp4.c  sgp4sdp4/sgp_in.c sgp4sdp4/sgp_math.c  sgp4sdp4/sgp_obs.c  sgp4sdp4/sgp_time.c  sgp4sdp4/solar.c astro.cpp -o wasmmodule.mjs -s EXPORTED_FUNCTIONS=@exported_functions -s WASM=1 -s SINGLE_FILE=1 -s TOTAL_MEMORY=24MB -s EXTRA_EXPORTED_RUNTIME_METHODS='["ccall", "cwrap"]' -s ALLOW_MEMORY_GROWTH=1
+
+shared:INFO: (Emscripten: Running sanity checks)
+ "/usr/local/bin/clang" -target wasm32-unknown-emscripten -D__EMSCRIPTEN_major__=1 -D__EMSCRIPTEN_minor__=39 -D__EMSCRIPTEN_tiny__=7 -D_LIBCPP_ABI_VERSION=2 -Dunix -D__unix -D__unix__ -Werror=implicit-function-declaration -Xclang -nostdsysteminc -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include -Xclang -isystem/home/tj/.emscripten_cache/wasm-obj/include -v -flto -O3 -DEMSCRIPTEN astmath/astMath/astMath.cpp -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL -c -o /tmp/emscripten_temp_m5ujMM/astMath_0.o -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr
+clang version 11.0.0 (git@github.com:llvm/llvm-project.git b04885a55c2aa4666a420a5638db75bee9a44fa0)
+Target: wasm32-unknown-emscripten
+Thread model: posix
+InstalledDir: /usr/local/bin
+ (in-process)
+ "/usr/local/bin/clang-11" -cc1 -triple wasm32-unknown-emscripten -emit-llvm-bc -flto -flto-unit -disable-free -disable-llvm-verifier -discard-value-names -main-file-name astMath.cpp -mrelocation-model static -mthread-model posix -mframe-pointer=none -fno-rounding-math -masm-verbose -mconstructor-aliases -target-cpu generic -fvisibility hidden -dwarf-column-info -debugger-tuning=gdb -v -resource-dir /usr/local/lib/clang/11.0.0 -D __EMSCRIPTEN_major__=1 -D __EMSCRIPTEN_minor__=39 -D __EMSCRIPTEN_tiny__=7 -D _LIBCPP_ABI_VERSION=2 -D unix -D __unix -D __unix__ -D EMSCRIPTEN -internal-isystem /include/wasm32-emscripten/c++/v1 -internal-isystem /include/c++/v1 -internal-isystem /usr/local/lib/clang/11.0.0/include -internal-isystem /include/wasm32-emscripten -internal-isystem /include -O3 -Werror=implicit-function-declaration -fdeprecated-macro -fdebug-compilation-dir /home/tj/software/ytterbium/src/SGP4Propagator -ferror-limit 19 -fmessage-length 0 -fgnuc-version=4.2.1 -fobjc-runtime=gnustep -fcxx-exceptions -fexceptions -fno-common -fdiagnostics-show-option -vectorize-loops -vectorize-slp -nostdsysteminc -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include -isystem/home/tj/.emscripten_cache/wasm-obj/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -o /tmp/emscripten_temp_m5ujMM/astMath_0.o -x c++ astmath/astMath/astMath.cpp
+clang -cc1 version 11.0.0 based upon LLVM 11.0.0git default target x86_64-unknown-linux-gnu
+ignoring nonexistent directory "/home/tj/.emscripten_cache/wasm-obj/include"
+ignoring nonexistent directory "/include/wasm32-emscripten/c++/v1"
+ignoring nonexistent directory "/include/c++/v1"
+ignoring nonexistent directory "/include/wasm32-emscripten"
+ignoring nonexistent directory "/include"
+#include "..." search starts here:
+#include <...> search starts here:
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL
+ /usr/local/lib/clang/11.0.0/include
+End of search list.
+ "/usr/local/bin/clang" -target wasm32-unknown-emscripten -D__EMSCRIPTEN_major__=1 -D__EMSCRIPTEN_minor__=39 -D__EMSCRIPTEN_tiny__=7 -D_LIBCPP_ABI_VERSION=2 -Dunix -D__unix -D__unix__ -Werror=implicit-function-declaration -Xclang -nostdsysteminc -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include -Xclang -isystem/home/tj/.emscripten_cache/wasm-obj/include -v -flto -O3 -DEMSCRIPTEN asttime/astTime/astTime.cpp -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL -c -o /tmp/emscripten_temp_m5ujMM/astTime_1.o -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr
+clang version 11.0.0 (git@github.com:llvm/llvm-project.git b04885a55c2aa4666a420a5638db75bee9a44fa0)
+Target: wasm32-unknown-emscripten
+Thread model: posix
+InstalledDir: /usr/local/bin
+ (in-process)
+ "/usr/local/bin/clang-11" -cc1 -triple wasm32-unknown-emscripten -emit-llvm-bc -flto -flto-unit -disable-free -disable-llvm-verifier -discard-value-names -main-file-name astTime.cpp -mrelocation-model static -mthread-model posix -mframe-pointer=none -fno-rounding-math -masm-verbose -mconstructor-aliases -target-cpu generic -fvisibility hidden -dwarf-column-info -debugger-tuning=gdb -v -resource-dir /usr/local/lib/clang/11.0.0 -D __EMSCRIPTEN_major__=1 -D __EMSCRIPTEN_minor__=39 -D __EMSCRIPTEN_tiny__=7 -D _LIBCPP_ABI_VERSION=2 -D unix -D __unix -D __unix__ -D EMSCRIPTEN -internal-isystem /include/wasm32-emscripten/c++/v1 -internal-isystem /include/c++/v1 -internal-isystem /usr/local/lib/clang/11.0.0/include -internal-isystem /include/wasm32-emscripten -internal-isystem /include -O3 -Werror=implicit-function-declaration -fdeprecated-macro -fdebug-compilation-dir /home/tj/software/ytterbium/src/SGP4Propagator -ferror-limit 19 -fmessage-length 0 -fgnuc-version=4.2.1 -fobjc-runtime=gnustep -fcxx-exceptions -fexceptions -fno-common -fdiagnostics-show-option -vectorize-loops -vectorize-slp -nostdsysteminc -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include -isystem/home/tj/.emscripten_cache/wasm-obj/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -o /tmp/emscripten_temp_m5ujMM/astTime_1.o -x c++ asttime/astTime/astTime.cpp
+clang -cc1 version 11.0.0 based upon LLVM 11.0.0git default target x86_64-unknown-linux-gnu
+ignoring nonexistent directory "/home/tj/.emscripten_cache/wasm-obj/include"
+ignoring nonexistent directory "/include/wasm32-emscripten/c++/v1"
+ignoring nonexistent directory "/include/c++/v1"
+ignoring nonexistent directory "/include/wasm32-emscripten"
+ignoring nonexistent directory "/include"
+#include "..." search starts here:
+#include <...> search starts here:
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL
+ /usr/local/lib/clang/11.0.0/include
+End of search list.
+ "/usr/local/bin/clang" -target wasm32-unknown-emscripten -D__EMSCRIPTEN_major__=1 -D__EMSCRIPTEN_minor__=39 -D__EMSCRIPTEN_tiny__=7 -D_LIBCPP_ABI_VERSION=2 -Dunix -D__unix -D__unix__ -Werror=implicit-function-declaration -Xclang -nostdsysteminc -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include -Xclang -isystem/home/tj/.emscripten_cache/wasm-obj/include -v -flto -O3 -DEMSCRIPTEN SGP4/SGP4/SGP4.cpp -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL -c -o /tmp/emscripten_temp_m5ujMM/SGP4_2.o -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr
+clang version 11.0.0 (git@github.com:llvm/llvm-project.git b04885a55c2aa4666a420a5638db75bee9a44fa0)
+Target: wasm32-unknown-emscripten
+Thread model: posix
+InstalledDir: /usr/local/bin
+ (in-process)
+ "/usr/local/bin/clang-11" -cc1 -triple wasm32-unknown-emscripten -emit-llvm-bc -flto -flto-unit -disable-free -disable-llvm-verifier -discard-value-names -main-file-name SGP4.cpp -mrelocation-model static -mthread-model posix -mframe-pointer=none -fno-rounding-math -masm-verbose -mconstructor-aliases -target-cpu generic -fvisibility hidden -dwarf-column-info -debugger-tuning=gdb -v -resource-dir /usr/local/lib/clang/11.0.0 -D __EMSCRIPTEN_major__=1 -D __EMSCRIPTEN_minor__=39 -D __EMSCRIPTEN_tiny__=7 -D _LIBCPP_ABI_VERSION=2 -D unix -D __unix -D __unix__ -D EMSCRIPTEN -internal-isystem /include/wasm32-emscripten/c++/v1 -internal-isystem /include/c++/v1 -internal-isystem /usr/local/lib/clang/11.0.0/include -internal-isystem /include/wasm32-emscripten -internal-isystem /include -O3 -Werror=implicit-function-declaration -fdeprecated-macro -fdebug-compilation-dir /home/tj/software/ytterbium/src/SGP4Propagator -ferror-limit 19 -fmessage-length 0 -fgnuc-version=4.2.1 -fobjc-runtime=gnustep -fcxx-exceptions -fexceptions -fno-common -fdiagnostics-show-option -vectorize-loops -vectorize-slp -nostdsysteminc -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include -isystem/home/tj/.emscripten_cache/wasm-obj/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -o /tmp/emscripten_temp_m5ujMM/SGP4_2.o -x c++ SGP4/SGP4/SGP4.cpp
+clang -cc1 version 11.0.0 based upon LLVM 11.0.0git default target x86_64-unknown-linux-gnu
+ignoring nonexistent directory "/home/tj/.emscripten_cache/wasm-obj/include"
+ignoring nonexistent directory "/include/wasm32-emscripten/c++/v1"
+ignoring nonexistent directory "/include/c++/v1"
+ignoring nonexistent directory "/include/wasm32-emscripten"
+ignoring nonexistent directory "/include"
+#include "..." search starts here:
+#include <...> search starts here:
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL
+ /usr/local/lib/clang/11.0.0/include
+End of search list.
+ "/usr/local/bin/clang" -target wasm32-unknown-emscripten -D__EMSCRIPTEN_major__=1 -D__EMSCRIPTEN_minor__=39 -D__EMSCRIPTEN_tiny__=7 -D_LIBCPP_ABI_VERSION=2 -Dunix -D__unix -D__unix__ -Werror=implicit-function-declaration -Xclang -nostdsysteminc -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include -Xclang -isystem/home/tj/.emscripten_cache/wasm-obj/include -v -flto -O3 -DEMSCRIPTEN coordfk5/coordFK5/coordFK5.cpp -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL -c -o /tmp/emscripten_temp_m5ujMM/coordFK5_3.o -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr
+clang version 11.0.0 (git@github.com:llvm/llvm-project.git b04885a55c2aa4666a420a5638db75bee9a44fa0)
+Target: wasm32-unknown-emscripten
+Thread model: posix
+InstalledDir: /usr/local/bin
+ (in-process)
+ "/usr/local/bin/clang-11" -cc1 -triple wasm32-unknown-emscripten -emit-llvm-bc -flto -flto-unit -disable-free -disable-llvm-verifier -discard-value-names -main-file-name coordFK5.cpp -mrelocation-model static -mthread-model posix -mframe-pointer=none -fno-rounding-math -masm-verbose -mconstructor-aliases -target-cpu generic -fvisibility hidden -dwarf-column-info -debugger-tuning=gdb -v -resource-dir /usr/local/lib/clang/11.0.0 -D __EMSCRIPTEN_major__=1 -D __EMSCRIPTEN_minor__=39 -D __EMSCRIPTEN_tiny__=7 -D _LIBCPP_ABI_VERSION=2 -D unix -D __unix -D __unix__ -D EMSCRIPTEN -internal-isystem /include/wasm32-emscripten/c++/v1 -internal-isystem /include/c++/v1 -internal-isystem /usr/local/lib/clang/11.0.0/include -internal-isystem /include/wasm32-emscripten -internal-isystem /include -O3 -Werror=implicit-function-declaration -fdeprecated-macro -fdebug-compilation-dir /home/tj/software/ytterbium/src/SGP4Propagator -ferror-limit 19 -fmessage-length 0 -fgnuc-version=4.2.1 -fobjc-runtime=gnustep -fcxx-exceptions -fexceptions -fno-common -fdiagnostics-show-option -vectorize-loops -vectorize-slp -nostdsysteminc -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include -isystem/home/tj/.emscripten_cache/wasm-obj/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -o /tmp/emscripten_temp_m5ujMM/coordFK5_3.o -x c++ coordfk5/coordFK5/coordFK5.cpp
+clang -cc1 version 11.0.0 based upon LLVM 11.0.0git default target x86_64-unknown-linux-gnu
+ignoring nonexistent directory "/home/tj/.emscripten_cache/wasm-obj/include"
+ignoring nonexistent directory "/include/wasm32-emscripten/c++/v1"
+ignoring nonexistent directory "/include/c++/v1"
+ignoring nonexistent directory "/include/wasm32-emscripten"
+ignoring nonexistent directory "/include"
+#include "..." search starts here:
+#include <...> search starts here:
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL
+ /usr/local/lib/clang/11.0.0/include
+End of search list.
+ "/usr/local/bin/clang" -target wasm32-unknown-emscripten -D__EMSCRIPTEN_major__=1 -D__EMSCRIPTEN_minor__=39 -D__EMSCRIPTEN_tiny__=7 -D_LIBCPP_ABI_VERSION=2 -Dunix -D__unix -D__unix__ -Werror=implicit-function-declaration -Xclang -nostdsysteminc -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include -Xclang -isystem/home/tj/.emscripten_cache/wasm-obj/include -v -flto -O3 -DEMSCRIPTEN sgp4sdp4/sgp4sdp4.c -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL -c -o /tmp/emscripten_temp_m5ujMM/sgp4sdp4_4.o -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr
+clang version 11.0.0 (git@github.com:llvm/llvm-project.git b04885a55c2aa4666a420a5638db75bee9a44fa0)
+Target: wasm32-unknown-emscripten
+Thread model: posix
+InstalledDir: /usr/local/bin
+ (in-process)
+ "/usr/local/bin/clang-11" -cc1 -triple wasm32-unknown-emscripten -emit-llvm-bc -flto -flto-unit -disable-free -disable-llvm-verifier -discard-value-names -main-file-name sgp4sdp4.c -mrelocation-model static -mthread-model posix -mframe-pointer=none -fno-rounding-math -masm-verbose -mconstructor-aliases -target-cpu generic -fvisibility hidden -dwarf-column-info -debugger-tuning=gdb -v -resource-dir /usr/local/lib/clang/11.0.0 -D __EMSCRIPTEN_major__=1 -D __EMSCRIPTEN_minor__=39 -D __EMSCRIPTEN_tiny__=7 -D _LIBCPP_ABI_VERSION=2 -D unix -D __unix -D __unix__ -D EMSCRIPTEN -internal-isystem /usr/local/lib/clang/11.0.0/include -internal-isystem /include/wasm32-emscripten -internal-isystem /include -O3 -Werror=implicit-function-declaration -fdebug-compilation-dir /home/tj/software/ytterbium/src/SGP4Propagator -ferror-limit 19 -fmessage-length 0 -fgnuc-version=4.2.1 -fobjc-runtime=gnustep -fno-common -fdiagnostics-show-option -vectorize-loops -vectorize-slp -nostdsysteminc -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include -isystem/home/tj/.emscripten_cache/wasm-obj/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -o /tmp/emscripten_temp_m5ujMM/sgp4sdp4_4.o -x c sgp4sdp4/sgp4sdp4.c
+clang -cc1 version 11.0.0 based upon LLVM 11.0.0git default target x86_64-unknown-linux-gnu
+ignoring nonexistent directory "/home/tj/.emscripten_cache/wasm-obj/include"
+ignoring nonexistent directory "/include/wasm32-emscripten"
+ignoring nonexistent directory "/include"
+#include "..." search starts here:
+#include <...> search starts here:
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL
+ /usr/local/lib/clang/11.0.0/include
+End of search list.
+ "/usr/local/bin/clang" -target wasm32-unknown-emscripten -D__EMSCRIPTEN_major__=1 -D__EMSCRIPTEN_minor__=39 -D__EMSCRIPTEN_tiny__=7 -D_LIBCPP_ABI_VERSION=2 -Dunix -D__unix -D__unix__ -Werror=implicit-function-declaration -Xclang -nostdsysteminc -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include -Xclang -isystem/home/tj/.emscripten_cache/wasm-obj/include -v -flto -O3 -DEMSCRIPTEN sgp4sdp4/sgp_in.c -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL -c -o /tmp/emscripten_temp_m5ujMM/sgp_in_5.o -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr
+clang version 11.0.0 (git@github.com:llvm/llvm-project.git b04885a55c2aa4666a420a5638db75bee9a44fa0)
+Target: wasm32-unknown-emscripten
+Thread model: posix
+InstalledDir: /usr/local/bin
+ (in-process)
+ "/usr/local/bin/clang-11" -cc1 -triple wasm32-unknown-emscripten -emit-llvm-bc -flto -flto-unit -disable-free -disable-llvm-verifier -discard-value-names -main-file-name sgp_in.c -mrelocation-model static -mthread-model posix -mframe-pointer=none -fno-rounding-math -masm-verbose -mconstructor-aliases -target-cpu generic -fvisibility hidden -dwarf-column-info -debugger-tuning=gdb -v -resource-dir /usr/local/lib/clang/11.0.0 -D __EMSCRIPTEN_major__=1 -D __EMSCRIPTEN_minor__=39 -D __EMSCRIPTEN_tiny__=7 -D _LIBCPP_ABI_VERSION=2 -D unix -D __unix -D __unix__ -D EMSCRIPTEN -internal-isystem /usr/local/lib/clang/11.0.0/include -internal-isystem /include/wasm32-emscripten -internal-isystem /include -O3 -Werror=implicit-function-declaration -fdebug-compilation-dir /home/tj/software/ytterbium/src/SGP4Propagator -ferror-limit 19 -fmessage-length 0 -fgnuc-version=4.2.1 -fobjc-runtime=gnustep -fno-common -fdiagnostics-show-option -vectorize-loops -vectorize-slp -nostdsysteminc -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include -isystem/home/tj/.emscripten_cache/wasm-obj/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -o /tmp/emscripten_temp_m5ujMM/sgp_in_5.o -x c sgp4sdp4/sgp_in.c
+clang -cc1 version 11.0.0 based upon LLVM 11.0.0git default target x86_64-unknown-linux-gnu
+ignoring nonexistent directory "/home/tj/.emscripten_cache/wasm-obj/include"
+ignoring nonexistent directory "/include/wasm32-emscripten"
+ignoring nonexistent directory "/include"
+#include "..." search starts here:
+#include <...> search starts here:
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL
+ /usr/local/lib/clang/11.0.0/include
+End of search list.
+ "/usr/local/bin/clang" -target wasm32-unknown-emscripten -D__EMSCRIPTEN_major__=1 -D__EMSCRIPTEN_minor__=39 -D__EMSCRIPTEN_tiny__=7 -D_LIBCPP_ABI_VERSION=2 -Dunix -D__unix -D__unix__ -Werror=implicit-function-declaration -Xclang -nostdsysteminc -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include -Xclang -isystem/home/tj/.emscripten_cache/wasm-obj/include -v -flto -O3 -DEMSCRIPTEN sgp4sdp4/sgp_math.c -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL -c -o /tmp/emscripten_temp_m5ujMM/sgp_math_6.o -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr
+clang version 11.0.0 (git@github.com:llvm/llvm-project.git b04885a55c2aa4666a420a5638db75bee9a44fa0)
+Target: wasm32-unknown-emscripten
+Thread model: posix
+InstalledDir: /usr/local/bin
+ (in-process)
+ "/usr/local/bin/clang-11" -cc1 -triple wasm32-unknown-emscripten -emit-llvm-bc -flto -flto-unit -disable-free -disable-llvm-verifier -discard-value-names -main-file-name sgp_math.c -mrelocation-model static -mthread-model posix -mframe-pointer=none -fno-rounding-math -masm-verbose -mconstructor-aliases -target-cpu generic -fvisibility hidden -dwarf-column-info -debugger-tuning=gdb -v -resource-dir /usr/local/lib/clang/11.0.0 -D __EMSCRIPTEN_major__=1 -D __EMSCRIPTEN_minor__=39 -D __EMSCRIPTEN_tiny__=7 -D _LIBCPP_ABI_VERSION=2 -D unix -D __unix -D __unix__ -D EMSCRIPTEN -internal-isystem /usr/local/lib/clang/11.0.0/include -internal-isystem /include/wasm32-emscripten -internal-isystem /include -O3 -Werror=implicit-function-declaration -fdebug-compilation-dir /home/tj/software/ytterbium/src/SGP4Propagator -ferror-limit 19 -fmessage-length 0 -fgnuc-version=4.2.1 -fobjc-runtime=gnustep -fno-common -fdiagnostics-show-option -vectorize-loops -vectorize-slp -nostdsysteminc -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include -isystem/home/tj/.emscripten_cache/wasm-obj/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -o /tmp/emscripten_temp_m5ujMM/sgp_math_6.o -x c sgp4sdp4/sgp_math.c
+clang -cc1 version 11.0.0 based upon LLVM 11.0.0git default target x86_64-unknown-linux-gnu
+ignoring nonexistent directory "/home/tj/.emscripten_cache/wasm-obj/include"
+ignoring nonexistent directory "/include/wasm32-emscripten"
+ignoring nonexistent directory "/include"
+#include "..." search starts here:
+#include <...> search starts here:
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL
+ /usr/local/lib/clang/11.0.0/include
+End of search list.
+ "/usr/local/bin/clang" -target wasm32-unknown-emscripten -D__EMSCRIPTEN_major__=1 -D__EMSCRIPTEN_minor__=39 -D__EMSCRIPTEN_tiny__=7 -D_LIBCPP_ABI_VERSION=2 -Dunix -D__unix -D__unix__ -Werror=implicit-function-declaration -Xclang -nostdsysteminc -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include -Xclang -isystem/home/tj/.emscripten_cache/wasm-obj/include -v -flto -O3 -DEMSCRIPTEN sgp4sdp4/sgp_obs.c -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL -c -o /tmp/emscripten_temp_m5ujMM/sgp_obs_7.o -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr
+clang version 11.0.0 (git@github.com:llvm/llvm-project.git b04885a55c2aa4666a420a5638db75bee9a44fa0)
+Target: wasm32-unknown-emscripten
+Thread model: posix
+InstalledDir: /usr/local/bin
+ (in-process)
+ "/usr/local/bin/clang-11" -cc1 -triple wasm32-unknown-emscripten -emit-llvm-bc -flto -flto-unit -disable-free -disable-llvm-verifier -discard-value-names -main-file-name sgp_obs.c -mrelocation-model static -mthread-model posix -mframe-pointer=none -fno-rounding-math -masm-verbose -mconstructor-aliases -target-cpu generic -fvisibility hidden -dwarf-column-info -debugger-tuning=gdb -v -resource-dir /usr/local/lib/clang/11.0.0 -D __EMSCRIPTEN_major__=1 -D __EMSCRIPTEN_minor__=39 -D __EMSCRIPTEN_tiny__=7 -D _LIBCPP_ABI_VERSION=2 -D unix -D __unix -D __unix__ -D EMSCRIPTEN -internal-isystem /usr/local/lib/clang/11.0.0/include -internal-isystem /include/wasm32-emscripten -internal-isystem /include -O3 -Werror=implicit-function-declaration -fdebug-compilation-dir /home/tj/software/ytterbium/src/SGP4Propagator -ferror-limit 19 -fmessage-length 0 -fgnuc-version=4.2.1 -fobjc-runtime=gnustep -fno-common -fdiagnostics-show-option -vectorize-loops -vectorize-slp -nostdsysteminc -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include -isystem/home/tj/.emscripten_cache/wasm-obj/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -o /tmp/emscripten_temp_m5ujMM/sgp_obs_7.o -x c sgp4sdp4/sgp_obs.c
+clang -cc1 version 11.0.0 based upon LLVM 11.0.0git default target x86_64-unknown-linux-gnu
+ignoring nonexistent directory "/home/tj/.emscripten_cache/wasm-obj/include"
+ignoring nonexistent directory "/include/wasm32-emscripten"
+ignoring nonexistent directory "/include"
+#include "..." search starts here:
+#include <...> search starts here:
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL
+ /usr/local/lib/clang/11.0.0/include
+End of search list.
+ "/usr/local/bin/clang" -target wasm32-unknown-emscripten -D__EMSCRIPTEN_major__=1 -D__EMSCRIPTEN_minor__=39 -D__EMSCRIPTEN_tiny__=7 -D_LIBCPP_ABI_VERSION=2 -Dunix -D__unix -D__unix__ -Werror=implicit-function-declaration -Xclang -nostdsysteminc -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include -Xclang -isystem/home/tj/.emscripten_cache/wasm-obj/include -v -flto -O3 -DEMSCRIPTEN sgp4sdp4/sgp_time.c -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL -c -o /tmp/emscripten_temp_m5ujMM/sgp_time_8.o -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr
+clang version 11.0.0 (git@github.com:llvm/llvm-project.git b04885a55c2aa4666a420a5638db75bee9a44fa0)
+Target: wasm32-unknown-emscripten
+Thread model: posix
+InstalledDir: /usr/local/bin
+ (in-process)
+ "/usr/local/bin/clang-11" -cc1 -triple wasm32-unknown-emscripten -emit-llvm-bc -flto -flto-unit -disable-free -disable-llvm-verifier -discard-value-names -main-file-name sgp_time.c -mrelocation-model static -mthread-model posix -mframe-pointer=none -fno-rounding-math -masm-verbose -mconstructor-aliases -target-cpu generic -fvisibility hidden -dwarf-column-info -debugger-tuning=gdb -v -resource-dir /usr/local/lib/clang/11.0.0 -D __EMSCRIPTEN_major__=1 -D __EMSCRIPTEN_minor__=39 -D __EMSCRIPTEN_tiny__=7 -D _LIBCPP_ABI_VERSION=2 -D unix -D __unix -D __unix__ -D EMSCRIPTEN -internal-isystem /usr/local/lib/clang/11.0.0/include -internal-isystem /include/wasm32-emscripten -internal-isystem /include -O3 -Werror=implicit-function-declaration -fdebug-compilation-dir /home/tj/software/ytterbium/src/SGP4Propagator -ferror-limit 19 -fmessage-length 0 -fgnuc-version=4.2.1 -fobjc-runtime=gnustep -fno-common -fdiagnostics-show-option -vectorize-loops -vectorize-slp -nostdsysteminc -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include -isystem/home/tj/.emscripten_cache/wasm-obj/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -o /tmp/emscripten_temp_m5ujMM/sgp_time_8.o -x c sgp4sdp4/sgp_time.c
+clang -cc1 version 11.0.0 based upon LLVM 11.0.0git default target x86_64-unknown-linux-gnu
+ignoring nonexistent directory "/home/tj/.emscripten_cache/wasm-obj/include"
+ignoring nonexistent directory "/include/wasm32-emscripten"
+ignoring nonexistent directory "/include"
+#include "..." search starts here:
+#include <...> search starts here:
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL
+ /usr/local/lib/clang/11.0.0/include
+End of search list.
+ "/usr/local/bin/clang" -target wasm32-unknown-emscripten -D__EMSCRIPTEN_major__=1 -D__EMSCRIPTEN_minor__=39 -D__EMSCRIPTEN_tiny__=7 -D_LIBCPP_ABI_VERSION=2 -Dunix -D__unix -D__unix__ -Werror=implicit-function-declaration -Xclang -nostdsysteminc -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include -Xclang -isystem/home/tj/.emscripten_cache/wasm-obj/include -v -flto -O3 -DEMSCRIPTEN sgp4sdp4/solar.c -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL -c -o /tmp/emscripten_temp_m5ujMM/solar_9.o -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr
+clang version 11.0.0 (git@github.com:llvm/llvm-project.git b04885a55c2aa4666a420a5638db75bee9a44fa0)
+Target: wasm32-unknown-emscripten
+Thread model: posix
+InstalledDir: /usr/local/bin
+ (in-process)
+ "/usr/local/bin/clang-11" -cc1 -triple wasm32-unknown-emscripten -emit-llvm-bc -flto -flto-unit -disable-free -disable-llvm-verifier -discard-value-names -main-file-name solar.c -mrelocation-model static -mthread-model posix -mframe-pointer=none -fno-rounding-math -masm-verbose -mconstructor-aliases -target-cpu generic -fvisibility hidden -dwarf-column-info -debugger-tuning=gdb -v -resource-dir /usr/local/lib/clang/11.0.0 -D __EMSCRIPTEN_major__=1 -D __EMSCRIPTEN_minor__=39 -D __EMSCRIPTEN_tiny__=7 -D _LIBCPP_ABI_VERSION=2 -D unix -D __unix -D __unix__ -D EMSCRIPTEN -internal-isystem /usr/local/lib/clang/11.0.0/include -internal-isystem /include/wasm32-emscripten -internal-isystem /include -O3 -Werror=implicit-function-declaration -fdebug-compilation-dir /home/tj/software/ytterbium/src/SGP4Propagator -ferror-limit 19 -fmessage-length 0 -fgnuc-version=4.2.1 -fobjc-runtime=gnustep -fno-common -fdiagnostics-show-option -vectorize-loops -vectorize-slp -nostdsysteminc -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include -isystem/home/tj/.emscripten_cache/wasm-obj/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -o /tmp/emscripten_temp_m5ujMM/solar_9.o -x c sgp4sdp4/solar.c
+clang -cc1 version 11.0.0 based upon LLVM 11.0.0git default target x86_64-unknown-linux-gnu
+ignoring nonexistent directory "/home/tj/.emscripten_cache/wasm-obj/include"
+ignoring nonexistent directory "/include/wasm32-emscripten"
+ignoring nonexistent directory "/include"
+#include "..." search starts here:
+#include <...> search starts here:
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL
+ /usr/local/lib/clang/11.0.0/include
+End of search list.
+ "/usr/local/bin/clang" -target wasm32-unknown-emscripten -D__EMSCRIPTEN_major__=1 -D__EMSCRIPTEN_minor__=39 -D__EMSCRIPTEN_tiny__=7 -D_LIBCPP_ABI_VERSION=2 -Dunix -D__unix -D__unix__ -Werror=implicit-function-declaration -Xclang -nostdsysteminc -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include -Xclang -isystem/home/tj/.emscripten_cache/wasm-obj/include -v -flto -O3 -DEMSCRIPTEN astro.cpp -Xclang -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL -c -o /tmp/emscripten_temp_m5ujMM/astro_10.o -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr
+clang version 11.0.0 (git@github.com:llvm/llvm-project.git b04885a55c2aa4666a420a5638db75bee9a44fa0)
+Target: wasm32-unknown-emscripten
+Thread model: posix
+InstalledDir: /usr/local/bin
+ (in-process)
+ "/usr/local/bin/clang-11" -cc1 -triple wasm32-unknown-emscripten -emit-llvm-bc -flto -flto-unit -disable-free -disable-llvm-verifier -discard-value-names -main-file-name astro.cpp -mrelocation-model static -mthread-model posix -mframe-pointer=none -fno-rounding-math -masm-verbose -mconstructor-aliases -target-cpu generic -fvisibility hidden -dwarf-column-info -debugger-tuning=gdb -v -resource-dir /usr/local/lib/clang/11.0.0 -D __EMSCRIPTEN_major__=1 -D __EMSCRIPTEN_minor__=39 -D __EMSCRIPTEN_tiny__=7 -D _LIBCPP_ABI_VERSION=2 -D unix -D __unix -D __unix__ -D EMSCRIPTEN -internal-isystem /include/wasm32-emscripten/c++/v1 -internal-isystem /include/c++/v1 -internal-isystem /usr/local/lib/clang/11.0.0/include -internal-isystem /include/wasm32-emscripten -internal-isystem /include -O3 -Werror=implicit-function-declaration -fdeprecated-macro -fdebug-compilation-dir /home/tj/software/ytterbium/src/SGP4Propagator -ferror-limit 19 -fmessage-length 0 -fgnuc-version=4.2.1 -fobjc-runtime=gnustep -fcxx-exceptions -fexceptions -fno-common -fdiagnostics-show-option -vectorize-loops -vectorize-slp -nostdsysteminc -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include -isystem/home/tj/.emscripten_cache/wasm-obj/include -isystem/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -o /tmp/emscripten_temp_m5ujMM/astro_10.o -x c++ astro.cpp
+clang -cc1 version 11.0.0 based upon LLVM 11.0.0git default target x86_64-unknown-linux-gnu
+ignoring nonexistent directory "/home/tj/.emscripten_cache/wasm-obj/include"
+ignoring nonexistent directory "/include/wasm32-emscripten/c++/v1"
+ignoring nonexistent directory "/include/c++/v1"
+ignoring nonexistent directory "/include/wasm32-emscripten"
+ignoring nonexistent directory "/include"
+#include "..." search starts here:
+#include <...> search starts here:
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libcxx
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libcxxabi/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/compat
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/libc
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib/libc/musl/arch/emscripten
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/include
+ /home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/include/SDL
+ /usr/local/lib/clang/11.0.0/include
+End of search list.
+ "/usr/local/bin/wasm-ld" -o /tmp/emscripten_temp_m5ujMM/wasmmodule.wasm --lto-O3 -L/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/local/lib /tmp/emscripten_temp_m5ujMM/astMath_0.o -L/home/tj/software/ytterbium/scripts/wasmtools/emscripten/system/lib /tmp/emscripten_temp_m5ujMM/astTime_1.o -L/home/tj/.emscripten_cache/wasm-obj /tmp/emscripten_temp_m5ujMM/SGP4_2.o /tmp/emscripten_temp_m5ujMM/coordFK5_3.o /tmp/emscripten_temp_m5ujMM/sgp4sdp4_4.o /tmp/emscripten_temp_m5ujMM/sgp_in_5.o /tmp/emscripten_temp_m5ujMM/sgp_math_6.o /tmp/emscripten_temp_m5ujMM/sgp_obs_7.o /tmp/emscripten_temp_m5ujMM/sgp_time_8.o /tmp/emscripten_temp_m5ujMM/solar_9.o /tmp/emscripten_temp_m5ujMM/astro_10.o /home/tj/.emscripten_cache/wasm-obj/libc.a /home/tj/.emscripten_cache/wasm-obj/libcompiler_rt.a /home/tj/.emscripten_cache/wasm-obj/libc-wasm.a /home/tj/.emscripten_cache/wasm-obj/libc++-noexcept.a /home/tj/.emscripten_cache/wasm-obj/libc++abi-noexcept.a /home/tj/.emscripten_cache/wasm-obj/libdlmalloc.a /home/tj/.emscripten_cache/wasm-obj/libpthread_stub.a /home/tj/.emscripten_cache/wasm-obj/libc_rt_wasm.a /home/tj/.emscripten_cache/wasm-obj/libsockets.a --allow-undefined --import-memory --import-table -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr --strip-debug --export __wasm_call_ctors --export __data_end --export sizeOfsatelliteCatalog --export generateEphemeris --export registerEntity --export propagate --export describeObject --export getValue --export getValueInReferenceFrame --export free --export freePtr --export deletePtr --export removeAll --export removeEntity --export getSatAzElRange --export getSatAzElRangeForInterval --export getPassAndVisibilityForInterval --export getSatAzElRangePositionForInterval --export malloc --export setThrew --export __errno_location --export _ZSt18uncaught_exceptionv --export __cxa_find_matching_catch --export __cxa_is_pointer_type --export __cxa_can_catch --export _get_tzname --export _get_daylight --export _get_timezone -z stack-size=5242880 --initial-memory=25165824 --no-entry --global-base=1024
+ "/usr/local/bin/wasm-emscripten-finalize" --detect-features --global-base=1024 /tmp/emscripten_temp_m5ujMM/wasmmodule.wasm -o /tmp/emscripten_temp_m5ujMM/wasmmodule.wasm.o.wasm
+ "/usr/local/bin/wasm-opt" --post-emscripten --inline-main --no-exit-runtime -O3 --low-memory-unused --strip-debug --strip-producers --pass-arg=emscripten-sbrk-ptr@9088 wasmmodule.wasm -o wasmmodule.wasm --mvp-features
+ "/usr/local/bin/wasm-metadce" --graph-file=/tmp/tmpAv4LVg.txt wasmmodule.wasm -o wasmmodule.wasm --mvp-features
+ "/usr/local/bin/wasm-opt" --minify-imports-and-exports-and-modules wasmmodule.wasm -o wasmmodule.wasm --mvp-features

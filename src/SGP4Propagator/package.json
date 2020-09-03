@@ -1,0 +1,21 @@
+{
+  "name": "external",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sgp4propagator.mjs",
+  "ignore": [
+    "wasmmodule.mjs"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf wasmmodule.mjs",
+    "build": "emcc -v -flto --llvm-lto 1 -lm -O3 astmath/astMath/astMath.cpp asttime/astTime/astTime.cpp SGP4/SGP4/SGP4.cpp coordfk5/coordFK5/coordFK5.cpp sgp4sdp4/sgp4sdp4.c  sgp4sdp4/sgp_in.c sgp4sdp4/sgp_math.c  sgp4sdp4/sgp_obs.c  sgp4sdp4/sgp_time.c  sgp4sdp4/solar.c astro.cpp -o wasmmodule.mjs -s EXPORTED_FUNCTIONS=@exported_functions -s WASM=1 -s SINGLE_FILE=1 -s TOTAL_MEMORY=24MB -s EXTRA_EXPORTED_RUNTIME_METHODS='[\"ccall\", \"cwrap\"]' -s ALLOW_MEMORY_GROWTH=1",
+    "build:dev": "emcc -v -lm -g4 astmath/astMath/astMath.cpp asttime/astTime/astTime.cpp SGP4/SGP4/SGP4.cpp coordfk5/coordFK5/coordFK5.cpp sgp4sdp4/sgp4sdp4.c  sgp4sdp4/sgp_in.c sgp4sdp4/sgp_math.c  sgp4sdp4/sgp_obs.c  sgp4sdp4/sgp_time.c  sgp4sdp4/solar.c astro.cpp -o wasmmodule.mjs -s ASSERTIONS=2 -s EXPORTED_FUNCTIONS=@exported_functions -s WASM=1 -s SINGLE_FILE=1 -s TOTAL_MEMORY=24MB -s EXTRA_EXPORTED_RUNTIME_METHODS='[\"ccall\", \"cwrap\"]' -s ALLOW_MEMORY_GROWTH=1",
+    "build:llvm": "emcc -v -fPIC -lm -O3 astmath/astMath/astMath.cpp asttime/astTime/astTime.cpp SGP4/SGP4/SGP4.cpp coordfk5/coordFK5/coordFK5.cpp astro.cpp -o external.bc",
+    "build:clang++": "clang++ -v -g -lm -fPIC -v -nostartfiles -static -undefined dynamic_lookup astmath/astMath/astMath.cpp asttime/astTime/astTime.cpp SGP4/SGP4/SGP4.cpp coordfk5/coordFK5/coordFK5.cpp sgp4sdp4/sgp4sdp4.c  sgp4sdp4/sgp_in.c sgp4sdp4/sgp_math.c  sgp4sdp4/sgp_obs.c  sgp4sdp4/sgp_time.c  sgp4sdp4/solar.c astro.cpp -o external.a",
+    "build:clang++:wasm": "clang++ -O3 -fno-exceptions -Wl,--no-entry,--export=registerEntity,--export=describeObject,--export=sizeOfsatelliteCatalog,--export=propagate,--export=generateEphemeris,--export=getValue,--export=getValueInReferenceFrame,--export=free,--export=freePtr,--export=deletePtr,--export=removeEntity,--export=removeAll,--export=getSatAzElRange,--export=getSatAzElRangeForInterval,--export=getSatAzElRangePositionForInterval --target=wasm32-unknown-wasi --sysroot=/opt/wasi-sdk/share/wasi-sysroot -v -g -lm -fPIC -v -nostartfiles astmath/astMath/astMath.cpp asttime/astTime/astTime.cpp SGP4/SGP4/SGP4.cpp coordfk5/coordFK5/coordFK5.cpp sgp4sdp4/sgp4sdp4.c  sgp4sdp4/sgp_in.c sgp4sdp4/sgp_math.c  sgp4sdp4/sgp_obs.c  sgp4sdp4/sgp_time.c  sgp4sdp4/solar.c astro.cpp -o sgp4.wasm"
+
+  },
+  "author": "",
+  "license": "CLOSED"
+}

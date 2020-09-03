@@ -6,6 +6,9 @@ import satellite from 'satellite.js';
 import Ajv from 'ajv';
 import xml2js from 'xml2js';
 
+
+
+
 var ajv = new Ajv({ unknownFormats: true }); // options can be passed, e.g. {allErrors: true}
 var validate = ajv.compile(schema);
 //var valid = validate(data);
@@ -16,6 +19,8 @@ var validate = ajv.compile(schema);
 
 
 
+
+return;
 //TEST
 let assert = {};
 
