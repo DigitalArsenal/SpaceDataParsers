@@ -4113,51 +4113,134 @@ PAYLOAD.createPAYLOAD = function (builder, OBJECT_IDOffset, OBJECT_NAMEOffset, D
   return PAYLOAD.endPAYLOAD(builder);
 }
 const schema = {
-  "$schema": "http://json-schema.org/draft-04/schema#",
   "definitions": {
     "referenceFrame": {
       "type": "string",
-      "enum": ["EME2000", "GCRF", "GRC", "ICRF", "ITRF2000", "ITRF93", "ITRF97", "MCI", "TDR", "TEME", "TOD"]
+      "enum": [
+        "EME2000",
+        "GCRF",
+        "GRC",
+        "ICRF",
+        "ITRF2000",
+        "ITRF93",
+        "ITRF97",
+        "MCI",
+        "TDR",
+        "TEME",
+        "TOD"
+      ]
     },
     "ephemerisType": {
       "type": "string",
-      "enum": ["SGP", "SGP4", "SDP4", "SGP8", "SDP8"]
+      "enum": [
+        "SGP",
+        "SGP4",
+        "SDP4",
+        "SGP8",
+        "SDP8"
+      ]
     },
     "timeSystem": {
       "type": "string",
-      "enum": ["GMST", "GPS", "MET", "MRT", "SCLK", "TAI", "TCB", "TDB", "TCG", "TT", "UT1", "UTC"]
+      "enum": [
+        "GMST",
+        "GPS",
+        "MET",
+        "MRT",
+        "SCLK",
+        "TAI",
+        "TCB",
+        "TDB",
+        "TCG",
+        "TT",
+        "UT1",
+        "UTC"
+      ]
     },
     "meanElementTheory": {
       "type": "string",
-      "enum": ["SGP4", "DSST", "USM"]
+      "enum": [
+        "SGP4",
+        "DSST",
+        "USM"
+      ]
     },
     "manCovRefFrame": {
       "type": "string",
-      "enum": ["RSW", "RTN", "TNW"]
+      "enum": [
+        "RSW",
+        "RTN",
+        "TNW"
+      ]
     },
     "objType": {
       "type": "string",
-      "enum": ["PAYLOAD", "DEBRIS", "ROCKET_BODY", "UNKNOWN"]
+      "enum": [
+        "PAYLOAD",
+        "DEBRIS",
+        "ROCKET_BODY",
+        "UNKNOWN"
+      ]
     },
     "opsStatusCode": {
       "type": "string",
-      "enum": ["OPERATIONAL", "NONOPERATIONAL", "PARTIALLY_OPERATIONAL", "BACKUP_STANDBY", "SPARE", "EXTENDED_MISSION", "DECAYED", "UNKNOWN"]
+      "enum": [
+        "OPERATIONAL",
+        "NONOPERATIONAL",
+        "PARTIALLY_OPERATIONAL",
+        "BACKUP_STANDBY",
+        "SPARE",
+        "EXTENDED_MISSION",
+        "DECAYED",
+        "UNKNOWN"
+      ]
     },
     "orbitalStatusCode": {
       "type": "string",
-      "enum": ["NO_CURRENT_ELEMENTS", "NO_INITIAL_ELEMENTS", "NO_ELEMENTS_AVAILABLE", "PERMANENTLY_DOCKED", "DOCKED_TO_INTERNATIONAL_SPACE_STATION", "IN_ORBIT"]
+      "enum": [
+        "NO_CURRENT_ELEMENTS",
+        "NO_INITIAL_ELEMENTS",
+        "NO_ELEMENTS_AVAILABLE",
+        "PERMANENTLY_DOCKED",
+        "DOCKED_TO_INTERNATIONAL_SPACE_STATION",
+        "IN_ORBIT"
+      ]
     },
     "orbitCenter": {
       "type": "string",
-      "enum": ["ASTEROID", "EARTH", "EARTH_LAGRANGE", "EARTH_MOON_BARYCENTER", "JUPITER", "MARS", "MERCURY", "MOON_EARTH", "NEPTUNE", "PLUTO", "SATURN", "SOLAR_SYSTEM_ESCAPE", "SUN", "URANUS", "VENUS"]
+      "enum": [
+        "ASTEROID",
+        "EARTH",
+        "EARTH_LAGRANGE",
+        "EARTH_MOON_BARYCENTER",
+        "JUPITER",
+        "MARS",
+        "MERCURY",
+        "MOON_EARTH",
+        "NEPTUNE",
+        "PLUTO",
+        "SATURN",
+        "SOLAR_SYSTEM_ESCAPE",
+        "SUN",
+        "URANUS",
+        "VENUS"
+      ]
     },
     "orbitType": {
       "type": "string",
-      "enum": ["ORBIT", "DOCKED", "LANDING", "IMPACT"]
+      "enum": [
+        "ORBIT",
+        "DOCKED",
+        "LANDING",
+        "IMPACT"
+      ]
     },
     "massType": {
       "type": "string",
-      "enum": ["DRY", "WET"]
+      "enum": [
+        "DRY",
+        "WET"
+      ]
     },
     "OMM": {
       "type": "object",
@@ -4379,7 +4462,10 @@ const schema = {
       "type": "object",
       "properties": {
         "RECORDS": {
-          "type": "array", "items": { "$ref": "#/definitions/OMM" }
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OMM"
+          }
         }
       },
       "additionalProperties": false
@@ -4388,7 +4474,10 @@ const schema = {
       "type": "object",
       "properties": {
         "RECORDS": {
-          "type": "array", "items": { "$ref": "#/definitions/MPE" }
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MPE"
+          }
         }
       },
       "additionalProperties": false
@@ -4482,7 +4571,7 @@ const schema = {
     }
   },
   "$ref": "#/definitions/OMM"
-}
+};
 
 // Exports for ECMAScript6 Modules
 export { referenceFrame };

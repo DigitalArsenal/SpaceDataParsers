@@ -2,6 +2,20 @@ import flatbuffers from './flatbuffers.js';
 import { OMM, OMMCOLLECTION, schema, referenceFrame, timeSystem, meanElementTheory, ephemerisType } from './OMM_generated.js';
 import btoa from 'btoa';
 import { writeFileSync, readFileSync, fstat } from 'fs';
+import satellite from 'satellite.js';
+import Ajv from 'ajv';
+import xml2js from 'xml2js';
+
+var ajv = new Ajv({ unknownFormats: true }); // options can be passed, e.g. {allErrors: true}
+var validate = ajv.compile(schema);
+//var valid = validate(data);
+//if (!valid) console.log(validate.errors);
+
+
+
+
+
+
 //TEST
 let assert = {};
 
@@ -68,7 +82,6 @@ function main() {
   let _GOES9 = OMM.endOMM(builder);
   builder.finish(_GOES9);
   let _GG = OMM.getRootAsOMM(builder.dataBuffer());
-  console.log(_GG.NORAD_CAT_ID())
 
   let records = [_GOES9];
 
@@ -94,7 +107,6 @@ function main() {
   // Get access to the root:
   let SCOLLECTION = OMMCOLLECTION.getRootAsOMMCOLLECTION(buf);
   let GOES9 = SCOLLECTION.RECORDS(0);
-  console.log(SCOLLECTION.RECORDSLength());
   if (SCOLLECTION.RECORDSLength()) {
     for (let prop in intermediate) {
       let { canonicalname } = intermediate[prop];
@@ -107,7 +119,6 @@ function main() {
 
       if (GOES9[prop]) {
         assert.equal(prop, SAT_TEST_OBJ[prop], GOES9[prop]);
-        console.log(GOES9[prop]);
       }
     }
 
