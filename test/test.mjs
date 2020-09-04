@@ -8,6 +8,7 @@ import xml2js from 'xml2js';
 import { tmpdir } from 'os';
 import sgp4module from '../src/SGP4Propagator/sgp4propagator.mjs'
 
+
 (async function () {
   sgp4module.then(wasmModule => {
     for (let x in wasmModule) {
@@ -31,11 +32,91 @@ import sgp4module from '../src/SGP4Propagator/sgp4propagator.mjs'
       getSatAzElRangeForInterval,
       getSatAzElRangePositionForInterval,
       describeObject,
-      HEAP8 } = wasmModule;
+      HEAP8,
+      HEAPU8,
+      stackAlloc } = wasmModule;
+    function stringToUTF8(str, outPtr, maxBytesToWrite) {
+      return stringToUTF8Array(str, HEAPU8, outPtr, maxBytesToWrite);
+    }
+    function stringToUTF8Array(str, heap, outIdx, maxBytesToWrite) {
+      if (!(maxBytesToWrite > 0)) // Parameter maxBytesToWrite is not optional. Negative values, 0, null, undefined and false each don't write out any bytes.
+        return 0;
+
+      var startIdx = outIdx;
+      var endIdx = outIdx + maxBytesToWrite - 1; // -1 for string null terminator.
+      for (var i = 0; i < str.length; ++i) {
+        // Gotcha: charCodeAt returns a 16-bit word that is a UTF-16 encoded code unit, not a Unicode code point of the character! So decode UTF16->UTF32->UTF8.
+        // See http://unicode.org/faq/utf_bom.html#utf16-3
+        // For UTF8 byte structure, see http://en.wikipedia.org/wiki/UTF-8#Description and https://www.ietf.org/rfc/rfc2279.txt and https://tools.ietf.org/html/rfc3629
+        var u = str.charCodeAt(i); // possibly a lead surrogate
+        if (u >= 0xD800 && u <= 0xDFFF) {
+          var u1 = str.charCodeAt(++i);
+          u = 0x10000 + ((u & 0x3FF) << 10) | (u1 & 0x3FF);
+        }
+        if (u <= 0x7F) {
+          if (outIdx >= endIdx) break;
+          heap[outIdx++] = u;
+        } else if (u <= 0x7FF) {
+          if (outIdx + 1 >= endIdx) break;
+          heap[outIdx++] = 0xC0 | (u >> 6);
+          heap[outIdx++] = 0x80 | (u & 63);
+        } else if (u <= 0xFFFF) {
+          if (outIdx + 2 >= endIdx) break;
+          heap[outIdx++] = 0xE0 | (u >> 12);
+          heap[outIdx++] = 0x80 | ((u >> 6) & 63);
+          heap[outIdx++] = 0x80 | (u & 63);
+        } else {
+          if (outIdx + 3 >= endIdx) break;
+          if (u >= 0x200000) warnOnce('Invalid Unicode code point 0x' + u.toString(16) + ' encountered when serializing a JS string to an UTF-8 string on the asm.js/wasm heap! (Valid unicode code points should be in range 0-0x1FFFFF).');
+          heap[outIdx++] = 0xF0 | (u >> 18);
+          heap[outIdx++] = 0x80 | ((u >> 12) & 63);
+          heap[outIdx++] = 0x80 | ((u >> 6) & 63);
+          heap[outIdx++] = 0x80 | (u & 63);
+        }
+      }
+      // Null-terminate the pointer to the buffer.
+      heap[outIdx] = 0;
+      return outIdx - startIdx;
+    }
+    // Returns the number of bytes the given Javascript string takes if encoded as a UTF8 byte array, EXCLUDING the null terminator byte.
+    function lengthBytesUTF8(str) {
+      var len = 0;
+      for (var i = 0; i < str.length; ++i) {
+        // Gotcha: charCodeAt returns a 16-bit word that is a UTF-16 encoded code unit, not a Unicode code point of the character! So decode UTF16->UTF32->UTF8.
+        // See http://unicode.org/faq/utf_bom.html#utf16-3
+        var u = str.charCodeAt(i); // possibly a lead surrogate
+        if (u >= 0xD800 && u <= 0xDFFF) u = 0x10000 + ((u & 0x3FF) << 10) | (str.charCodeAt(++i) & 0x3FF);
+        if (u <= 0x7F) ++len;
+        else if (u <= 0x7FF) len += 2;
+        else if (u <= 0xFFFF) len += 3;
+        else len += 4;
+      }
+      return len;
+    }
+
+
+
+
+
+
+
+
+    let writeString = function (str) {
+      var ret = 0;
+      if (str !== null && str !== undefined && str !== 0) { // null string
+        // at most 4 bytes per UTF-8 code point, +1 for the trailing '\0'
+        var len = (str.length << 2) + 1;
+        ret = stackAlloc(len);
+        stringToUTF8(str, ret, len);
+      }
+      return ret;
+    };
+    let tle = ["1     5U 58002B   20126.81463012 +.00000185 +00000-0 +23100-3 0  9999",
+      "2     5 034.2494 359.6658 1847113 160.4367 207.7732 10.84842166200625"].map(r =>writeString(r));
 
     let pointer = registerEntity(
-      "1     5U 58002B   20126.81463012 +.00000185 +00000-0 +23100-3 0  9999",
-      "2     5 034.2494 359.6658 1847113 160.4367 207.7732 10.84842166200625",
+      tle[0],
+      tle[1],
       true,
       0,
       0,
@@ -55,7 +136,7 @@ import sgp4module from '../src/SGP4Propagator/sgp4propagator.mjs'
       3
     );
     console.log(flatArray);
-    
+
     var ajv = new Ajv({ unknownFormats: true }); // options can be passed, e.g. {allErrors: true}
     var validate = ajv.compile(schema);
     //var valid = validate(data);

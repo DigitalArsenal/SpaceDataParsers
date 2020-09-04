@@ -166,7 +166,7 @@ extern "C"
       //bool sortCatalog = false,
       long *SatObjPointer = nullptr)
   {
-    printf("%s \n %s \n", line1, line2);
+    printf("%s \n%s \n%d \n", line1, line2, visible);
     //https://github.com/emscripten-core/emscripten/issues/3942
     if (visible == NULL)
       visible = true;
@@ -201,7 +201,7 @@ extern "C"
     nSatObj->vx = 4.5;
     nSatObj->vy = 5.5;
     nSatObj->vz = 6.5;
-    printf("%lf %lf\n", nSatObj->satrec.nm, nSatObj->satrec.period_sec);
+
     return (long *)nSatObj;
   }
 
