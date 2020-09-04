@@ -10,7 +10,8 @@ import sgp4module from '../src/SGP4Propagator/sgp4propagator.mjs'
 
 
 (async function () {
-  sgp4module.then(wasmModule => {
+  sgp4module.then(function (wasmModule) {
+
     for (let x in wasmModule) {
       if (x[0] === "_") {
         wasmModule[x.split("_")[1]] = wasmModule[x];
@@ -35,6 +36,7 @@ import sgp4module from '../src/SGP4Propagator/sgp4propagator.mjs'
       HEAP8,
       HEAPU8,
       stackAlloc } = wasmModule;
+    /*
     function stringToUTF8(str, outPtr, maxBytesToWrite) {
       return stringToUTF8Array(str, HEAPU8, outPtr, maxBytesToWrite);
     }
@@ -94,13 +96,6 @@ import sgp4module from '../src/SGP4Propagator/sgp4propagator.mjs'
       return len;
     }
 
-
-
-
-
-
-
-
     let writeString = function (str) {
       var ret = 0;
       if (str !== null && str !== undefined && str !== 0) { // null string
@@ -110,10 +105,12 @@ import sgp4module from '../src/SGP4Propagator/sgp4propagator.mjs'
         stringToUTF8(str, ret, len);
       }
       return ret;
-    };
+    };*/
     let tle = ["1     5U 58002B   20126.81463012 +.00000185 +00000-0 +23100-3 0  9999",
-      "2     5 034.2494 359.6658 1847113 160.4367 207.7732 10.84842166200625"].map(r =>writeString(r));
+      "2     5 034.2494 359.6658 1847113 160.4367 207.7732 10.84842166200625"];
 
+    //let tlen = tle.map(r => writeString(r));
+    
     let pointer = registerEntity(
       tle[0],
       tle[1],
@@ -123,7 +120,9 @@ import sgp4module from '../src/SGP4Propagator/sgp4propagator.mjs'
       0,
       null
     );
+    
     console.log(pointer);
+    return;
     let _now = new Date().getTime();
     let flatArray = new Float64Array(
       wasmModule.HEAP8.buffer,

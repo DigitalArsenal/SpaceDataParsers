@@ -128,7 +128,9 @@ export default wasmmodule().then(wasmModule => {
 			]
 		}
 	};
-
-	Object.keys(wrapping).forEach(key => wasmModule[key] = (wrapping[key].params) ? wasmModule["cwrap"](key, wrapping[key].rval, wrapping[key].params) : wasmModule["cwrap"](key, wrapping[key].rval));
-	return wasmModule;
+	let _wrappedModule = {};
+	Object.keys(wrapping).forEach(key => {
+		_wrappedModule[key] = (wrapping[key].params) ? wasmModule["cwrap"](key, wrapping[key].rval, wrapping[key].params) : wasmModule["cwrap"](key, wrapping[key].rval)
+	});
+	return _wrappedModule;
 });
