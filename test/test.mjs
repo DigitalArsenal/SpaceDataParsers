@@ -10,37 +10,35 @@ import sgp4module from '../src/SGP4Propagator/sgp4propagator.mjs'
 
 
 (async function () {
-  sgp4module.then(function (wasmModule) {
+  sgp4module.then(function (moduleMethods) {
+    let { methods, wasmModule } = moduleMethods;
 
-    for (let x in wasmModule) {
-      if (x[0] === "_") {
-        wasmModule[x.split("_")[1]] = wasmModule[x];
-      }
-    }
-    let { sizeOfsatelliteCatalog,
-      freePtr,
-      free,
-      deletePtr,
+    let {
+      sizeOfsatelliteCatalog,
       registerEntity,
       removeEntity,
       removeAll,
       propagate,
-      malloc,
       generateEphemeris,
       getValue,
       getValueInReferenceFrame,
       getSatAzElRange,
       getSatAzElRangeForInterval,
       getSatAzElRangePositionForInterval,
-      describeObject,
+      describeObject } = methods;
+
+    let {
+      freePtr,
+      free,
+      deletePtr,
+      malloc,
       HEAP8,
       HEAPU8,
-      stackAlloc } = wasmModule;
+      stackAlloc
+    } = wasmModule;
 
     let tle = ["1     5U 58002B   20126.81463012 +.00000185 +00000-0 +23100-3 0  9999",
       "2     5 034.2494 359.6658 1847113 160.4367 207.7732 10.84842166200625"];
-
-    //let tlen = tle.map(r => writeString(r));
 
     let pointer = registerEntity(
       tle[0],
@@ -53,7 +51,7 @@ import sgp4module from '../src/SGP4Propagator/sgp4propagator.mjs'
     );
 
     console.log(HEAP8, pointer);
-    return;
+
     let _now = new Date().getTime();
     let flatArray = new Float64Array(
       HEAP8.buffer,
@@ -65,13 +63,13 @@ import sgp4module from '../src/SGP4Propagator/sgp4propagator.mjs'
       ), // Choice of reference frames for velocity
       3
     );
+
     console.log(flatArray);
 
     var ajv = new Ajv({ unknownFormats: true }); // options can be passed, e.g. {allErrors: true}
     var validate = ajv.compile(schema);
     //var valid = validate(data);
     //if (!valid) console.log(validate.errors);
-
 
     //TEST
     let assert = {};
