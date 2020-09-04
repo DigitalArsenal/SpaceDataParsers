@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon  --experimental-wasm-modules test/test.mjs -w test/test.mjs",
     "update:schema": "./node_modules/.bin/ajv migrate -s ./test/_root_IDLDocument.schema.json",
-    "build:sgp4:wasm":"cd ./src/SGP4Propagator && npm run build"
+    "build:sgp4:wasm":"cd ./src/SGP4Propagator && npm run build && sed -i -E 's/__dirname//' ./wasmmodule.mjs"
   },
   "repository": {
     "type": "git",

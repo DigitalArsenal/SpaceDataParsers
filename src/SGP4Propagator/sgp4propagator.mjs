@@ -117,16 +117,6 @@ export default wasmmodule().then(wasmModule => {
 				"number"
 			]
 		},
-		"getPassAndVisibilityForInterval": {
-			rval: "number",
-			params: [
-				"number",
-				"number",
-				"number",
-				"number",
-				"number"
-			]
-		},
 		"getSatAzElRangePositionForInterval": {
 			rval: "number",
 			params: [
@@ -140,5 +130,5 @@ export default wasmmodule().then(wasmModule => {
 	};
 
 	Object.keys(wrapping).forEach(key => wasmModule[key] = (wrapping[key].params) ? wasmModule["cwrap"](key, wrapping[key].rval, wrapping[key].params) : wasmModule["cwrap"](key, wrapping[key].rval));
-
+	return wasmModule;
 });

@@ -83,12 +83,12 @@ extern "C"
   }
 
   // Run SGP4 on a single sat and epoch and write result to provided memory address
-  int sgp4Propagate(long *SatObjPointer, double epoch, bool temeToECEF, double *result, bool storeResult, bool fast=false)
+  int sgp4Propagate(long *SatObjPointer, double epoch, bool temeToECEF, double *result, bool storeResult, bool fast = false)
   {
     SatObj *nSatObj = (SatObj *)SatObjPointer;
     if (!(nSatObj->visible))
       return -1;
-
+    printf("%lf \n", nSatObj->satrec.nm);
     double tt = ((epoch - nSatObj->unix_timestamp) / 1000) / 60;
     if (!storeResult)
       SGP4Funcs::sgp4_pos(nSatObj->satrec, tt, ro);
@@ -97,7 +97,7 @@ extern "C"
     if ((nSatObj->satrec).error > 0)
     {
       nSatObj->ephemeris_length = 0;
-      //printf("SGP4 error %u for SATNUM %lu at EPOCH %lf\n", (nSatObj->satrec).error, (nSatObj->satrec).satnum, epoch);
+      printf("SGP4 error %u for SATNUM %lu at EPOCH %lf\n", (nSatObj->satrec).error, (nSatObj->satrec).satnum, epoch);
       if (result)
         memset(result, 0, sizeof(ro));
       return (nSatObj->satrec).error;
@@ -116,11 +116,13 @@ extern "C"
             // oscillates around 0, so leave it for now ftp://hpiers.obspm.fr/iers/series/opa/eopc04_IAU2000
           */
 
-      if (fast) coordFK5::teme_ecef_convert(ro, ecef, true, polarMatrix, pefMatrix);
-      else {
+      if (fast)
+        coordFK5::teme_ecef_convert(ro, ecef, true, polarMatrix, pefMatrix);
+      else
+      {
         double jdut1 = ((epoch / 86400000) + 2440587.500) + currentEOP.dut1; //TODO get the delta ut1 from EOP
         double jcent = (jdut1 - 2451545.0) / 36525.0;
- 
+
         coordFK5::teme_ecef_pos(ro, eTo, ecef, jcent, jdut1, currentEOP.x, currentEOP.y, true, 2);
       }
 
@@ -129,8 +131,10 @@ extern "C"
         ecef[i] *= 1000;
       }
 
-      if (result) memcpy(result, ecef, sizeof(ecef));
-      if (!storeResult) return 0;
+      if (result)
+        memcpy(result, ecef, sizeof(ecef));
+      if (!storeResult)
+        return 0;
     }
     for (int i = 0; i < THREE; ++i)
     {
@@ -146,7 +150,8 @@ extern "C"
       nSatObj->vy = vo[1] * 1000;
       nSatObj->vz = vo[2] * 1000;
     }
-    if (!temeToECEF && result) memcpy(result, ro, sizeof(ro));
+    if (!temeToECEF && result)
+      memcpy(result, ro, sizeof(ro));
 
     return 0;
   }
@@ -161,6 +166,7 @@ extern "C"
       //bool sortCatalog = false,
       long *SatObjPointer = nullptr)
   {
+    printf("%s \n %s \n", line1, line2);
     //https://github.com/emscripten-core/emscripten/issues/3942
     if (visible == NULL)
       visible = true;
@@ -195,7 +201,7 @@ extern "C"
     nSatObj->vx = 4.5;
     nSatObj->vy = 5.5;
     nSatObj->vz = 6.5;
-
+    printf("%lf %lf\n", nSatObj->satrec.nm, nSatObj->satrec.period_sec);
     return (long *)nSatObj;
   }
 
@@ -243,10 +249,11 @@ extern "C"
     }
 
     // Initial matrixes for ECEF conversion outside of loop
-    if (temeToECEF) {
+    if (temeToECEF)
+    {
       double jdut1 = ((epoch / 86400000) + 2440587.500) + currentEOP.dut1; //TODO get the delta ut1 from EOP
       double jcent = (jdut1 - 2451545.0) / 36525.0;
-      coordFK5::teme_ecef_matrix( jcent, jdut1, currentEOP.x, currentEOP.y, true, 2, polarMatrix, pefMatrix);
+      coordFK5::teme_ecef_matrix(jcent, jdut1, currentEOP.x, currentEOP.y, true, 2, polarMatrix, pefMatrix);
     }
 
     int index = 0;

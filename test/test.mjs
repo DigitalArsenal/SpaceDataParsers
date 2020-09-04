@@ -6,12 +6,10 @@ import satellite from 'satellite.js';
 import Ajv from 'ajv';
 import xml2js from 'xml2js';
 import { tmpdir } from 'os';
-import sgp4module from '../src/SGP4Propagator/wasmmodule.mjs'
-globalThis.__dirname = "";
-
+import sgp4module from '../src/SGP4Propagator/sgp4propagator.mjs'
 
 (async function () {
-  sgp4module().then(wasmModule => {
+  sgp4module.then(wasmModule => {
     for (let x in wasmModule) {
       if (x[0] === "_") {
         wasmModule[x.split("_")[1]] = wasmModule[x];
@@ -45,26 +43,19 @@ globalThis.__dirname = "";
       null
     );
     console.log(pointer);
-    let _e = sizeOfsatelliteCatalog();
     let _now = new Date().getTime();
-    propagate(_now, true);
-
-    let flatArrayPointer = propagate(_now, true);
-
     let flatArray = new Float64Array(
-      HEAP8.buffer,
-      flatArrayPointer,
-      _e.length * 3
+      wasmModule.HEAP8.buffer,
+      wasmModule.getValueInReferenceFrame(
+        pointer,
+        _now,
+        true, //convert in Cesium
+        true
+      ), // Choice of reference frames for velocity
+      3
     );
-      console.log(_e)
-    for (let e = 0; e < 1; e++) {
-      if (_e[e]) {
-        //race condition for removal, eventual consistency
-        console.log(_c);
-        _e[e].position = _c;
-      }
-    }
-
+    console.log(flatArray);
+    
     var ajv = new Ajv({ unknownFormats: true }); // options can be passed, e.g. {allErrors: true}
     var validate = ajv.compile(schema);
     //var valid = validate(data);
