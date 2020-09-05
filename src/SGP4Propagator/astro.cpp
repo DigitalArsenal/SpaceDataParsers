@@ -204,7 +204,69 @@ extern "C"
 
     return (long *)nSatObj;
   }
+  void *registerEntityOMM(
+      char *EPOCH,
+      double SEMI_MAJOR_AXIS,
+      double MEAN_MOTION,
+      double ECCENTRICITY,
+      double INCLINATION,
+      double RA_OF_ASC_NODE,
+      double ARG_OF_PERICENTER,
+      double MEAN_ANOMALY,
+      double GM,
+      signed char EPHEMERIS_TYPE,
+      char *CLASSIFICATION_TYPE,
+      uint32_t NORAD_CAT_ID,
+      uint32_t ELEMENT_SET_NO,
+      double REV_AT_EPOCH,
+      double BSTAR,
+      double MEAN_MOTION_DOT,
+      double MEAN_MOTION_DDOT,
+      bool visible,
+      double startmfe = 0,
+      double stopmfe = 0,
+      double deltamin = 0,
+      //bool sortCatalog = false,
+      long *SatObjPointer = nullptr)
+  {
 
+    //https://github.com/emscripten-core/emscripten/issues/3942
+    if (visible == NULL)
+      visible = true;
+    SatObj *nSatObj;
+    if (SatObjPointer)
+      nSatObj = (SatObj *)SatObjPointer;
+    else
+    {
+      nSatObj = new SatObj();
+      satelliteCatalog.push_back((SatObj *)nSatObj);
+      nSatObj->array_index = satelliteCatalog.size() - 1;
+      resized = true;
+    }
+
+    nSatObj->visible = visible;
+
+    char typerun = 'm', typeinput = 'z', opsmode = 'i';
+    gravconsttype whichconst = wgs84;
+
+    //SGP4Funcs::twoline2rv(line1, line2, typerun, typeinput, opsmode, whichconst, startmfe, stopmfe, deltamin, nSatObj->satrec);
+
+    nSatObj->unix_timestamp = (nSatObj->satrec.jdsatepoch + nSatObj->satrec.jdsatepochF - 2440587.500) * 86400000;
+    nSatObj->period = (2 * M_PI / nSatObj->satrec.no_kozai) * 60 * 1000;
+    nSatObj->satrec.period_sec = nSatObj->period / 1000;
+    nSatObj->ephemeris_start = startmfe;
+    nSatObj->ephemeris_stop = stopmfe;
+    nSatObj->ephemeris_step = deltamin;
+    nSatObj->ephemeris_ptr = nullptr;
+    nSatObj->x = 1.5;
+    nSatObj->y = 2.5;
+    nSatObj->z = 3.5;
+    nSatObj->vx = 4.5;
+    nSatObj->vy = 5.5;
+    nSatObj->vz = 6.5;
+
+    return (long *)nSatObj;
+  }
   void removeEntity(long *SatObjPointer)
   {
     SatObj *nSatObj = (SatObj *)SatObjPointer;
