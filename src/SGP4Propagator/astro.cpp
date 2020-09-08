@@ -163,7 +163,6 @@ extern "C"
       double startmfe = 0,
       double stopmfe = 0,
       double deltamin = 0,
-      //bool sortCatalog = false,
       long *SatObjPointer = nullptr)
   {
     printf("%s \n%s \n%d \n", line1, line2, visible);
@@ -226,7 +225,6 @@ extern "C"
       double startmfe = 0,
       double stopmfe = 0,
       double deltamin = 0,
-      //bool sortCatalog = false,
       long *SatObjPointer = nullptr)
   {
 

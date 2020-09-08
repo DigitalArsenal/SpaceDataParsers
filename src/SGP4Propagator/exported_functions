@@ -2,6 +2,7 @@
 "_sizeOfsatelliteCatalog",
 "_generateEphemeris",
 "_registerEntity",
+"_registerEntityOMM",
 "_propagate",
 "_describeObject",
 "_getValue",

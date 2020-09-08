@@ -28,6 +28,33 @@ export default wasmmodule().then(wasmModule => {
 				"number"
 			]
 		},
+		"registerEntityOMM": {
+			rval: "number",
+			params: [
+				"string", //char *EPOCH,
+				"number", //double SEMI_MAJOR_AXIS,
+				"number", //double MEAN_MOTION,
+				"number", //double ECCENTRICITY,
+				"number", //double INCLINATION,
+				"number", //double RA_OF_ASC_NODE,
+				"number", //double ARG_OF_PERICENTER,
+				"number", //double MEAN_ANOMALY,
+				"number", //double GM,
+				"string", //signed char EPHEMERIS_TYPE,
+				"string", //char * CLASSIFICATION_TYPE,
+				"number", //uint32_t NORAD_CAT_ID,
+				"number", //uint32_t ELEMENT_SET_NO,
+				"number", //double REV_AT_EPOCH,
+				"number", //double BSTAR,
+				"number", //double MEAN_MOTION_DOT,
+				"number", //double MEAN_MOTION_DDOT,
+				"bool",   //bool visible,
+				"number", //double startmfe = 0,
+				"number", //double stopmfe = 0,
+				"number", //double deltamin = 0,
+				"number", //long * SatObjPointer = nullptr)
+			]
+		},
 		"describeObject": {
 			rval: "string",
 			params: []
