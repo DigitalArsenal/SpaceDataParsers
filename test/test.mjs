@@ -8,14 +8,27 @@ import xml2js from 'xml2js';
 import { tmpdir } from 'os';
 import sgp4module from '../src/SGP4Propagator/sgp4propagator.mjs'
 
+let spaceTrack = {
+  raw: {},
+  xml: [],
+  tle: [],
+  _3le: [],
+  csv: [],
+};
+
 
 (async function () {
+
+  spaceTrack.raw.xml = await new xml2js.Parser().parseStringPromise(readFileSync('./test/data/space-track/omm.xml'));
+  console.log(JSON.stringify(spaceTrack.raw.xml.ndm.omm.map(om=>om.body)[0]));
+
   sgp4module.then(function (moduleMethods) {
     let { methods, wasmModule } = moduleMethods;
 
     let {
       sizeOfsatelliteCatalog,
       registerEntity,
+      registerEntityOMM,
       removeEntity,
       removeAll,
       propagate,
@@ -36,6 +49,10 @@ import sgp4module from '../src/SGP4Propagator/sgp4propagator.mjs'
       HEAPU8,
       stackAlloc
     } = wasmModule;
+
+
+
+    return 0;
 
     let tle = ["1     5U 58002B   20126.81463012 +.00000185 +00000-0 +23100-3 0  9999",
       "2     5 034.2494 359.6658 1847113 160.4367 207.7732 10.84842166200625"];
