@@ -8,9 +8,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon  --experimental-wasm-modules test/test.mjs -w test/test.mjs",
+    "dev": "nodemon  --experimental-wasm-modules test/test.mjs -w test/test.mjs -w src/index.mjs",
     "update:schema": "./node_modules/.bin/ajv migrate -s ./test/_root_IDLDocument.schema.json",
-    "build:sgp4:wasm":"cd ./src/SGP4Propagator && npm run build && sed -i -E 's/__dirname//' ./wasmmodule.mjs"
+    "build:sgp4:wasm": "cd ./src/SGP4Propagator && npm run build && sed -i -E 's/__dirname//' ./wasmmodule.mjs"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
   "homepage": "https://github.com/DigitalArsenal/SpaceDataParsers#readme",
   "dependencies": {
     "ajv": "^6.12.4",
+    "bignumber": "^1.1.0",
     "btoa": "^1.2.1",
     "satellite.js": "^4.0.0",
     "xml2js": "^0.4.23"

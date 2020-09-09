@@ -8,7 +8,7 @@ import {
   tle_map,
   tle_transform,
 } from "./definitions.mjs";
-window.bignumber = bignumber;
+globalThis.bignumber = bignumber;
 
 class lineReader {
   constructor(reader) {

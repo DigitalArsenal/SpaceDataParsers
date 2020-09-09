@@ -1,26 +1,34 @@
+import { numCheck, parseOMMXML, parseOMMJSON } from "../src/index.mjs";
 import flatbuffers from './flatbuffers.js';
 import { OMM, OMMCOLLECTION, schema, referenceFrame, timeSystem, meanElementTheory, ephemerisType } from '../src/class/OMM.flatbuffer.class.js';
 import btoa from 'btoa';
 import { writeFileSync, readFileSync, fstat } from 'fs';
 import satellite from 'satellite.js';
 import Ajv from 'ajv';
-import xml2js from 'xml2js';
 import { tmpdir } from 'os';
 import sgp4module from '../src/SGP4Propagator/sgp4propagator.mjs'
 
+
 let spaceTrack = {
-  raw: {},
   xml: [],
   tle: [],
   _3le: [],
   csv: [],
+  json: []
 };
-
-
 (async function () {
+  spaceTrack.xml = await parseOMMXML(readFileSync('./test/data/space-track/omm.xml'), schema);
+  spaceTrack.json = parseOMMJSON(readFileSync('./test/data/space-track/omm.json', { encoding: 'utf8' }), schema);
+  console.log(spaceTrack.xml.length, spaceTrack.json.length);
+  for (let i = 0; i < spaceTrack.xml.length; i++) {
+    for (let prop in spaceTrack.xml[i]) {
+      if (spaceTrack.xml[i][prop] !== spaceTrack.json[i][prop]) {
+        console.log(prop, spaceTrack.xml[i][prop], spaceTrack.json[i][prop]);
+      }
+    }
+  }
 
-  spaceTrack.raw.xml = await new xml2js.Parser().parseStringPromise(readFileSync('./test/data/space-track/omm.xml'));
-  console.log(spaceTrack.raw.xml.ndm.omm.map(om => om));
+  return 0;
 
   sgp4module.then(function (moduleMethods) {
     let { methods, wasmModule } = moduleMethods;
@@ -63,7 +71,28 @@ let spaceTrack = {
           0,
           null
         );
-    
+      "string", //char *EPOCH,
+        "number", //double SEMI_MAJOR_AXIS,
+        "number", //double MEAN_MOTION,
+        "number", //double ECCENTRICITY,
+        "number", //double INCLINATION,
+        "number", //double RA_OF_ASC_NODE,
+        "number", //double ARG_OF_PERICENTER,
+        "number", //double MEAN_ANOMALY,
+        "number", //double GM,
+        "string", //signed char EPHEMERIS_TYPE,
+        "string", //char * CLASSIFICATION_TYPE,
+        "number", //uint32_t NORAD_CAT_ID,
+        "number", //uint32_t ELEMENT_SET_NO,
+        "number", //double REV_AT_EPOCH,
+        "number", //double BSTAR,
+        "number", //double MEAN_MOTION_DOT,
+        "number", //double MEAN_MOTION_DDOT,
+        "bool",   //bool visible,
+        "number", //double startmfe = 0,
+        "number", //double stopmfe = 0,
+        "number", //double deltamin = 0,
+        "number", //long * SatObjPointer = nullptr)
         console.log(HEAP8, pointer);
     
         let _now = new Date().getTime();
@@ -86,13 +115,12 @@ let spaceTrack = {
     */
     let schemaKeys = Object.keys(schema.definitions.OMM.properties);
 
-    console.log(schemaKeys);
-    let buf = new flatbuffers.ByteBuffer(readFileSync('./test/data/spacedatastandards.org/omm.fbs'));
+    let buf = new flatbuffers.ByteBuffer(readFileSync('./test/data/spacedatastandards/omm.fbs'));
     // Get access to the root:
     let SCOLLECTION = OMMCOLLECTION.getRootAsOMMCOLLECTION(buf);
     for (let i = 0; i < SCOLLECTION.RECORDSLength(); i++) {
       schemaKeys.forEach(key => {
-        console.log(key, ":", SCOLLECTION.RECORDS(i)[key]());
+        //console.log(key, ":", SCOLLECTION.RECORDS(i)[key]());
       });
     }
   });
