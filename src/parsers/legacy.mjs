@@ -20,19 +20,35 @@ class lineReader {
         const utf8Decoder = new TextDecoder("utf-8");
         let leRegex = /[\r\n]{1,2}/gm;
 
-        let { value, done } = await reader.read();
-        value = value ? utf8Decoder.decode(value) : "";
+        let result = await reader.read();
+
+        if (result === null) yield;
+        let value, done;
+        done = result === null;
+        if (result?.value) {
+          value = result.value;
+
+        } else {
+          value = result;
+        }
 
         let startIndex = 0;
 
-        for (;;) {
+        for (; ;) {
           let remline = leRegex.exec(value);
           //only progress if there are more lines
           if (!remline) {
             if (done) break;
             //loop through each successive line
             let remainder = value.substr(startIndex);
-            ({ value, done } = await reader.read());
+            (result = await reader.read());
+            if (result?.value) {
+              value = result.value;
+              done = result.done;
+            } else {
+              value = result;
+              done = result === null;
+            }
             //add more if available
             value = remainder + (value ? utf8Decoder.decode(value) : "");
             startIndex = leRegex.lastIndex = 0;
@@ -42,7 +58,7 @@ class lineReader {
           startIndex = leRegex.lastIndex;
         }
 
-        if (startIndex < value.length) {
+        if (startIndex < value?.length) {
           yield value.substr(startIndex);
         }
       }
@@ -89,6 +105,7 @@ class tle extends lineReader {
             _tp = tp.length === 2 ? [tp[0] - 1, tp[1]] : [tp[0] - 1, tp[0]];
             let value = _line.substring(_tp[0], _tp[1]);
             _OMM[prop] = (tle_transform[prop] || bignumber)(value);
+            if (_OMM[prop] instanceof bignumber) _OMM[prop] = _OMM[prop].toNumber();
           }
         });
         if (OBJECT_NAME) _OMM.OBJECT_NAME = OBJECT_NAME;

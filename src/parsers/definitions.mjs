@@ -1,4 +1,4 @@
-import { JulianDate, TimeStandard } from "./JulianDate";
+import { JulianDate, TimeStandard } from "./JulianDate.mjs";
 
 import bignumber from "bignumber.js";
 
@@ -143,16 +143,9 @@ const tle_transform = {
       return i % 2 || i == 0 || i == tA.length - 1;
     });
 
-    let _epoch = new Date(Date.UTC.apply(0, tA));
-    /*
-    let jdate = new JulianDate();
-    JulianDate.fromDate(_epoch, jdate); //converts to TAI https://github.com/CesiumGS/cesium/blob/1.69/Source/Core/JulianDate.js#L299
-    console.log(Juliandate.totalDays(jdate));
-    */
-    _epoch.microseconds = parseInt(tA[tA.length - 1] * 1000);
-    return _epoch;
+    return (new Date(Date.UTC.apply(0, tA))).toISOString().replace(/z/ig, '').split('.')[0] + '.' + parseInt(tA[tA.length - 1] * 1000);
   },
-  
+
 };
 
 export { satcat_map, satcat_transform, tle_map, tle_transform };

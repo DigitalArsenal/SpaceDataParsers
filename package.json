@@ -24,8 +24,9 @@
   "homepage": "https://github.com/DigitalArsenal/SpaceDataParsers#readme",
   "dependencies": {
     "ajv": "^6.12.4",
-    "bignumber": "^1.1.0",
+    "bignumber.js": "^9.0.0",
     "btoa": "^1.2.1",
+    "neat-csv": "^5.2.0",
     "satellite.js": "^4.0.0",
     "xml2js": "^0.4.23"
   },

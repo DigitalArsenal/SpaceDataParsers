@@ -1,32 +1,46 @@
-import { numCheck, parseOMMXML, parseOMMJSON } from "../src/index.mjs";
+import { numCheck, parseOMMXML, parseOMMJSON, parseOMMCSV, parseTLE } from "../src/index.mjs";
 import flatbuffers from './flatbuffers.js';
 import { OMM, OMMCOLLECTION, schema, referenceFrame, timeSystem, meanElementTheory, ephemerisType } from '../src/class/OMM.flatbuffer.class.js';
 import btoa from 'btoa';
-import { writeFileSync, readFileSync, fstat } from 'fs';
+import { writeFileSync, readFileSync, createReadStream, fstat } from 'fs';
 import satellite from 'satellite.js';
 import Ajv from 'ajv';
 import { tmpdir } from 'os';
 import sgp4module from '../src/SGP4Propagator/sgp4propagator.mjs'
 
 
-let spaceTrack = {
+let OMMS = {
   xml: [],
-  tle: [],
-  _3le: [],
   csv: [],
   json: []
 };
+
+let LEGACY = {
+  tle: []
+};
+
 (async function () {
-  spaceTrack.xml = await parseOMMXML(readFileSync('./test/data/space-track/omm.xml'), schema);
-  spaceTrack.json = parseOMMJSON(readFileSync('./test/data/space-track/omm.json', { encoding: 'utf8' }), schema);
-  console.log(spaceTrack.xml.length, spaceTrack.json.length);
-  for (let i = 0; i < spaceTrack.xml.length; i++) {
-    for (let prop in spaceTrack.xml[i]) {
-      if (spaceTrack.xml[i][prop] !== spaceTrack.json[i][prop]) {
-        console.log(prop, spaceTrack.xml[i][prop], spaceTrack.json[i][prop]);
+  OMMS.xml = await parseOMMXML(readFileSync('./test/data/celestrak/omm.xml'), schema);
+  OMMS.json = parseOMMJSON(readFileSync('./test/data/celestrak/omm.json', { encoding: 'utf8' }), schema);
+  OMMS.csv = await parseOMMCSV(readFileSync('./test/data/celestrak/omm.csv', { encoding: 'utf8' }), schema);
+  LEGACY.tle = await parseTLE(createReadStream('./test/data/celestrak/3le.txt', { encoding: 'utf8' }), schema);
+
+  //console.clear();
+
+  /*
+    for (let i = 0; i < OMMS.xml.length; i++) {
+      for (let prop in OMMS.xml[i]) {
+        let x = OMMS.xml[i][prop];
+        let j = OMMS.json[i][prop];
+        let c = OMMS.csv[i][prop];
+        if (x == j && j == c) { } else {
+          console.log(`${prop}
+          XML:  ${x}
+          JSON: ${j}
+          CSV:  ${c}`);
+        }
       }
-    }
-  }
+    }*/
 
   return 0;
 

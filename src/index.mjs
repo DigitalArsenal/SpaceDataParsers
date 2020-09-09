@@ -1,6 +1,9 @@
 import xml2js from 'xml2js';
+import csv from 'neat-csv';
+import { Readable } from "stream";
+import { tle, satcat, vcm } from "./parsers/legacy.mjs";
 
-const numCheck = (schema, pkey, pval) => (schema.definitions.OMM.properties[pkey]?.type === "number") ? parseFloat(pval) || null : pval;
+const numCheck = (schema, pkey, pval) => (schema.definitions.OMM.properties[pkey]?.type === "number") ? parseFloat(pval) || null : pval || null;
 
 const parseOMMXML = async (input, schema) => {
     let xp = await new xml2js.Parser({
@@ -40,4 +43,29 @@ const parseOMMJSON = (input, schema) => {
         return numCheck(schema, key, value);
     });
 }
-export { numCheck, parseOMMXML, parseOMMJSON };
+
+const parseOMMCSV = async (input, schema) => {
+    let results = (await (csv(input))).map(row => {
+        for (let prop in row) {
+            row[prop] = numCheck(schema, prop, row[prop]);
+        }
+        return row;
+    });
+
+    return results;
+}
+
+const parseTLE = async (input, schema) => {
+    input = input instanceof Readable ? input : Readable.from(input);
+    let tles = new tle(input);
+    let started = false;
+    input.on('readable', async () => {
+        if (started) return;
+        started = true;
+        let stop = await tles.readLines();
+        let a = tles.lines.map(tles.format.OMM);
+        console.log('end', a[0]);
+    });
+}
+
+export { numCheck, parseOMMXML, parseOMMJSON, parseOMMCSV, parseTLE };
