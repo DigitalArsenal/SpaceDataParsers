@@ -7,7 +7,6 @@ const useAsNumber = ["#/definitions/ephemerisType"]; //Hack until we can formali
 
 const numCheck = (schema, pkey, pval) => {
     let sD = schema.definitions.OMM.properties[pkey];
-    console.log(sD?.$ref);
     return (sD?.type === "number" || useAsNumber.indexOf(sD?.$ref) > -1) ? parseFloat(pval) ?? null : pval ?? null;
 }
 
@@ -71,7 +70,8 @@ const parseTLE = (input, schema) => {
             started = true;
             let stop = await tles.readLines();
             let results = tles.lines.map(tles.format.OMM);
-            resolve(results);
+            let raw = tles.lines;
+            resolve({ results, raw });
         });
     })
 
