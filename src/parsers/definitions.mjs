@@ -142,8 +142,7 @@ const tle_transform = {
     tA = tA.filter((v, i) => {
       return i % 2 || i == 0 || i == tA.length - 1;
     });
-
-    return (new Date(Date.UTC.apply(0, tA))).toISOString().replace(/z/ig, '').split('.')[0] + '.' + parseInt(tA[tA.length - 1] * 1000);
+    return (new Date(Date.UTC.apply(0, tA))).toISOString().replace(/z/ig, '').split('.')[0] + '.' + (parseFloat(tA[tA.length - 1].toFixed(3) * 1000).toString()).padStart(6,'0');
   },
 
 };

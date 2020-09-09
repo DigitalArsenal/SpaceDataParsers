@@ -3,7 +3,13 @@ import csv from 'neat-csv';
 import { Readable } from "stream";
 import { tle, satcat, vcm } from "./parsers/legacy.mjs";
 
-const numCheck = (schema, pkey, pval) => (schema.definitions.OMM.properties[pkey]?.type === "number") ? parseFloat(pval) || null : pval || null;
+const useAsNumber = ["#/definitions/ephemerisType"]; //Hack until we can formalize fields between each format
+
+const numCheck = (schema, pkey, pval) => {
+    let sD = schema.definitions.OMM.properties[pkey];
+    console.log(sD?.$ref);
+    return (sD?.type === "number" || useAsNumber.indexOf(sD?.$ref) > -1) ? parseFloat(pval) ?? null : pval ?? null;
+}
 
 const parseOMMXML = async (input, schema) => {
     let xp = await new xml2js.Parser({
@@ -55,17 +61,20 @@ const parseOMMCSV = async (input, schema) => {
     return results;
 }
 
-const parseTLE = async (input, schema) => {
-    input = input instanceof Readable ? input : Readable.from(input);
-    let tles = new tle(input);
-    let started = false;
-    input.on('readable', async () => {
-        if (started) return;
-        started = true;
-        let stop = await tles.readLines();
-        let a = tles.lines.map(tles.format.OMM);
-        console.log('end', a[0]);
-    });
+const parseTLE = (input, schema) => {
+    return new Promise((resolve, reject) => {
+        input = input instanceof Readable ? input : Readable.from(input);
+        let tles = new tle(input);
+        let started = false;
+        input.on('readable', async () => {
+            if (started) return;
+            started = true;
+            let stop = await tles.readLines();
+            let results = tles.lines.map(tles.format.OMM);
+            resolve(results);
+        });
+    })
+
 }
 
 export { numCheck, parseOMMXML, parseOMMJSON, parseOMMCSV, parseTLE };
