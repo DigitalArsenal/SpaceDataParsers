@@ -30,32 +30,6 @@ let LEGACY = {
 
   console.clear();
 
-  for (let i = 0; i < OMMS.xml.length; i++) {
-
-    for (let prop in OMMS.xml[i]) {
-      let x = OMMS.xml[i][prop];
-      let j = OMMS.json[i][prop];
-      let c = OMMS.csv[i][prop];
-      let t = LEGACY.tle[i][prop];
-      if (x === j && j === c && c === t) {
-        /*if(prop === 'EPOCH')
-         console.log(`OK:${prop}
-           XML:  ${x}
-           JSON: ${j}
-           CSV:  ${c}
-           TLE:  ${t}`);*/
-      } else {
-        /*
-        console.log(`FAIL: PROP: ${prop} ${OMMS.xml[i].NORAD_CAT_ID} ${OMMS.json[i].NORAD_CAT_ID} ${OMMS.csv[i].NORAD_CAT_ID}
-          XML:  ${x}
-          JSON: ${j}
-          CSV:  ${c}
-          TLE:  ${t}`);*/
-      }
-    }
-  }
-
-
   let { methods, wasmModule } = await sgp4module;
 
   let {
@@ -83,54 +57,68 @@ let LEGACY = {
     stackAlloc
   } = wasmModule;
 
+  for (let i = 0; i < OMMS.xml.length; i++) {
 
-  let tle = LEGACY.raw[0].slice(1);
+    let tle = LEGACY.raw[i].slice(1);
+    let tleOMM = LEGACY.tle[i];
+    let pointer = registerEntity(
+      tle[0],
+      tle[1],
+      true,
+      0,
+      0,
+      0,
+      null
+    );
+    console.log(tleOMM);
 
-  let pointer = registerEntity(
-    tle[0],
-    tle[1],
-    true,
-    0,
-    0,
-    0,
-    null
-  );
-  /*
-"string", //char *EPOCH,
-  "number", //double SEMI_MAJOR_AXIS,
-  "number", //double MEAN_MOTION,
-  "number", //double ECCENTRICITY,
-  "number", //double INCLINATION,
-  "number", //double RA_OF_ASC_NODE,
-  "number", //double ARG_OF_PERICENTER,
-  "number", //double MEAN_ANOMALY,
-  "number", //double GM,
-  "string", //signed char EPHEMERIS_TYPE,
-  "string", //char * CLASSIFICATION_TYPE,
-  "number", //uint32_t NORAD_CAT_ID,
-  "number", //uint32_t ELEMENT_SET_NO,
-  "number", //double REV_AT_EPOCH,
-  "number", //double BSTAR,
-  "number", //double MEAN_MOTION_DOT,
-  "number", //double MEAN_MOTION_DDOT,
-  "bool",   //bool visible,
-  "number", //double startmfe = 0,
-  "number", //double stopmfe = 0,
-  "number", //double deltamin = 0,
-  "number", //long * SatObjPointer = nullptr)*/
-  let _now = new Date().getTime();
-  let flatArray = new Float64Array(
-    HEAP8.buffer,
-    getValueInReferenceFrame(
-      pointer,
-      _now,
-      true, //convert in Cesium
-      true
-    ), // Choice of reference frames for velocity
-    3
-  );
-  console.log(flatArray);
-
+    let pointerOMM = registerEntityOMM(
+      tleOMM.EPOCH,
+      tleOMM.MEAN_MOTION,
+      tleOMM.ECCENTRICITY,
+      tleOMM.INCLINATION,
+      tleOMM.RA_OF_ASC_NODE,
+      tleOMM.ARG_OF_PERICENTER,
+      tleOMM.GM,
+      tleOMM.EPHEMERIS_TYPE,
+      tleOMM.CLASSIFICATION_TYPE,
+      tleOMM.NORAD_CAT_ID,
+      tleOMM.ELEMENT_SET_NO,
+      tleOMM.RA_OF_ASC_NODE,
+      tleOMM.REV_AT_EPOCH,
+      tleOMM.BSTAR,
+      tleOMM.MEAN_MOTION_DOT,
+      tleOMM.MEAN_MOTION_DDOT,
+      true,
+      0,
+      0,
+      0,
+      null
+    );
+    let _now = new Date().getTime();
+    let flatArray = new Float64Array(
+      HEAP8.buffer,
+      getValueInReferenceFrame(
+        pointer,
+        _now,
+        true, //convert in Cesium
+        true
+      ), // Choice of reference frames for velocity
+      3
+    );
+    console.log(flatArray);
+    let flatArrayOMM = new Float64Array(
+      HEAP8.buffer,
+      getValueInReferenceFrame(
+        pointerOMM,
+        _now,
+        true, //convert in Cesium
+        true
+      ), // Choice of reference frames for velocity
+      3
+    );
+    console.log(flatArrayOMM);
+  }
   /*
   var ajv = new Ajv({ unknownFormats: true }); // options can be passed, e.g. {allErrors: true}
   var validate = ajv.compile(schema);

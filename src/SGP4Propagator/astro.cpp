@@ -88,7 +88,7 @@ extern "C"
     SatObj *nSatObj = (SatObj *)SatObjPointer;
     if (!(nSatObj->visible))
       return -1;
-    printf("%lf \n", nSatObj->satrec.nm);
+
     double tt = ((epoch - nSatObj->unix_timestamp) / 1000) / 60;
     if (!storeResult)
       SGP4Funcs::sgp4_pos(nSatObj->satrec, tt, ro);
@@ -165,7 +165,6 @@ extern "C"
       double deltamin = 0,
       long *SatObjPointer = nullptr)
   {
-    printf("%s \n%s \n%d \n", line1, line2, visible);
     //https://github.com/emscripten-core/emscripten/issues/3942
     if (visible == NULL)
       visible = true;
@@ -205,7 +204,6 @@ extern "C"
   }
   void *registerEntityOMM(
       char *EPOCH,
-      double SEMI_MAJOR_AXIS,
       double MEAN_MOTION,
       double ECCENTRICITY,
       double INCLINATION,
@@ -227,7 +225,12 @@ extern "C"
       double deltamin = 0,
       long *SatObjPointer = nullptr)
   {
+    printf("%s \n", EPOCH);
+    printf("%.7f \n", MEAN_MOTION);
+    printf("%.7f \n", ECCENTRICITY);
 
+    
+    return 0;
     //https://github.com/emscripten-core/emscripten/issues/3942
     if (visible == NULL)
       visible = true;

@@ -32,7 +32,6 @@ export default wasmmodule().then(wasmModule => {
 			rval: "number",
 			params: [
 				"string", //char *EPOCH,
-				"number", //double SEMI_MAJOR_AXIS,
 				"number", //double MEAN_MOTION,
 				"number", //double ECCENTRICITY,
 				"number", //double INCLINATION,
