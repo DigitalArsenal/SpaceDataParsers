@@ -96,7 +96,8 @@ let LEGACY = {
       0,
       null
     );
-    let _now = new Date().getTime();
+    let _now = new Date(tleOMM.EPOCH).getTime();
+    console.log(_now);
     let flatArray = new Float64Array(
       HEAP8.buffer,
       getValueInReferenceFrame(
