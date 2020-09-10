@@ -2490,14 +2490,14 @@ namespace SGP4Funcs
 		satrec.revnum = REV_AT_EPOCH;
 
 #ifdef _MSC_VER
-		sscanf_s(EPOCH, "%d-%d-%dT%d:%d:%f",
+		sscanf_s(EPOCH, "%4d-%2d-%2dT%2d:%2d:%lf",
 				 &year, &mon, &day, &hr, &minute, &sec);
 #else
-		sscanf(EPOCH, "%d-%d-%dT%d:%d:%f",
+		sscanf(EPOCH, "%4d-%2d-%2dT%2d:%2d:%lf",
 			   &year, &mon, &day, &hr, &minute, &sec);
 #endif
 		jday(year, mon, day, hr, minute, sec, satrec.jdsatepoch, satrec.jdsatepochF);
-
+		printf("%s \n %4d-%2d-%2dT%2d:%2d:%lf \n", EPOCH, year, mon, day, hr, minute, sec);
 		// ---- find no, ndot, nddot ----
 		satrec.no_kozai = satrec.no_kozai / xpdotp; //* rad/min
 

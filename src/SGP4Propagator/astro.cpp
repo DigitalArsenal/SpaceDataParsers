@@ -185,7 +185,8 @@ extern "C"
     gravconsttype whichconst = wgs84;
 
     SGP4Funcs::twoline2rv(line1, line2, typerun, typeinput, opsmode, whichconst, startmfe, stopmfe, deltamin, nSatObj->satrec);
-
+    
+    /*
     printf("OBJECT_ID %s \n", nSatObj->satrec.intldesg);
     printf("MEAN_MOTION %.7f \n", nSatObj->satrec.no_kozai);
     printf("ECCENTRICITY %.7f \n", nSatObj->satrec.ecco);
@@ -200,7 +201,10 @@ extern "C"
     printf("REV_AT_EPOCH %.7f \n", nSatObj->satrec.revnum);
     printf("BSTAR %.7f \n", nSatObj->satrec.bstar);
     printf("MEAN_MOTION_DOT %.7f \n", nSatObj->satrec.ndot);
-    printf("MEAN_MOTION_DDOT %.7f \n\n =======>\n TWOLINE\n\n", nSatObj->satrec.nddot);
+    printf("MEAN_MOTION_DDOT %.7f\n", nSatObj->satrec.nddot);
+    printf("SATEPOCH %.7f \n", nSatObj->satrec.jdsatepoch);
+    printf("SATEPOCHF %.7f \n\n =======>\n TWOLINE\n\n", nSatObj->satrec.jdsatepochF);
+   */
 
     nSatObj->unix_timestamp = (nSatObj->satrec.jdsatepoch + nSatObj->satrec.jdsatepochF - 2440587.500) * 86400000;
     nSatObj->period = (2 * M_PI / nSatObj->satrec.no_kozai) * 60 * 1000;
@@ -243,23 +247,6 @@ extern "C"
       long *SatObjPointer = nullptr)
   {
 
-    printf("%s \n", EPOCH);
-    printf("%.7f \n\n====>\n", MEAN_MOTION);
-     printf("%.7f \n", ECCENTRICITY);
-    printf("%.7f \n", INCLINATION);
-    printf("%.7f \n", RA_OF_ASC_NODE);
-    printf("%.7f \n", ARG_OF_PERICENTER);
-    printf("%.7f \n", MEAN_ANOMALY);
-    printf("%.7f \n", GM);
-    printf("%c \n", EPHEMERIS_TYPE);
-    printf("%s \n", CLASSIFICATION_TYPE);
-    printf("%i \n", NORAD_CAT_ID);
-    printf("%i \n", ELEMENT_SET_NO);
-    printf("%.7f \n", REV_AT_EPOCH);
-    printf("%.7f \n", BSTAR);
-    printf("%.7f \n", MEAN_MOTION_DOT);
-    printf("%.7f \n=====>\nINPUT\n\n", MEAN_MOTION_DDOT);
-  /**/
     //https://github.com/emscripten-core/emscripten/issues/3942
     if (visible == NULL)
       visible = true;
@@ -295,9 +282,9 @@ extern "C"
                       REV_AT_EPOCH,
                       BSTAR,
                       MEAN_MOTION_DOT,
-                      MEAN_MOTION_DDOT, 
+                      MEAN_MOTION_DDOT,
                       typerun, typeinput, opsmode, whichconst, startmfe, stopmfe, deltamin, nSatObj->satrec);
-
+    /*
     printf("OBJECT_ID %s \n", nSatObj->satrec.intldesg);
     printf("MEAN_MOTION %.7f \n", nSatObj->satrec.no_kozai);
     printf("ECCENTRICITY %.7f \n", nSatObj->satrec.ecco);
@@ -313,7 +300,9 @@ extern "C"
     printf("BSTAR %.7f \n", nSatObj->satrec.bstar);
     printf("MEAN_MOTION_DOT %.7f \n", nSatObj->satrec.ndot);
     printf("MEAN_MOTION_DDOT %.7f \n", nSatObj->satrec.nddot);
-
+    printf("SATEPOCH %.7f \n", nSatObj->satrec.jdsatepoch);
+    printf("SATEPOCHF %.7f \n", nSatObj->satrec.jdsatepochF);
+   */
     nSatObj->unix_timestamp = (nSatObj->satrec.jdsatepoch + nSatObj->satrec.jdsatepochF - 2440587.500) * 86400000;
     nSatObj->period = (2 * M_PI / nSatObj->satrec.no_kozai) * 60 * 1000;
     nSatObj->satrec.period_sec = nSatObj->period / 1000;
