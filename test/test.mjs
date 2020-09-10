@@ -73,13 +73,15 @@ let LEGACY = {
     console.log(tleOMM);
 
     let pointerOMM = registerEntityOMM(
+      tleOMM.OBJECT_ID,
       tleOMM.EPOCH,
       tleOMM.MEAN_MOTION,
       tleOMM.ECCENTRICITY,
       tleOMM.INCLINATION,
       tleOMM.RA_OF_ASC_NODE,
       tleOMM.ARG_OF_PERICENTER,
-      tleOMM.GM,
+      tleOMM.MEAN_ANOMALY,
+      null,//tleOMM.GM,
       tleOMM.EPHEMERIS_TYPE,
       tleOMM.CLASSIFICATION_TYPE,
       tleOMM.NORAD_CAT_ID,

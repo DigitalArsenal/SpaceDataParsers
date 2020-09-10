@@ -31,6 +31,7 @@ export default wasmmodule().then(wasmModule => {
 		"registerEntityOMM": {
 			rval: "number",
 			params: [
+				"string", //char *OBJECT_ID,
 				"string", //char *EPOCH,
 				"number", //double MEAN_MOTION,
 				"number", //double ECCENTRICITY,

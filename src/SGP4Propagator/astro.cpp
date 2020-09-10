@@ -203,6 +203,7 @@ extern "C"
     return (long *)nSatObj;
   }
   void *registerEntityOMM(
+      char *OBJECT_ID,
       char *EPOCH,
       double MEAN_MOTION,
       double ECCENTRICITY,
@@ -225,12 +226,24 @@ extern "C"
       double deltamin = 0,
       long *SatObjPointer = nullptr)
   {
+    /* */
     printf("%s \n", EPOCH);
     printf("%.7f \n", MEAN_MOTION);
     printf("%.7f \n", ECCENTRICITY);
-
-    
-    return 0;
+    printf("%.7f \n", INCLINATION);
+    printf("%.7f \n", RA_OF_ASC_NODE);
+    printf("%.7f \n", ARG_OF_PERICENTER);
+    printf("%.7f \n", MEAN_ANOMALY);
+    printf("%.7f \n", GM);
+    printf("%c \n", EPHEMERIS_TYPE);
+    printf("%s \n", CLASSIFICATION_TYPE);
+    printf("%i \n", NORAD_CAT_ID);
+    printf("%i \n", ELEMENT_SET_NO);
+    printf("%.7f \n", REV_AT_EPOCH);
+    printf("%.7f \n", BSTAR);
+    printf("%.7f \n", MEAN_MOTION_DOT);
+    printf("%.7f \n", MEAN_MOTION_DDOT);
+ 
     //https://github.com/emscripten-core/emscripten/issues/3942
     if (visible == NULL)
       visible = true;
@@ -250,6 +263,9 @@ extern "C"
     char typerun = 'm', typeinput = 'z', opsmode = 'i';
     gravconsttype whichconst = wgs84;
 
+    nSatObj->satrec.satnum = NORAD_CAT_ID;
+    printf("%i \n", nSatObj->satrec.satnum);
+    return 0;
     //SGP4Funcs::twoline2rv(line1, line2, typerun, typeinput, opsmode, whichconst, startmfe, stopmfe, deltamin, nSatObj->satrec);
 
     nSatObj->unix_timestamp = (nSatObj->satrec.jdsatepoch + nSatObj->satrec.jdsatepochF - 2440587.500) * 86400000;
