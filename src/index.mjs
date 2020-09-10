@@ -2,6 +2,8 @@ import xml2js from 'xml2js';
 import csv from 'neat-csv';
 import { Readable } from "stream";
 import { tle, satcat, vcm } from "./parsers/legacy.mjs";
+import { OMM, OMMCOLLECTION, schema, referenceFrame, timeSystem, meanElementTheory, ephemerisType } from './class/OMM.flatbuffer.class.js';
+import flatbuffers from './lib/flatbuffers.js';
 
 const useAsNumber = ["#/definitions/ephemerisType"]; //Hack until we can formalize fields between each format
 
@@ -77,4 +79,16 @@ const parseTLE = (input, schema) => {
 
 }
 
-export { numCheck, parseOMMXML, parseOMMJSON, parseOMMCSV, parseTLE };
+const readFB = (input, schema) => {
+    let schemaKeys = Object.keys(schema.definitions.OMM.properties);
+    let buf = new flatbuffers.ByteBuffer(input);
+    let SCOLLECTION = OMMCOLLECTION.getRootAsOMMCOLLECTION(buf);
+    for (let i = 0; i < SCOLLECTION.RECORDSLength(); i++) {
+        schemaKeys.forEach(key => {
+            if (typeof SCOLLECTION.RECORDS(i)[key] === "function")
+                Object.defineProperty(SCOLLECTION.RECORDS(i), key, { get: SCOLLECTION.RECORDS(i)[key] });
+        });
+    }
+    return SCOLLECTION;
+}
+export { numCheck, parseOMMXML, parseOMMJSON, parseOMMCSV, parseTLE, readFB };

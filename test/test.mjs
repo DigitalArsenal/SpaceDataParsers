@@ -1,5 +1,4 @@
-import { numCheck, parseOMMXML, parseOMMJSON, parseOMMCSV, parseTLE } from "../src/index.mjs";
-import flatbuffers from './flatbuffers.js';
+import { numCheck, parseOMMXML, parseOMMJSON, parseOMMCSV, parseTLE, readFB } from "../src/index.mjs";
 import { OMM, OMMCOLLECTION, schema, referenceFrame, timeSystem, meanElementTheory, ephemerisType } from '../src/class/OMM.flatbuffer.class.js';
 import btoa from 'btoa';
 import { writeFileSync, readFileSync, createReadStream, fstat } from 'fs';
@@ -12,7 +11,8 @@ import sgp4module from '../src/SGP4Propagator/sgp4propagator.mjs'
 let OMMS = {
   xml: [],
   csv: [],
-  json: []
+  json: [],
+  fb: null
 };
 
 let LEGACY = {
@@ -21,10 +21,11 @@ let LEGACY = {
 };
 
 (async function () {
-  OMMS.xml = await parseOMMXML(readFileSync('./test/data/celestrak/omm.xml'), schema);
-  OMMS.json = parseOMMJSON(readFileSync('./test/data/celestrak/omm.json', { encoding: 'utf8' }), schema);
-  OMMS.csv = await parseOMMCSV(readFileSync('./test/data/celestrak/omm.csv', { encoding: 'utf8' }), schema);
-  let { results, raw } = await parseTLE(createReadStream('./test/data/celestrak/3le.txt', { encoding: 'utf8' }), schema);
+  OMMS.xml = await parseOMMXML(readFileSync('./test/data/spacedatastandards/omm.xml'), schema);
+  OMMS.json = parseOMMJSON(readFileSync('./test/data/spacedatastandards/omm.json', { encoding: 'utf8' }), schema);
+  OMMS.csv = await parseOMMCSV(readFileSync('./test/data/spacedatastandards/omm.csv', { encoding: 'utf8' }), schema);
+  OMMS.fb = readFB(readFileSync('./test/data/spacedatastandards/omm.fbs'), schema);
+  let { results, raw } = await parseTLE(createReadStream('./test/data/spacedatastandards/3le.txt', { encoding: 'utf8' }), schema);
   LEGACY.tle = results;
   LEGACY.raw = raw;
 
@@ -117,15 +118,17 @@ let LEGACY = {
       ), // Choice of reference frames for velocity
       3
     );
-    for (let i = 0; i < flatArray.length; i++) {
-      if (flatArray[i] !== flatArrayOMM[i]) {
+    console.log(flatArray, flatArrayOMM);
+    for (let ii = 0; ii < flatArray.length; ii++) {
+      if (flatArray[ii] !== flatArrayOMM[ii] || !flatArray[ii] || flatArrayOMM[ii]) {
+
         console.log(`
         
-Error converting:
+Error propagating:
 
 ${tle.join("\n")}
 
-to
+------------------------
 
 ${JSON.stringify(tleOMM, null, 4)}
 ${new Array(50).join("=")}
@@ -135,21 +138,6 @@ ${new Array(50).join("=")}
     }
 
   }
-  /*
-  var ajv = new Ajv({ unknownFormats: true }); // options can be passed, e.g. {allErrors: true}
-  var validate = ajv.compile(schema);
-  var valid = validate(data);
-  if (!valid) console.log(validate.errors);
-  */
-  let schemaKeys = Object.keys(schema.definitions.OMM.properties);
 
-  let buf = new flatbuffers.ByteBuffer(readFileSync('./test/data/spacedatastandards/omm.fbs'));
-  // Get access to the root:
-  let SCOLLECTION = OMMCOLLECTION.getRootAsOMMCOLLECTION(buf);
-  for (let i = 0; i < SCOLLECTION.RECORDSLength(); i++) {
-    schemaKeys.forEach(key => {
-      console.log(key, ":", SCOLLECTION.RECORDS(i)[key]());
-    });
-  }
 
 })()
