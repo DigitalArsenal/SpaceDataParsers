@@ -28,8 +28,6 @@ let LEGACY = {
   LEGACY.tle = results;
   LEGACY.raw = raw;
 
-  console.clear();
-
   let { methods, wasmModule } = await sgp4module;
 
   let {
@@ -57,13 +55,11 @@ let LEGACY = {
     stackAlloc
   } = wasmModule;
 
-  for (let i = 0; i < 1; i++) {
+  for (let i = 0; i < LEGACY.tle.length; i++) {
 
 
     let tle = LEGACY.raw[i].slice(1);
     let tleOMM = LEGACY.tle[i];
-
-    console.log(tle, tleOMM);
 
     let pointer = registerEntity(
       tle[0],
@@ -74,7 +70,7 @@ let LEGACY = {
       0,
       null
     );
-   
+
     let pointerOMM = registerEntityOMM(
       tleOMM.OBJECT_ID,
       tleOMM.EPOCH,
@@ -110,7 +106,7 @@ let LEGACY = {
       ), // Choice of reference frames for velocity
       3
     );
-    console.log(flatArray);
+
     let flatArrayOMM = new Float64Array(
       HEAP8.buffer,
       getValueInReferenceFrame(
@@ -121,7 +117,23 @@ let LEGACY = {
       ), // Choice of reference frames for velocity
       3
     );
-    console.log(flatArrayOMM);
+    for (let i = 0; i < flatArray.length; i++) {
+      if (flatArray[i] !== flatArrayOMM[i]) {
+        console.log(`
+        
+Error converting:
+
+${tle.join("\n")}
+
+to
+
+${JSON.stringify(tleOMM, null, 4)}
+${new Array(50).join("=")}
+`
+        );
+      }
+    }
+
   }
   /*
   var ajv = new Ajv({ unknownFormats: true }); // options can be passed, e.g. {allErrors: true}
@@ -136,7 +148,7 @@ let LEGACY = {
   let SCOLLECTION = OMMCOLLECTION.getRootAsOMMCOLLECTION(buf);
   for (let i = 0; i < SCOLLECTION.RECORDSLength(); i++) {
     schemaKeys.forEach(key => {
-      //console.log(key, ":", SCOLLECTION.RECORDS(i)[key]());
+      console.log(key, ":", SCOLLECTION.RECORDS(i)[key]());
     });
   }
 
