@@ -53,7 +53,7 @@
 #include <string.h>
 #include <iostream>
 
-#define SGP4Version  "SGP4 Version 2016-03-09"
+#define SGP4Version "SGP4 Version 2016-03-09"
 
 // -------------------------- structure declarations ----------------------------
 typedef enum
@@ -113,268 +113,254 @@ typedef struct elsetrec
 */
 typedef char char_11[11];
 
-#define SATREC_FIELDS \
-  SATREC(long int, satnum, "%li") \
-  SATREC(int, epochyr, "%i") \
-  SATREC(int, epochtynumrev, "%i") \
-  SATREC(int, error, "%i") \
-  SATREC(char, operationmode, "%c") \
-  SATREC(char, init, "%c") \
-  SATREC(char, method, "%c") \
-  SATREC(int, isimp, "%i") \
-  SATREC(double, aycof, "%lf") \
-  SATREC(double, con41, "%lf") \
-  SATREC(double, cc1, "%lf") \
-  SATREC(double, cc4, "%lf") \
-  SATREC(double, cc5, "%lf") \
-  SATREC(double, d2, "%lf") \
-  SATREC(double, d3, "%lf") \
-  SATREC(double, d4, "%lf") \
-  SATREC(double, delmo, "%lf") \
-  SATREC(double, eta, "%lf") \
-  SATREC(double, argpdot, "%lf") \
-  SATREC(double, omgcof, "%lf") \
-  SATREC(double, sinmao, "%lf") \
-  SATREC(double, t, "%lf") \
-  SATREC(double, t2cof, "%lf") \
-  SATREC(double, t3cof, "%lf") \
-  SATREC(double, t4cof, "%lf") \
-  SATREC(double, t5cof, "%lf") \
-  SATREC(double, x1mth2, "%lf") \
-  SATREC(double, x7thm1, "%lf") \
-  SATREC(double, mdot, "%lf") \
-  SATREC(double, nodedot, "%lf") \
-  SATREC(double, xlcof, "%lf") \
-  SATREC(double, xmcof, "%lf") \
-  SATREC(double, nodecf, "%lf") \
-  SATREC(int, irez, "%i") \
-  SATREC(double, d2201, "%lf") \
-  SATREC(double, d2211, "%lf") \
-  SATREC(double, d3210, "%lf") \
-  SATREC(double, d3222, "%lf") \
-  SATREC(double, d4410, "%lf") \
-  SATREC(double, d4422, "%lf") \
-  SATREC(double, d5220, "%lf") \
-  SATREC(double, d5232, "%lf") \
-  SATREC(double, d5421, "%lf") \
-  SATREC(double, d5433, "%lf") \
-  SATREC(double, dedt, "%lf") \
-  SATREC(double, del1, "%lf") \
-  SATREC(double, del2, "%lf") \
-  SATREC(double, del3, "%lf") \
-  SATREC(double, didt, "%lf") \
-  SATREC(double, dmdt, "%lf") \
-  SATREC(double, dnodt, "%lf") \
-  SATREC(double, domdt, "%lf") \
-  SATREC(double, e3, "%lf") \
-  SATREC(double, ee2, "%lf") \
-  SATREC(double, peo, "%lf") \
-  SATREC(double, pgho, "%lf") \
-  SATREC(double, pho, "%lf") \
-  SATREC(double, pinco, "%lf") \
-  SATREC(double, plo, "%lf") \
-  SATREC(double, se2, "%lf") \
-  SATREC(double, se3, "%lf") \
-  SATREC(double, sgh2, "%lf") \
-  SATREC(double, sgh3, "%lf") \
-  SATREC(double, sgh4, "%lf") \
-  SATREC(double, sh2, "%lf") \
-  SATREC(double, sh3, "%lf") \
-  SATREC(double, si2, "%lf") \
-  SATREC(double, si3, "%lf") \
-  SATREC(double, sl2, "%lf") \
-  SATREC(double, sl3, "%lf") \
-  SATREC(double, sl4, "%lf") \
-  SATREC(double, gsto, "%lf") \
-  SATREC(double, xfact, "%lf") \
-  SATREC(double, xgh2, "%lf") \
-  SATREC(double, xgh3, "%lf") \
-  SATREC(double, xgh4, "%lf") \
-  SATREC(double, xh2, "%lf") \
-  SATREC(double, xh3, "%lf") \
-  SATREC(double, xi2, "%lf") \
-  SATREC(double, xi3, "%lf") \
-  SATREC(double, xl2, "%lf") \
-  SATREC(double, xl3, "%lf") \
-  SATREC(double, xl4, "%lf") \
-  SATREC(double, xlamo, "%lf") \
-  SATREC(double, zmol, "%lf") \
-  SATREC(double, zmos, "%lf") \
-  SATREC(double, atime, "%lf") \
-  SATREC(double, xli, "%lf") \
-  SATREC(double, xni, "%lf") \
-  SATREC(double, a, "%lf") \
-  SATREC(double, altp, "%lf") \
-  SATREC(double, alta, "%lf") \
-  SATREC(double, epochdays, "%lf") \
-  SATREC(double, jdsatepoch, "%lf") \
-  SATREC(double, jdsatepochF, "%lf") \
-  SATREC(double, nddot, "%lf") \
-  SATREC(double, ndot, "%lf") \
-  SATREC(double, bstar, "%lf") \
-  SATREC(double, rcse, "%lf") \
-  SATREC(double, inclo, "%lf") \
-  SATREC(double, nodeo, "%lf") \
-  SATREC(double, ecco, "%lf") \
-  SATREC(double, argpo, "%lf") \
-  SATREC(double, mo, "%lf") \
-  SATREC(double, no_kozai, "%lf") \
-  SATREC(char, classification, "%c") \
-  SATREC(char_11, intldesg, "%10s") \
-  SATREC(int, ephtype, "%i") \
-  SATREC(long, elnum, "%li") \
-  SATREC(long, revnum, "%li") \
-  SATREC(double, no_unkozai, "%lf") \
-  SATREC(double, am, "%lf") \
-  SATREC(double, em, "%lf") \
-  SATREC(double, im, "%lf") \
-  SATREC(double, Om, "%lf") \
-  SATREC(double, om, "%lf") \
-  SATREC(double, mm, "%lf") \
-  SATREC(double, nm, "%lf") \
-  SATREC(double, tumin, "%lf") \
-  SATREC(double, mu, "%lf") \
-  SATREC(double, radiusearthkm, "%lf") \
-  SATREC(double, xke, "%lf") \
-  SATREC(double, j2, "%lf") \
-  SATREC(double, j3, "%lf") \
-  SATREC(double, j4, "%lf") \
-  SATREC(double, j3oj2, "%lf") \
-  SATREC(long, dia_mm, "%li") \
-  SATREC(double, period_sec, "%lf") \
-  SATREC(unsigned char, active, "%u") \
+#define SATREC_FIELDS                      \
+  SATREC(long int, satnum, "%li")          \
+  SATREC(int, epochyr, "%i")               \
+  SATREC(int, epochtynumrev, "%i")         \
+  SATREC(int, error, "%i")                 \
+  SATREC(char, operationmode, "%c")        \
+  SATREC(char, init, "%c")                 \
+  SATREC(char, method, "%c")               \
+  SATREC(int, isimp, "%i")                 \
+  SATREC(double, aycof, "%lf")             \
+  SATREC(double, con41, "%lf")             \
+  SATREC(double, cc1, "%lf")               \
+  SATREC(double, cc4, "%lf")               \
+  SATREC(double, cc5, "%lf")               \
+  SATREC(double, d2, "%lf")                \
+  SATREC(double, d3, "%lf")                \
+  SATREC(double, d4, "%lf")                \
+  SATREC(double, delmo, "%lf")             \
+  SATREC(double, eta, "%lf")               \
+  SATREC(double, argpdot, "%lf")           \
+  SATREC(double, omgcof, "%lf")            \
+  SATREC(double, sinmao, "%lf")            \
+  SATREC(double, t, "%lf")                 \
+  SATREC(double, t2cof, "%lf")             \
+  SATREC(double, t3cof, "%lf")             \
+  SATREC(double, t4cof, "%lf")             \
+  SATREC(double, t5cof, "%lf")             \
+  SATREC(double, x1mth2, "%lf")            \
+  SATREC(double, x7thm1, "%lf")            \
+  SATREC(double, mdot, "%lf")              \
+  SATREC(double, nodedot, "%lf")           \
+  SATREC(double, xlcof, "%lf")             \
+  SATREC(double, xmcof, "%lf")             \
+  SATREC(double, nodecf, "%lf")            \
+  SATREC(int, irez, "%i")                  \
+  SATREC(double, d2201, "%lf")             \
+  SATREC(double, d2211, "%lf")             \
+  SATREC(double, d3210, "%lf")             \
+  SATREC(double, d3222, "%lf")             \
+  SATREC(double, d4410, "%lf")             \
+  SATREC(double, d4422, "%lf")             \
+  SATREC(double, d5220, "%lf")             \
+  SATREC(double, d5232, "%lf")             \
+  SATREC(double, d5421, "%lf")             \
+  SATREC(double, d5433, "%lf")             \
+  SATREC(double, dedt, "%lf")              \
+  SATREC(double, del1, "%lf")              \
+  SATREC(double, del2, "%lf")              \
+  SATREC(double, del3, "%lf")              \
+  SATREC(double, didt, "%lf")              \
+  SATREC(double, dmdt, "%lf")              \
+  SATREC(double, dnodt, "%lf")             \
+  SATREC(double, domdt, "%lf")             \
+  SATREC(double, e3, "%lf")                \
+  SATREC(double, ee2, "%lf")               \
+  SATREC(double, peo, "%lf")               \
+  SATREC(double, pgho, "%lf")              \
+  SATREC(double, pho, "%lf")               \
+  SATREC(double, pinco, "%lf")             \
+  SATREC(double, plo, "%lf")               \
+  SATREC(double, se2, "%lf")               \
+  SATREC(double, se3, "%lf")               \
+  SATREC(double, sgh2, "%lf")              \
+  SATREC(double, sgh3, "%lf")              \
+  SATREC(double, sgh4, "%lf")              \
+  SATREC(double, sh2, "%lf")               \
+  SATREC(double, sh3, "%lf")               \
+  SATREC(double, si2, "%lf")               \
+  SATREC(double, si3, "%lf")               \
+  SATREC(double, sl2, "%lf")               \
+  SATREC(double, sl3, "%lf")               \
+  SATREC(double, sl4, "%lf")               \
+  SATREC(double, gsto, "%lf")              \
+  SATREC(double, xfact, "%lf")             \
+  SATREC(double, xgh2, "%lf")              \
+  SATREC(double, xgh3, "%lf")              \
+  SATREC(double, xgh4, "%lf")              \
+  SATREC(double, xh2, "%lf")               \
+  SATREC(double, xh3, "%lf")               \
+  SATREC(double, xi2, "%lf")               \
+  SATREC(double, xi3, "%lf")               \
+  SATREC(double, xl2, "%lf")               \
+  SATREC(double, xl3, "%lf")               \
+  SATREC(double, xl4, "%lf")               \
+  SATREC(double, xlamo, "%lf")             \
+  SATREC(double, zmol, "%lf")              \
+  SATREC(double, zmos, "%lf")              \
+  SATREC(double, atime, "%lf")             \
+  SATREC(double, xli, "%lf")               \
+  SATREC(double, xni, "%lf")               \
+  SATREC(double, a, "%lf")                 \
+  SATREC(double, altp, "%lf")              \
+  SATREC(double, alta, "%lf")              \
+  SATREC(double, epochdays, "%lf")         \
+  SATREC(double, jdsatepoch, "%lf")        \
+  SATREC(double, jdsatepochF, "%lf")       \
+  SATREC(double, nddot, "%lf")             \
+  SATREC(double, ndot, "%lf")              \
+  SATREC(double, bstar, "%lf")             \
+  SATREC(double, rcse, "%lf")              \
+  SATREC(double, inclo, "%lf")             \
+  SATREC(double, nodeo, "%lf")             \
+  SATREC(double, ecco, "%lf")              \
+  SATREC(double, argpo, "%lf")             \
+  SATREC(double, mo, "%lf")                \
+  SATREC(double, no_kozai, "%lf")          \
+  SATREC(char, classification, "%c")       \
+  SATREC(char_11, intldesg, "%10s")        \
+  SATREC(int, ephtype, "%i")               \
+  SATREC(long, elnum, "%li")               \
+  SATREC(long, revnum, "%li")              \
+  SATREC(double, no_unkozai, "%lf")        \
+  SATREC(double, am, "%lf")                \
+  SATREC(double, em, "%lf")                \
+  SATREC(double, im, "%lf")                \
+  SATREC(double, Om, "%lf")                \
+  SATREC(double, om, "%lf")                \
+  SATREC(double, mm, "%lf")                \
+  SATREC(double, nm, "%lf")                \
+  SATREC(double, tumin, "%lf")             \
+  SATREC(double, mu, "%lf")                \
+  SATREC(double, radiusearthkm, "%lf")     \
+  SATREC(double, xke, "%lf")               \
+  SATREC(double, j2, "%lf")                \
+  SATREC(double, j3, "%lf")                \
+  SATREC(double, j4, "%lf")                \
+  SATREC(double, j3oj2, "%lf")             \
+  SATREC(long, dia_mm, "%li")              \
+  SATREC(double, period_sec, "%lf")        \
+  SATREC(unsigned char, active, "%u")      \
   SATREC(unsigned char, not_orbital, "%u") \
   SATREC(double, rcs_m2, "%lf")
 
-
-typedef struct elsetrec {
+typedef struct elsetrec
+{
 #define SATREC(type, name, format) type name;
   SATREC_FIELDS
 #undef SATREC
 } elsetrec;
 
-
-namespace SGP4Funcs 
+namespace SGP4Funcs
 {
 
-	//	public class SGP4Class
-	//	{
+  //	public class SGP4Class
+  //	{
 
-	bool sgp4init
-		(
-		gravconsttype whichconst, char opsmode, const int satn, const double epoch,
-		const double xbstar, const double xndot, const double xnddot, const double xecco, const double xargpo,
-		const double xinclo, const double xmo, const double xno,
-		const double xnodeo, elsetrec& satrec
-		);
+  bool sgp4init(
+      gravconsttype whichconst, char opsmode, const int satn, const double epoch,
+      const double xbstar, const double xndot, const double xnddot, const double xecco, const double xargpo,
+      const double xinclo, const double xmo, const double xno,
+      const double xnodeo, elsetrec &satrec);
 
-	bool sgp4
-		(
-		// no longer need gravconsttype whichconst, all data contained in satrec
-		elsetrec& satrec, double tsince,
-		double r[3], double v[3]
-		);
+  bool sgp4(
+      // no longer need gravconsttype whichconst, all data contained in satrec
+      elsetrec &satrec, double tsince,
+      double r[3], double v[3]);
 
-        bool sgp4_pos
-                (
-                // no longer need gravconsttype whichconst, all data contained in satrec
-                elsetrec& satrec, double tsince,
-                double r[3]
-                );
+  bool sgp4_pos(
+      // no longer need gravconsttype whichconst, all data contained in satrec
+      elsetrec &satrec, double tsince,
+      double r[3]);
 
-	void getgravconst
-		(
-		gravconsttype whichconst,
-		double& tumin,
-		double& mu,
-		double& radiusearthkm,
-		double& xke,
-		double& j2,
-		double& j3,
-		double& j4,
-		double& j3oj2
-		);
+  void getgravconst(
+      gravconsttype whichconst,
+      double &tumin,
+      double &mu,
+      double &radiusearthkm,
+      double &xke,
+      double &j2,
+      double &j3,
+      double &j4,
+      double &j3oj2);
 
-	// older sgp4io methods
-	void twoline2rv
-		(
-		char      longstr1[130], char longstr2[130],
-		char      typerun, char typeinput, char opsmode,
-		gravconsttype       whichconst,
-		double& startmfe, double& stopmfe, double& deltamin,
-		elsetrec& satrec
-		);
+  // older sgp4io methods
+  void twoline2rv(
+      char longstr1[130], char longstr2[130],
+      char typerun, char typeinput, char opsmode,
+      gravconsttype whichconst,
+      double &startmfe, double &stopmfe, double &deltamin,
+      elsetrec &satrec);
+  void omm2rv(
+      char *OBJECT_ID,
+      char *EPOCH,
+      double MEAN_MOTION,
+      double ECCENTRICITY,
+      double INCLINATION,
+      double RA_OF_ASC_NODE,
+      double ARG_OF_PERICENTER,
+      double MEAN_ANOMALY,
+      double GM,
+      signed char EPHEMERIS_TYPE,
+      char *CLASSIFICATION_TYPE,
+      uint32_t NORAD_CAT_ID,
+      uint32_t ELEMENT_SET_NO,
+      double REV_AT_EPOCH,
+      double BSTAR,
+      double MEAN_MOTION_DOT,
+      double MEAN_MOTION_DDOT,
+      char typerun, char typeinput, char opsmode,
+      gravconsttype whichconst,
+      double &startmfe, double &stopmfe, double &deltamin,
+      elsetrec &satrec);
 
-	// older sgp4ext methods
-	double  gstime
-		(
-		double jdut1
-		);
+  // older sgp4ext methods
+  double gstime(
+      double jdut1);
 
-	double  sgn
-		(
-		double x
-		);
+  double sgn(
+      double x);
 
-	double  mag
-		(
-		double x[3]
-		);
+  double mag(
+      double x[3]);
 
-	void    cross
-		(
-		double vec1[3], double vec2[3], double outvec[3]
-		);
+  void cross(
+      double vec1[3], double vec2[3], double outvec[3]);
 
-	double  dot
-		(
-		double x[3], double y[3]
-		);
+  double dot(
+      double x[3], double y[3]);
 
-	double  angle
-		(
-		double vec1[3],
-		double vec2[3]
-		);
+  double angle(
+      double vec1[3],
+      double vec2[3]);
 
-	void    newtonnu
-		(
-		double ecc, double nu,
-		double& e0, double& m
-		);
+  void newtonnu(
+      double ecc, double nu,
+      double &e0, double &m);
 
-	double  asinh
-		(
-		double xval
-		);
+  double asinh(
+      double xval);
 
-	void    rv2coe
-		(
-		double r[3], double v[3], const double mu,
-		double& p, double& a, double& ecc, double& incl, double& omega, double& argp,
-		double& nu, double& m, double& arglat, double& truelon, double& lonper
-		);
+  void rv2coe(
+      double r[3], double v[3], const double mu,
+      double &p, double &a, double &ecc, double &incl, double &omega, double &argp,
+      double &nu, double &m, double &arglat, double &truelon, double &lonper);
 
-	void    jday
-		(
-		int year, int mon, int day, int hr, int minute, double sec,
-		double& jd, double& jdFrac
-		);
+  void jday(
+      int year, int mon, int day, int hr, int minute, double sec,
+      double &jd, double &jdFrac);
 
-	void    days2mdhms
-		(
-		int year, double days,
-		int& mon, int& day, int& hr, int& minute, double& sec
-		);
+  void days2mdhms(
+      int year, double days,
+      int &mon, int &day, int &hr, int &minute, double &sec);
 
-	void    invjday
-		(
-		double jd, double jdFrac,
-		int& year, int& mon, int& day,
-		int& hr, int& minute, double& sec
-		);
+  void invjday(
+      double jd, double jdFrac,
+      int &year, int &mon, int &day,
+      int &hr, int &minute, double &sec);
 
-
-}  // namespace
+} // namespace SGP4Funcs
 
 #endif

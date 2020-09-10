@@ -2471,7 +2471,7 @@ namespace SGP4Funcs
 		int mon, day, hr, minute, nexp, ibexp;
 
 		satrec.error = 0;
-		
+
 		// ---- OMM Parameters ----
 		satrec.satnum = NORAD_CAT_ID;
 		satrec.classification = *CLASSIFICATION_TYPE;
@@ -2489,10 +2489,17 @@ namespace SGP4Funcs
 		satrec.no_kozai = MEAN_MOTION;
 		satrec.revnum = REV_AT_EPOCH;
 
+#ifdef _MSC_VER
+		sscanf_s(EPOCH, "%d-%d-%dT%d:%d:%f",
+				 &year, &mon, &day, &hr, &minute, &sec);
+#else
+		sscanf(EPOCH, "%d-%d-%dT%d:%d:%f",
+			   &year, &mon, &day, &hr, &minute, &sec);
+#endif
+		jday(year, mon, day, hr, minute, sec, satrec.jdsatepoch, satrec.jdsatepochF);
+
 		// ---- find no, ndot, nddot ----
 		satrec.no_kozai = satrec.no_kozai / xpdotp; //* rad/min
-		satrec.nddot = satrec.nddot * pow(10.0, nexp);
-		satrec.bstar = satrec.bstar * pow(10.0, ibexp);
 
 		// ---- convert to sgp4 units ----
 		// satrec.a    = pow( satrec.no_kozai*tumin , (-2.0/3.0) );
@@ -2504,26 +2511,6 @@ namespace SGP4Funcs
 		satrec.nodeo = satrec.nodeo * deg2rad;
 		satrec.argpo = satrec.argpo * deg2rad;
 		satrec.mo = satrec.mo * deg2rad;
-
-		// sgp4fix not needed here
-		// satrec.alta = satrec.a*(1.0 + satrec.ecco) - 1.0;
-		// satrec.altp = satrec.a*(1.0 - satrec.ecco) - 1.0;
-
-		// ----------------------------------------------------------------
-		// find sgp4epoch time of element set
-		// remember that sgp4 uses units of days from 0 jan 1950 (sgp4epoch)
-		// and minutes from the epoch (time)
-		// ----------------------------------------------------------------
-
-		// ---------------- temp fix for years from 1957-2056 -------------------
-		// --------- correct fix will occur when year is 4-digit in tle ---------
-		if (satrec.epochyr < 57)
-			year = satrec.epochyr + 2000;
-		else
-			year = satrec.epochyr + 1900;
-
-		days2mdhms(year, satrec.epochdays, mon, day, hr, minute, sec);
-		jday(year, mon, day, hr, minute, sec, satrec.jdsatepoch, satrec.jdsatepochF);
 
 		// ---- input start stop times manually
 		if ((typerun != 'v') && (typerun != 'c'))
@@ -2625,7 +2612,7 @@ namespace SGP4Funcs
 		sgp4init(whichconst, opsmode, satrec.satnum, (satrec.jdsatepoch + satrec.jdsatepochF) - 2433281.5, satrec.bstar,
 				 satrec.ndot, satrec.nddot, satrec.ecco, satrec.argpo, satrec.inclo, satrec.mo, satrec.no_kozai,
 				 satrec.nodeo, satrec);
-	} // twoline2rv
+	} // omm2rv
 
 	// older sgp4ext methods
 	/* -----------------------------------------------------------------------------

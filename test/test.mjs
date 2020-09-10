@@ -57,10 +57,14 @@ let LEGACY = {
     stackAlloc
   } = wasmModule;
 
-  for (let i = 0; i < OMMS.xml.length; i++) {
+  for (let i = 0; i < 1; i++) {
+
 
     let tle = LEGACY.raw[i].slice(1);
     let tleOMM = LEGACY.tle[i];
+
+    console.log(tle, tleOMM);
+
     let pointer = registerEntity(
       tle[0],
       tle[1],
@@ -70,8 +74,7 @@ let LEGACY = {
       0,
       null
     );
-    console.log(tleOMM);
-
+   
     let pointerOMM = registerEntityOMM(
       tleOMM.OBJECT_ID,
       tleOMM.EPOCH,
@@ -86,7 +89,6 @@ let LEGACY = {
       tleOMM.CLASSIFICATION_TYPE,
       tleOMM.NORAD_CAT_ID,
       tleOMM.ELEMENT_SET_NO,
-      tleOMM.RA_OF_ASC_NODE,
       tleOMM.REV_AT_EPOCH,
       tleOMM.BSTAR,
       tleOMM.MEAN_MOTION_DOT,
