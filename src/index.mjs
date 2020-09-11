@@ -86,11 +86,12 @@ const readFB = (input, schema) => {
     let results = [];
     for (let i = 0; i < SCOLLECTION.RECORDSLength(); i++) {
         let result = SCOLLECTION.RECORDS(i);
-        schemaKeys.forEach(key => {
-            if (typeof SCOLLECTION.RECORDS(i)[key] === "function") {
-                Object.defineProperty(result, key, { get() { return SCOLLECTION.RECORDS(i)[key]() } });
+        for (let key in schemaKeys) {
+            let sK = schemaKeys[key];
+            if (typeof SCOLLECTION.RECORDS(i)[sK] === "function") {
+                Object.defineProperty(result, sK, { get() { return SCOLLECTION.RECORDS(i)[sK]() } });
             }
-        });
+        };
         results.push(result);
     }
     return results;
