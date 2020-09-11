@@ -6,26 +6,25 @@
     <body>
       <segment>
         <metadata>
-          <OBJECT_NAME>STARLINK-1258</OBJECT_NAME>
-          <OBJECT_ID>2020-019X</OBJECT_ID>
+          <OBJECT_ID>1958-002B</OBJECT_ID>
         </metadata>
         <data>
           <meanElements>
-            <EPOCH>2020-04-10T14:00:01.999</EPOCH>
-            <ECCENTRICITY>0.0001059</ECCENTRICITY>
-            <INCLINATION>52.999</INCLINATION>
-            <RA_OF_ASC_NODE>141.3693</RA_OF_ASC_NODE>
-            <ARG_OF_PERICENTER>71.6583</ARG_OF_PERICENTER>
-            <MEAN_ANOMALY>1.3915</MEAN_ANOMALY>
+            <EPOCH>2020-05-05T19:33:04.042368</EPOCH>
+            <ECCENTRICITY>0.1847113</ECCENTRICITY>
+            <INCLINATION>34.2494</INCLINATION>
+            <RA_OF_ASC_NODE>359.6658</RA_OF_ASC_NODE>
+            <ARG_OF_PERICENTER>160.4367</ARG_OF_PERICENTER>
+            <MEAN_ANOMALY>207.7732</MEAN_ANOMALY>
           </meanElements>
           <tleParameters>
             <EPHEMERIS_TYPE>0</EPHEMERIS_TYPE>
             <CLASSIFICATION_TYPE>U</CLASSIFICATION_TYPE>
-            <NORAD_CAT_ID>45381</NORAD_CAT_ID>
+            <NORAD_CAT_ID>5</NORAD_CAT_ID>
             <ELEMENT_SET_NO>999</ELEMENT_SET_NO>
-            <REV_AT_EPOCH>428</REV_AT_EPOCH>
-            <BSTAR>0.00049097</BSTAR>
-            <MEAN_MOTION_DOT>0.00044604</MEAN_MOTION_DOT>
+            <REV_AT_EPOCH>20062</REV_AT_EPOCH>
+            <BSTAR>0.000231</BSTAR>
+            <MEAN_MOTION_DOT>0.00000185</MEAN_MOTION_DOT>
           </tleParameters>
         </data>
       </segment>
@@ -37,26 +36,25 @@
     <body>
       <segment>
         <metadata>
-          <OBJECT_NAME>STARLINK-1264</OBJECT_NAME>
-          <OBJECT_ID>2020-019Y</OBJECT_ID>
+          <OBJECT_ID>1959-001A</OBJECT_ID>
         </metadata>
         <data>
           <meanElements>
-            <EPOCH>2020-04-10T14:00:01.999</EPOCH>
-            <ECCENTRICITY>0.0000942</ECCENTRICITY>
-            <INCLINATION>52.9991</INCLINATION>
-            <RA_OF_ASC_NODE>141.3356</RA_OF_ASC_NODE>
-            <ARG_OF_PERICENTER>72.0456</ARG_OF_PERICENTER>
-            <MEAN_ANOMALY>21.404</MEAN_ANOMALY>
+            <EPOCH>2020-05-05T17:07:41.757600</EPOCH>
+            <ECCENTRICITY>0.1468098</ECCENTRICITY>
+            <INCLINATION>32.8669</INCLINATION>
+            <RA_OF_ASC_NODE>215.871</RA_OF_ASC_NODE>
+            <ARG_OF_PERICENTER>10.182</ARG_OF_PERICENTER>
+            <MEAN_ANOMALY>352.5413</MEAN_ANOMALY>
           </meanElements>
           <tleParameters>
             <EPHEMERIS_TYPE>0</EPHEMERIS_TYPE>
             <CLASSIFICATION_TYPE>U</CLASSIFICATION_TYPE>
-            <NORAD_CAT_ID>45382</NORAD_CAT_ID>
+            <NORAD_CAT_ID>11</NORAD_CAT_ID>
             <ELEMENT_SET_NO>999</ELEMENT_SET_NO>
-            <REV_AT_EPOCH>410</REV_AT_EPOCH>
-            <BSTAR>0.00048995</BSTAR>
-            <MEAN_MOTION_DOT>0.0004448</MEAN_MOTION_DOT>
+            <REV_AT_EPOCH>26990</REV_AT_EPOCH>
+            <BSTAR>0.000017255</BSTAR>
+            <MEAN_MOTION_DOT>0.00000033</MEAN_MOTION_DOT>
           </tleParameters>
         </data>
       </segment>
@@ -68,26 +66,25 @@
     <body>
       <segment>
         <metadata>
-          <OBJECT_NAME>STARLINK-1266</OBJECT_NAME>
-          <OBJECT_ID>2020-019Z</OBJECT_ID>
+          <OBJECT_ID>1959-001B</OBJECT_ID>
         </metadata>
         <data>
           <meanElements>
-            <EPOCH>2020-04-09T22:00:00.999</EPOCH>
-            <ECCENTRICITY>0.0000921</ECCENTRICITY>
-            <INCLINATION>52.9994</INCLINATION>
-            <RA_OF_ASC_NODE>144.6189</RA_OF_ASC_NODE>
-            <ARG_OF_PERICENTER>85.3449</ARG_OF_PERICENTER>
-            <MEAN_ANOMALY>201.7294</MEAN_ANOMALY>
+            <EPOCH>2020-05-05T10:50:27.171168</EPOCH>
+            <ECCENTRICITY>0.1665487</ECCENTRICITY>
+            <INCLINATION>32.9023</INCLINATION>
+            <RA_OF_ASC_NODE>141.3677</RA_OF_ASC_NODE>
+            <ARG_OF_PERICENTER>209.8665</ARG_OF_PERICENTER>
+            <MEAN_ANOMALY>139.572</MEAN_ANOMALY>
           </meanElements>
           <tleParameters>
             <EPHEMERIS_TYPE>0</EPHEMERIS_TYPE>
             <CLASSIFICATION_TYPE>U</CLASSIFICATION_TYPE>
-            <NORAD_CAT_ID>45383</NORAD_CAT_ID>
+            <NORAD_CAT_ID>12</NORAD_CAT_ID>
             <ELEMENT_SET_NO>999</ELEMENT_SET_NO>
-            <REV_AT_EPOCH>417</REV_AT_EPOCH>
-            <BSTAR>0.00042089</BSTAR>
-            <MEAN_MOTION_DOT>0.00038147</MEAN_MOTION_DOT>
+            <REV_AT_EPOCH>51762</REV_AT_EPOCH>
+            <BSTAR>0.000043322</BSTAR>
+            <MEAN_MOTION_DOT>0.00000106</MEAN_MOTION_DOT>
           </tleParameters>
         </data>
       </segment>
@@ -99,26 +96,25 @@
     <body>
       <segment>
         <metadata>
-          <OBJECT_NAME>STARLINK-1267</OBJECT_NAME>
-          <OBJECT_ID>2020-019AA</OBJECT_ID>
+          <OBJECT_ID>1958-002A</OBJECT_ID>
         </metadata>
         <data>
           <meanElements>
-            <EPOCH>2020-04-10T14:00:01.999</EPOCH>
-            <ECCENTRICITY>0.0001221</ECCENTRICITY>
-            <INCLINATION>52.9966</INCLINATION>
-            <RA_OF_ASC_NODE>141.3443</RA_OF_ASC_NODE>
-            <ARG_OF_PERICENTER>75.3958</ARG_OF_PERICENTER>
-            <MEAN_ANOMALY>14.6676</MEAN_ANOMALY>
+            <EPOCH>2020-05-05T20:22:08.716800</EPOCH>
+            <ECCENTRICITY>0.2026378</ECCENTRICITY>
+            <INCLINATION>34.2624</INCLINATION>
+            <RA_OF_ASC_NODE>277.5612</RA_OF_ASC_NODE>
+            <ARG_OF_PERICENTER>58.1371</ARG_OF_PERICENTER>
+            <MEAN_ANOMALY>320.0639</MEAN_ANOMALY>
           </meanElements>
           <tleParameters>
             <EPHEMERIS_TYPE>0</EPHEMERIS_TYPE>
             <CLASSIFICATION_TYPE>U</CLASSIFICATION_TYPE>
-            <NORAD_CAT_ID>45384</NORAD_CAT_ID>
+            <NORAD_CAT_ID>16</NORAD_CAT_ID>
             <ELEMENT_SET_NO>999</ELEMENT_SET_NO>
-            <REV_AT_EPOCH>429</REV_AT_EPOCH>
-            <BSTAR>0.00050106</BSTAR>
-            <MEAN_MOTION_DOT>0.00045525</MEAN_MOTION_DOT>
+            <REV_AT_EPOCH>45436</REV_AT_EPOCH>
+            <BSTAR>-0.00020434</BSTAR>
+            <MEAN_MOTION_DOT>-0.00000168</MEAN_MOTION_DOT>
           </tleParameters>
         </data>
       </segment>
@@ -130,26 +126,25 @@
     <body>
       <segment>
         <metadata>
-          <OBJECT_NAME>STARLINK-1268</OBJECT_NAME>
-          <OBJECT_ID>2020-019AB</OBJECT_ID>
+          <OBJECT_ID>1959-007A</OBJECT_ID>
         </metadata>
         <data>
           <meanElements>
-            <EPOCH>2020-04-10T14:00:01.999</EPOCH>
-            <ECCENTRICITY>0.000144</ECCENTRICITY>
-            <INCLINATION>52.9982</INCLINATION>
-            <RA_OF_ASC_NODE>141.4441</RA_OF_ASC_NODE>
-            <ARG_OF_PERICENTER>62.1131</ARG_OF_PERICENTER>
-            <MEAN_ANOMALY>333.7744</MEAN_ANOMALY>
+            <EPOCH>2020-05-06T00:46:45.104736</EPOCH>
+            <ECCENTRICITY>0.1664963</ECCENTRICITY>
+            <INCLINATION>33.3439</INCLINATION>
+            <RA_OF_ASC_NODE>333.172</RA_OF_ASC_NODE>
+            <ARG_OF_PERICENTER>41.6658</ARG_OF_PERICENTER>
+            <MEAN_ANOMALY>329.9462</MEAN_ANOMALY>
           </meanElements>
           <tleParameters>
             <EPHEMERIS_TYPE>0</EPHEMERIS_TYPE>
             <CLASSIFICATION_TYPE>U</CLASSIFICATION_TYPE>
-            <NORAD_CAT_ID>45385</NORAD_CAT_ID>
+            <NORAD_CAT_ID>20</NORAD_CAT_ID>
             <ELEMENT_SET_NO>999</ELEMENT_SET_NO>
-            <REV_AT_EPOCH>429</REV_AT_EPOCH>
-            <BSTAR>0.00047769</BSTAR>
-            <MEAN_MOTION_DOT>0.00043438</MEAN_MOTION_DOT>
+            <REV_AT_EPOCH>22572</REV_AT_EPOCH>
+            <BSTAR>0.00002158</BSTAR>
+            <MEAN_MOTION_DOT>0.00000036</MEAN_MOTION_DOT>
           </tleParameters>
         </data>
       </segment>
@@ -161,26 +156,25 @@
     <body>
       <segment>
         <metadata>
-          <OBJECT_NAME>STARLINK-1272</OBJECT_NAME>
-          <OBJECT_ID>2020-019AC</OBJECT_ID>
+          <OBJECT_ID>1959-009A</OBJECT_ID>
         </metadata>
         <data>
           <meanElements>
-            <EPOCH>2020-04-10T14:00:01.999</EPOCH>
-            <ECCENTRICITY>0.0001537</ECCENTRICITY>
-            <INCLINATION>52.9965</INCLINATION>
-            <RA_OF_ASC_NODE>141.3532</RA_OF_ASC_NODE>
-            <ARG_OF_PERICENTER>67.0706</ARG_OF_PERICENTER>
-            <MEAN_ANOMALY>19.6009</MEAN_ANOMALY>
+            <EPOCH>2020-05-06T04:40:00.850656</EPOCH>
+            <ECCENTRICITY>0.0139684</ECCENTRICITY>
+            <INCLINATION>50.2837</INCLINATION>
+            <RA_OF_ASC_NODE>300.344</RA_OF_ASC_NODE>
+            <ARG_OF_PERICENTER>97.2941</ARG_OF_PERICENTER>
+            <MEAN_ANOMALY>264.3907</MEAN_ANOMALY>
           </meanElements>
           <tleParameters>
             <EPHEMERIS_TYPE>0</EPHEMERIS_TYPE>
             <CLASSIFICATION_TYPE>U</CLASSIFICATION_TYPE>
-            <NORAD_CAT_ID>45386</NORAD_CAT_ID>
+            <NORAD_CAT_ID>22</NORAD_CAT_ID>
             <ELEMENT_SET_NO>999</ELEMENT_SET_NO>
-            <REV_AT_EPOCH>429</REV_AT_EPOCH>
-            <BSTAR>0.00049152</BSTAR>
-            <MEAN_MOTION_DOT>0.00044643</MEAN_MOTION_DOT>
+            <REV_AT_EPOCH>21900</REV_AT_EPOCH>
+            <BSTAR>0.000040517</BSTAR>
+            <MEAN_MOTION_DOT>0.0000023</MEAN_MOTION_DOT>
           </tleParameters>
         </data>
       </segment>
@@ -192,26 +186,25 @@
     <body>
       <segment>
         <metadata>
-          <OBJECT_NAME>STARLINK-1274</OBJECT_NAME>
-          <OBJECT_ID>2020-019AD</OBJECT_ID>
+          <OBJECT_ID>1960-002B</OBJECT_ID>
         </metadata>
         <data>
           <meanElements>
-            <EPOCH>2020-04-10T14:00:01.999</EPOCH>
-            <ECCENTRICITY>0.0000935</ECCENTRICITY>
-            <INCLINATION>52.9989</INCLINATION>
-            <RA_OF_ASC_NODE>141.3795</RA_OF_ASC_NODE>
-            <ARG_OF_PERICENTER>58.8229</ARG_OF_PERICENTER>
-            <MEAN_ANOMALY>7.4954</MEAN_ANOMALY>
+            <EPOCH>2020-05-05T13:36:21.930336</EPOCH>
+            <ECCENTRICITY>0.0023537</ECCENTRICITY>
+            <INCLINATION>48.3781</INCLINATION>
+            <RA_OF_ASC_NODE>151.0121</RA_OF_ASC_NODE>
+            <ARG_OF_PERICENTER>47.9747</ARG_OF_PERICENTER>
+            <MEAN_ANOMALY>312.3164</MEAN_ANOMALY>
           </meanElements>
           <tleParameters>
             <EPHEMERIS_TYPE>0</EPHEMERIS_TYPE>
             <CLASSIFICATION_TYPE>U</CLASSIFICATION_TYPE>
-            <NORAD_CAT_ID>45387</NORAD_CAT_ID>
+            <NORAD_CAT_ID>29</NORAD_CAT_ID>
             <ELEMENT_SET_NO>999</ELEMENT_SET_NO>
-            <REV_AT_EPOCH>428</REV_AT_EPOCH>
-            <BSTAR>0.00048942</BSTAR>
-            <MEAN_MOTION_DOT>0.00044461</MEAN_MOTION_DOT>
+            <REV_AT_EPOCH>21233</REV_AT_EPOCH>
+            <BSTAR>0.000011788</BSTAR>
+            <MEAN_MOTION_DOT>-0.00000129</MEAN_MOTION_DOT>
           </tleParameters>
         </data>
       </segment>
@@ -223,26 +216,25 @@
     <body>
       <segment>
         <metadata>
-          <OBJECT_NAME>STARLINK-1280</OBJECT_NAME>
-          <OBJECT_ID>2020-019AE</OBJECT_ID>
+          <OBJECT_ID>1960-007A</OBJECT_ID>
         </metadata>
         <data>
           <meanElements>
-            <EPOCH>2020-04-10T14:00:01.999</EPOCH>
-            <ECCENTRICITY>0.0003783</ECCENTRICITY>
-            <INCLINATION>52.9974</INCLINATION>
-            <RA_OF_ASC_NODE>141.488</RA_OF_ASC_NODE>
-            <ARG_OF_PERICENTER>84.5234</ARG_OF_PERICENTER>
-            <MEAN_ANOMALY>309.7439</MEAN_ANOMALY>
+            <EPOCH>2020-05-06T02:25:50.894400</EPOCH>
+            <ECCENTRICITY>0.0257792</ECCENTRICITY>
+            <INCLINATION>66.6924</INCLINATION>
+            <RA_OF_ASC_NODE>132.5405</RA_OF_ASC_NODE>
+            <ARG_OF_PERICENTER>344.834</ARG_OF_PERICENTER>
+            <MEAN_ANOMALY>14.513</MEAN_ANOMALY>
           </meanElements>
           <tleParameters>
             <EPHEMERIS_TYPE>0</EPHEMERIS_TYPE>
             <CLASSIFICATION_TYPE>U</CLASSIFICATION_TYPE>
-            <NORAD_CAT_ID>45388</NORAD_CAT_ID>
+            <NORAD_CAT_ID>45</NORAD_CAT_ID>
             <ELEMENT_SET_NO>999</ELEMENT_SET_NO>
-            <REV_AT_EPOCH>429</REV_AT_EPOCH>
-            <BSTAR>0.04225</BSTAR>
-            <MEAN_MOTION_DOT>0.03791075</MEAN_MOTION_DOT>
+            <REV_AT_EPOCH>11663</REV_AT_EPOCH>
+            <BSTAR>0.000014572</BSTAR>
+            <MEAN_MOTION_DOT>-0.0000005</MEAN_MOTION_DOT>
           </tleParameters>
         </data>
       </segment>
@@ -254,26 +246,25 @@
     <body>
       <segment>
         <metadata>
-          <OBJECT_NAME>STARLINK-1283</OBJECT_NAME>
-          <OBJECT_ID>2020-019AF</OBJECT_ID>
+          <OBJECT_ID>1960-007B</OBJECT_ID>
         </metadata>
         <data>
           <meanElements>
-            <EPOCH>2020-04-10T14:00:01.999</EPOCH>
-            <ECCENTRICITY>0.0001689</ECCENTRICITY>
-            <INCLINATION>52.9932</INCLINATION>
-            <RA_OF_ASC_NODE>138.2083</RA_OF_ASC_NODE>
-            <ARG_OF_PERICENTER>205.8497</ARG_OF_PERICENTER>
-            <MEAN_ANOMALY>331.3647</MEAN_ANOMALY>
+            <EPOCH>2020-05-06T02:13:44.265216</EPOCH>
+            <ECCENTRICITY>0.0208027</ECCENTRICITY>
+            <INCLINATION>66.6889</INCLINATION>
+            <RA_OF_ASC_NODE>160.9665</RA_OF_ASC_NODE>
+            <ARG_OF_PERICENTER>164.8506</ARG_OF_PERICENTER>
+            <MEAN_ANOMALY>195.8964</MEAN_ANOMALY>
           </meanElements>
           <tleParameters>
             <EPHEMERIS_TYPE>0</EPHEMERIS_TYPE>
             <CLASSIFICATION_TYPE>U</CLASSIFICATION_TYPE>
-            <NORAD_CAT_ID>45389</NORAD_CAT_ID>
+            <NORAD_CAT_ID>46</NORAD_CAT_ID>
             <ELEMENT_SET_NO>999</ELEMENT_SET_NO>
-            <REV_AT_EPOCH>433</REV_AT_EPOCH>
-            <BSTAR>0.014948</BSTAR>
-            <MEAN_MOTION_DOT>0.04543148</MEAN_MOTION_DOT>
+            <REV_AT_EPOCH>13296</REV_AT_EPOCH>
+            <BSTAR>0.000024408</BSTAR>
+            <MEAN_MOTION_DOT>0.00000006</MEAN_MOTION_DOT>
           </tleParameters>
         </data>
       </segment>
@@ -285,26 +276,25 @@
     <body>
       <segment>
         <metadata>
-          <OBJECT_NAME>STARLINK-1284</OBJECT_NAME>
-          <OBJECT_ID>2020-019AG</OBJECT_ID>
+          <OBJECT_ID>1960-007C</OBJECT_ID>
         </metadata>
         <data>
           <meanElements>
-            <EPOCH>2020-04-10T14:00:01.999</EPOCH>
-            <ECCENTRICITY>0.0001184</ECCENTRICITY>
-            <INCLINATION>52.9988</INCLINATION>
-            <RA_OF_ASC_NODE>141.3628</RA_OF_ASC_NODE>
-            <ARG_OF_PERICENTER>71.5518</ARG_OF_PERICENTER>
-            <MEAN_ANOMALY>4.953</MEAN_ANOMALY>
+            <EPOCH>2020-05-05T20:09:41.889024</EPOCH>
+            <ECCENTRICITY>0.0231452</ECCENTRICITY>
+            <INCLINATION>66.6654</INCLINATION>
+            <RA_OF_ASC_NODE>268.9662</RA_OF_ASC_NODE>
+            <ARG_OF_PERICENTER>332.7776</ARG_OF_PERICENTER>
+            <MEAN_ANOMALY>26.1344</MEAN_ANOMALY>
           </meanElements>
           <tleParameters>
             <EPHEMERIS_TYPE>0</EPHEMERIS_TYPE>
             <CLASSIFICATION_TYPE>U</CLASSIFICATION_TYPE>
-            <NORAD_CAT_ID>45390</NORAD_CAT_ID>
+            <NORAD_CAT_ID>47</NORAD_CAT_ID>
             <ELEMENT_SET_NO>999</ELEMENT_SET_NO>
-            <REV_AT_EPOCH>428</REV_AT_EPOCH>
-            <BSTAR>0.0010552</BSTAR>
-            <MEAN_MOTION_DOT>0.00097191</MEAN_MOTION_DOT>
+            <REV_AT_EPOCH>12853</REV_AT_EPOCH>
+            <BSTAR>0.0000077084</BSTAR>
+            <MEAN_MOTION_DOT>-0.00000079</MEAN_MOTION_DOT>
           </tleParameters>
         </data>
       </segment>

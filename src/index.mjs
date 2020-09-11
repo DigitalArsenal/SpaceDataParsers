@@ -12,7 +12,7 @@ const numCheck = (schema, pkey, pval) => {
     return (sD?.type === "number" || useAsNumber.indexOf(sD?.$ref) > -1) ? parseFloat(pval) ?? null : pval ?? null;
 }
 
-const parseOMMXML = async (input, schema) => {
+const readOMMXML = async (input, schema) => {
     let xp = await new xml2js.Parser({
         parseNumbers: true
     }).parseStringPromise(input);
@@ -45,13 +45,13 @@ const parseOMMXML = async (input, schema) => {
     });
 }
 
-const parseOMMJSON = (input, schema) => {
+const readOMMJSON = (input, schema) => {
     return JSON.parse(input, function (key, value) {
         return numCheck(schema, key, value);
     });
 }
 
-const parseOMMCSV = async (input, schema) => {
+const readOMMCSV = async (input, schema) => {
     let results = (await (csv(input))).map(row => {
         for (let prop in row) {
             row[prop] = numCheck(schema, prop, row[prop]);
@@ -62,7 +62,7 @@ const parseOMMCSV = async (input, schema) => {
     return results;
 }
 
-const parseTLE = (input, schema) => {
+const readTLE = (input, schema) => {
     return new Promise((resolve, reject) => {
         input = input instanceof Readable ? input : Readable.from(input);
         let tles = new tle(input);
@@ -83,12 +83,50 @@ const readFB = (input, schema) => {
     let schemaKeys = Object.keys(schema.definitions.OMM.properties);
     let buf = new flatbuffers.ByteBuffer(input);
     let SCOLLECTION = OMMCOLLECTION.getRootAsOMMCOLLECTION(buf);
+    let results = [];
     for (let i = 0; i < SCOLLECTION.RECORDSLength(); i++) {
+        let result = SCOLLECTION.RECORDS(i);
         schemaKeys.forEach(key => {
-            if (typeof SCOLLECTION.RECORDS(i)[key] === "function")
-                Object.defineProperty(SCOLLECTION.RECORDS(i), key, { get: SCOLLECTION.RECORDS(i)[key] });
+            if (typeof SCOLLECTION.RECORDS(i)[key] === "function") {
+                let _old = SCOLLECTION.RECORDS(i)[key].bind(SCOLLECTION.RECORDS(i));
+                Object.defineProperty(result, key, { get() { return _old() } });
+            }
         });
+        results.push(result);
     }
-    return SCOLLECTION;
+    return results;
 }
-export { numCheck, parseOMMXML, parseOMMJSON, parseOMMCSV, parseTLE, readFB };
+
+const writeFB = (raw, schema) => {
+
+    let builder = new flatbuffers.Builder(0);
+
+    let records = intermediates.map(intermediate => {
+        OMM.startOMM(builder);
+        for (let prop in intermediate) {
+            OMM[prop](builder, intermediate[prop].value);
+        }
+        var BuiltOMM = OMM.endOMM(builder);
+        builder.finish(BuiltOMM);
+        return BuiltOMM;
+    });
+
+    let OMMRECORDS = OMMCOLLECTION.createRECORDSVector(builder, records);
+
+    OMMCOLLECTION.startOMMCOLLECTION(builder);
+
+    OMMCOLLECTION.addRECORDS(builder, OMMRECORDS);
+
+    let COLLECTION = OMMCOLLECTION.endOMMCOLLECTION(builder);
+
+    builder.finish(COLLECTION);
+
+    var buf = builder.dataBuffer();
+    let uint8 = builder.asUint8Array();
+    var decoder = new TextDecoder("utf8");
+    var b64encoded = btoa(
+        unescape(encodeURIComponent(decoder.decode(uint8)))
+    );
+    return uint8;
+}
+export { numCheck, readOMMXML, readOMMJSON, readOMMCSV, readTLE, readFB, writeFB };

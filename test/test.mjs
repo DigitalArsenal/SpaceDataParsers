@@ -1,4 +1,4 @@
-import { numCheck, parseOMMXML, parseOMMJSON, parseOMMCSV, parseTLE, readFB } from "../src/index.mjs";
+import { numCheck, readOMMXML, readOMMJSON, readOMMCSV, readTLE, readFB, writeFB } from "../src/index.mjs";
 import { OMM, OMMCOLLECTION, schema, referenceFrame, timeSystem, meanElementTheory, ephemerisType } from '../src/class/OMM.flatbuffer.class.js';
 import btoa from 'btoa';
 import { writeFileSync, readFileSync, createReadStream, fstat } from 'fs';
@@ -21,11 +21,11 @@ let LEGACY = {
 };
 
 (async function () {
-  OMMS.xml = await parseOMMXML(readFileSync('./test/data/spacedatastandards/omm.xml'), schema);
-  OMMS.json = parseOMMJSON(readFileSync('./test/data/spacedatastandards/omm.json', { encoding: 'utf8' }), schema);
-  OMMS.csv = await parseOMMCSV(readFileSync('./test/data/spacedatastandards/omm.csv', { encoding: 'utf8' }), schema);
+  OMMS.xml = await readOMMXML(readFileSync('./test/data/spacedatastandards/omm.xml'), schema);
+  OMMS.json = readOMMJSON(readFileSync('./test/data/spacedatastandards/omm.json', { encoding: 'utf8' }), schema);
+  OMMS.csv = await readOMMCSV(readFileSync('./test/data/spacedatastandards/omm.csv', { encoding: 'utf8' }), schema);
   OMMS.fb = readFB(readFileSync('./test/data/spacedatastandards/omm.fbs'), schema);
-  let { results, raw } = await parseTLE(createReadStream('./test/data/spacedatastandards/3le.txt', { encoding: 'utf8' }), schema);
+  let { results, raw } = await readTLE(createReadStream('./test/data/spacedatastandards/3le.txt', { encoding: 'utf8' }), schema);
   LEGACY.tle = results;
   LEGACY.raw = raw;
 
@@ -56,11 +56,37 @@ let LEGACY = {
     stackAlloc
   } = wasmModule;
 
+
+  const registerOMM = (objOMM) => registerEntityOMM(
+    objOMM.OBJECT_ID,
+    objOMM.EPOCH,
+    objOMM.MEAN_MOTION,
+    objOMM.ECCENTRICITY,
+    objOMM.INCLINATION,
+    objOMM.RA_OF_ASC_NODE,
+    objOMM.ARG_OF_PERICENTER,
+    objOMM.MEAN_ANOMALY,
+    null,//objOMM.GM,
+    objOMM.EPHEMERIS_TYPE,
+    objOMM.CLASSIFICATION_TYPE,
+    objOMM.NORAD_CAT_ID,
+    objOMM.ELEMENT_SET_NO,
+    objOMM.REV_AT_EPOCH,
+    objOMM.BSTAR,
+    objOMM.MEAN_MOTION_DOT,
+    objOMM.MEAN_MOTION_DDOT,
+    true,
+    0,
+    0,
+    0,
+    null
+  );
+
   for (let i = 0; i < LEGACY.tle.length; i++) {
 
-
-    let tle = LEGACY.raw[i].slice(1);
+    let tle = LEGACY.raw[i].slice(-2);
     let tleOMM = LEGACY.tle[i];
+    let tleFB = OMMS.fb[i];
 
     let pointer = registerEntity(
       tle[0],
@@ -72,32 +98,10 @@ let LEGACY = {
       null
     );
 
-    let pointerOMM = registerEntityOMM(
-      tleOMM.OBJECT_ID,
-      tleOMM.EPOCH,
-      tleOMM.MEAN_MOTION,
-      tleOMM.ECCENTRICITY,
-      tleOMM.INCLINATION,
-      tleOMM.RA_OF_ASC_NODE,
-      tleOMM.ARG_OF_PERICENTER,
-      tleOMM.MEAN_ANOMALY,
-      null,//tleOMM.GM,
-      tleOMM.EPHEMERIS_TYPE,
-      tleOMM.CLASSIFICATION_TYPE,
-      tleOMM.NORAD_CAT_ID,
-      tleOMM.ELEMENT_SET_NO,
-      tleOMM.REV_AT_EPOCH,
-      tleOMM.BSTAR,
-      tleOMM.MEAN_MOTION_DOT,
-      tleOMM.MEAN_MOTION_DDOT,
-      true,
-      0,
-      0,
-      0,
-      null
-    );
+
+    let pointerFB = registerOMM(tleFB);
     let _now = new Date(tleOMM.EPOCH).getTime();
-    console.log(_now);
+
     let flatArray = new Float64Array(
       HEAP8.buffer,
       getValueInReferenceFrame(
@@ -112,7 +116,7 @@ let LEGACY = {
     let flatArrayOMM = new Float64Array(
       HEAP8.buffer,
       getValueInReferenceFrame(
-        pointerOMM,
+        pointerFB,
         _now,
         true, //convert in Cesium
         true
@@ -121,21 +125,7 @@ let LEGACY = {
     );
     console.log(flatArray, flatArrayOMM);
     for (let ii = 0; ii < flatArray.length; ii++) {
-      if (flatArray[ii] !== flatArrayOMM[ii] || !flatArray[ii] || flatArrayOMM[ii]) {
 
-        console.log(`
-        
-Error propagating:
-
-${tle.join("\n")}
-
-------------------------
-
-${JSON.stringify(tleOMM, null, 4)}
-${new Array(50).join("=")}
-`
-        );
-      }
     }
 
   }
