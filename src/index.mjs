@@ -88,8 +88,7 @@ const readFB = (input, schema) => {
         let result = SCOLLECTION.RECORDS(i);
         schemaKeys.forEach(key => {
             if (typeof SCOLLECTION.RECORDS(i)[key] === "function") {
-                let _old = SCOLLECTION.RECORDS(i)[key].bind(SCOLLECTION.RECORDS(i));
-                Object.defineProperty(result, key, { get() { return _old() } });
+                Object.defineProperty(result, key, { get() { return SCOLLECTION.RECORDS(i)[key]() } });
             }
         });
         results.push(result);
