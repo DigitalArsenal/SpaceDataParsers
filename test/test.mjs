@@ -91,8 +91,6 @@ let LEGACY = {
     writeFileSync('./test/data/spacedatastandards/omm.sizePrefixed.fbs', writeFB(jsonOMM, schema));
     let sPTest = readFB(readFileSync('./test/data/spacedatastandards/omm.sizePrefixed.fbs'), schema);
 
-    console.log('spTest', jsonOMM.EPOCH, sPTest[0].EPOCH);
-
     let pointer = registerEntity(
       tle[0],
       tle[1],
