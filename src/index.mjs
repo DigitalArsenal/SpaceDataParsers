@@ -4,6 +4,8 @@ import { Readable } from "stream";
 import { tle, satcat, vcm } from "./parsers/legacy.mjs";
 import { OMM, OMMCOLLECTION, schema, referenceFrame, timeSystem, meanElementTheory, ephemerisType } from './class/OMM.flatbuffer.class.js';
 import flatbuffers from './lib/flatbuffers.js';
+import btoa from 'btoa';
+globalThis.flatbuffers = flatbuffers;
 
 const useAsNumber = ["#/definitions/ephemerisType"]; //Hack until we can formalize fields between each format
 
@@ -79,48 +81,83 @@ const readTLE = (input, schema) => {
 
 }
 
-const readFB = (input, schema) => {
+const readFB = (input, schema, iscollection) => {
     let schemaKeys = Object.keys(schema.definitions.OMM.properties);
     let buf = new flatbuffers.ByteBuffer(input);
     let SCOLLECTION = OMMCOLLECTION.getRootAsOMMCOLLECTION(buf);
+    let SOMM = OMM.getSizePrefixedRootAsOMM(buf);
     let results = [];
-    for (let i = 0; i < SCOLLECTION.RECORDSLength(); i++) {
-        let result = SCOLLECTION.RECORDS(i);
-        for (let key in schemaKeys) {
-            let sK = schemaKeys[key];
-            if (typeof SCOLLECTION.RECORDS(i)[sK] === "function") {
-                Object.defineProperty(result, sK, { get() { return SCOLLECTION.RECORDS(i)[sK]() } });
-            }
-        };
-        results.push(result);
+    if (SCOLLECTION.RECORDSLength()) {
+        for (let i = 0; i < SCOLLECTION.RECORDSLength(); i++) {
+            let result = SCOLLECTION.RECORDS(i);
+            for (let key in schemaKeys) {
+                let sK = schemaKeys[key];
+                if (typeof SCOLLECTION.RECORDS(i)[sK] === "function") {
+                    Object.defineProperty(result, sK, { get() { return SCOLLECTION.RECORDS(i)[sK]() } });
+                }
+            };
+            results.push(result);
+        }
+    } else {
+        try {
+            let SOMM = OMM.getSizePrefixedRootAsOMM(buf);
+            let result = {};
+            for (let key in schemaKeys) {
+                let sK = schemaKeys[key];
+                console.log(sK, SOMM[sK]());
+                if (typeof SOMM[sK] === "function") {
+                    Object.defineProperty(result, sK, { get() { return SOMM[sK]() } });
+                }
+            };
+            results.push(result);
+        } catch (e) { console.log(e); }
+
     }
     return results;
 }
 
-const writeFB = (raw, schema) => {
+const transformType = (builder, _value, type) => {
+    switch (type) {
+        case "number":
+            _value = +_value;
+            break;
+        case "string":
+            _value = builder.createString(
+                new Uint8Array(
+                    Buffer.from(
+                        typeof _value === "string"
+                            ? _value
+                            : _value.toString()
+                    )
+                )
+            );
+    }
+    return _value;
+}
 
+const writeFB = (jsonOMM, schema) => {
+    let schemaKeys = Object.keys(schema.definitions.OMM.properties);
     let builder = new flatbuffers.Builder(0);
 
-    let records = intermediates.map(intermediate => {
-        OMM.startOMM(builder);
-        for (let prop in intermediate) {
-            OMM[prop](builder, intermediate[prop].value);
+    for (let k = 0; k < schemaKeys.length; k++) {
+        let sK = schemaKeys[k];
+        let { type } = schema.definitions.OMM.properties[sK];
+        if (jsonOMM[sK] ?? false) {
+            jsonOMM[sK] = transformType(builder, jsonOMM[sK], type);
+        } else {
+            delete jsonOMM[sK];
         }
-        var BuiltOMM = OMM.endOMM(builder);
-        builder.finish(BuiltOMM);
-        return BuiltOMM;
-    });
+    }
+    OMM.startOMM(builder);
 
-    let OMMRECORDS = OMMCOLLECTION.createRECORDSVector(builder, records);
+    for (let key in jsonOMM) {
+        if (schemaKeys.indexOf(key) === -1) continue;
+        let addKey = `add${key}`;
+        OMM[addKey](builder, jsonOMM[key]);
+    }
 
-    OMMCOLLECTION.startOMMCOLLECTION(builder);
-
-    OMMCOLLECTION.addRECORDS(builder, OMMRECORDS);
-
-    let COLLECTION = OMMCOLLECTION.endOMMCOLLECTION(builder);
-
-    builder.finish(COLLECTION);
-
+    var BuiltOMM = OMM.endOMM(builder);
+    builder.finishSizePrefixed(BuiltOMM);
     var buf = builder.dataBuffer();
     let uint8 = builder.asUint8Array();
     var decoder = new TextDecoder("utf8");
@@ -128,5 +165,6 @@ const writeFB = (raw, schema) => {
         unescape(encodeURIComponent(decoder.decode(uint8)))
     );
     return uint8;
-}
+};
+
 export { numCheck, readOMMXML, readOMMJSON, readOMMCSV, readTLE, readFB, writeFB };
