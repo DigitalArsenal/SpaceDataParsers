@@ -85,7 +85,7 @@ const readFB = (input, schema, iscollection) => {
     let schemaKeys = Object.keys(schema.definitions.OMM.properties);
     let buf = new flatbuffers.ByteBuffer(input);
     let SCOLLECTION = OMMCOLLECTION.getRootAsOMMCOLLECTION(buf);
-    let SOMM = OMM.getSizePrefixedRootAsOMM(buf);
+
     let results = [];
     if (SCOLLECTION.RECORDSLength()) {
         for (let i = 0; i < SCOLLECTION.RECORDSLength(); i++) {
@@ -104,7 +104,6 @@ const readFB = (input, schema, iscollection) => {
             let result = {};
             for (let key in schemaKeys) {
                 let sK = schemaKeys[key];
-                console.log(sK, SOMM[sK]());
                 if (typeof SOMM[sK] === "function") {
                     Object.defineProperty(result, sK, { get() { return SOMM[sK]() } });
                 }
@@ -138,27 +137,25 @@ const transformType = (builder, _value, type) => {
 const writeFB = (jsonOMM, schema) => {
     let schemaKeys = Object.keys(schema.definitions.OMM.properties);
     let builder = new flatbuffers.Builder(0);
-
+    let _jsonOMM = {};
     for (let k = 0; k < schemaKeys.length; k++) {
         let sK = schemaKeys[k];
         let { type } = schema.definitions.OMM.properties[sK];
         if (jsonOMM[sK] ?? false) {
-            jsonOMM[sK] = transformType(builder, jsonOMM[sK], type);
-        } else {
-            delete jsonOMM[sK];
+            _jsonOMM[sK] = transformType(builder, jsonOMM[sK], type);
         }
     }
     OMM.startOMM(builder);
 
-    for (let key in jsonOMM) {
+    for (let key in _jsonOMM) {
         if (schemaKeys.indexOf(key) === -1) continue;
         let addKey = `add${key}`;
-        OMM[addKey](builder, jsonOMM[key]);
+        OMM[addKey](builder, _jsonOMM[key]);
     }
 
     var BuiltOMM = OMM.endOMM(builder);
     builder.finishSizePrefixed(BuiltOMM);
-    var buf = builder.dataBuffer();
+
     let uint8 = builder.asUint8Array();
     var decoder = new TextDecoder("utf8");
     var b64encoded = btoa(

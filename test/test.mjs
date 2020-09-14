@@ -28,7 +28,6 @@ let LEGACY = {
   let { results, raw } = await readTLE(createReadStream('./test/data/spacedatastandards/3le.txt', { encoding: 'utf8' }), schema);
   LEGACY.tle = results;
   LEGACY.raw = raw;
-
   let { methods, wasmModule } = await sgp4module;
 
   let {
@@ -86,11 +85,13 @@ let LEGACY = {
 
     let tle = LEGACY.raw[i].slice(-2);
     let jsonOMM = LEGACY.tle[i];
+
     let tleFB = OMMS.fb[i];
 
     writeFileSync('./test/data/spacedatastandards/omm.sizePrefixed.fbs', writeFB(jsonOMM, schema));
     let sPTest = readFB(readFileSync('./test/data/spacedatastandards/omm.sizePrefixed.fbs'), schema);
-    console.log('spTest', sPTest[0].EPOCH);
+
+    console.log('spTest', jsonOMM.EPOCH, sPTest[0].EPOCH);
 
     let pointer = registerEntity(
       tle[0],
@@ -101,7 +102,7 @@ let LEGACY = {
       0,
       null
     );
-      
+
     let pointerFB = registerOMM(tleFB);
     let _now = new Date(jsonOMM.EPOCH).getTime();
 
@@ -126,8 +127,8 @@ let LEGACY = {
       ), // Choice of reference frames for velocity
       3
     );
-    
-    for (let ii = 0; ii < flatArray.length; ii++) {}
+
+    for (let ii = 0; ii < flatArray.length; ii++) { }
 
   }
 

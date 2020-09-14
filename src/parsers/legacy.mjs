@@ -95,7 +95,7 @@ class tle extends lineReader {
         let _OMM = {};
         if (tle.length === 3) {
           OBJECT_NAME = tle[0].trim();
-          tle = tle.slice(1, 3);
+          tle = tle.slice(-2);
         }
         tle.forEach((_line, i) => {
           let tt = tle_map[i + 1];
@@ -104,7 +104,9 @@ class tle extends lineReader {
             let _tp = [];
             _tp = tp.length === 2 ? [tp[0] - 1, tp[1]] : [tp[0] - 1, tp[0]];
             let value = _line.substring(_tp[0], _tp[1]);
+
             _OMM[prop] = (tle_transform[prop] || bignumber)(value);
+       
             if (_OMM[prop] instanceof bignumber) _OMM[prop] = _OMM[prop].toNumber();
           }
         });
