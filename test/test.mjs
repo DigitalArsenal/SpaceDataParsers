@@ -2,7 +2,6 @@ import { numCheck, readOMMXML, readOMMJSON, readOMMCSV, readTLE, readFB, writeFB
 import { OMM, OMMCOLLECTION, MPE, schema, referenceFrame, timeSystem, meanElementTheory, ephemerisType } from '../src/class/OMM.flatbuffer.class.js';
 import btoa from 'btoa';
 import { writeFileSync, readFileSync, createReadStream, fstat } from 'fs';
-import satellite from 'satellite.js';
 import Ajv from 'ajv';
 import { tmpdir } from 'os';
 import sgp4module from '../src/SGP4Propagator/sgp4propagator.mjs'

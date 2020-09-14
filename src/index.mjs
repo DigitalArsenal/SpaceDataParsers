@@ -1,4 +1,7 @@
 import xml2js from 'xml2js';
+import sax from 'sax';
+import saxPath from 'saxpath';
+
 import csv from 'neat-csv';
 import { Readable } from "stream";
 import { tle, satcat, vcm } from "./parsers/legacy.mjs";
