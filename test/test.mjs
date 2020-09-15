@@ -7,120 +7,139 @@ import Ajv from "ajv";
 import { tmpdir } from "os";
 import sgp4module from "../src/SGP4Propagator/sgp4propagator.mjs";
 
-tape("timing test", function (t) {
+let OMMS = {
+  xml: await readOMMXML(readFileSync("./test/data/spacedatastandards/omm.xml"), schema),
+  csv: await readOMMCSV(readFileSync("./test/data/spacedatastandards/omm.csv", { encoding: "utf8" }), schema),
+  json: readOMMJSON(readFileSync("./test/data/spacedatastandards/omm.json", { encoding: "utf8" }), schema),
+  fb: readFB(readFileSync("./test/data/spacedatastandards/omm.fbs"), schema, true),
+};
+
+let LEGACY = await readTLE(createReadStream("./test/data/spacedatastandards/3le.txt", { encoding: "utf8" }), schema);
+LEGACY.tle = LEGACY.results;
+
+let { methods, wasmModule } = await sgp4module;
+
+let {
+  sizeOfsatelliteCatalog,
+  registerEntity,
+  registerEntityOMM,
+  removeEntity,
+  removeAll,
+  propagate,
+  generateEphemeris,
+  getValue,
+  getValueInReferenceFrame,
+  getSatAzElRange,
+  getSatAzElRangeForInterval,
+  getSatAzElRangePositionForInterval,
+  describeObject,
+} = methods;
+
+let { freePtr, free, deletePtr, malloc, HEAP8, HEAPU8, stackAlloc } = wasmModule;
+
+const registerOMM = (jsonOMM) =>
+  registerEntityOMM(
+    null, //jsonOMM.OBJECT_ID,
+    jsonOMM.EPOCH,
+    jsonOMM.MEAN_MOTION,
+    jsonOMM.ECCENTRICITY,
+    jsonOMM.INCLINATION,
+    jsonOMM.RA_OF_ASC_NODE,
+    null, //jsonOMM.ARG_OF_PERICENTER,
+    jsonOMM.MEAN_ANOMALY,
+    null, //jsonOMM.GM,
+    null, //jsonOMM.EPHEMERIS_TYPE,
+    null, //jsonOMM.CLASSIFICATION_TYPE,
+    jsonOMM.NORAD_CAT_ID,
+    null, //jsonOMM.ELEMENT_SET_NO,
+    null, //jsonOMM.REV_AT_EPOCH,
+    jsonOMM.BSTAR,
+    null, //jsonOMM.MEAN_MOTION_DOT,
+    null, //jsonOMM.MEAN_MOTION_DDOT,
+    true,
+    0,
+    0,
+    0,
+    null
+  );
+
+process.on("uncaughtException", (err) => {
+  console.log("\x1b[31m%s\x1b[0m", "✘ Fatality! Uncaught Exception within unit tests, error thrown:");
+  console.log(err);
+  console.log("not ok 1");
+  console.log("\x1b[31m%s\x1b[0m", "Force-Exiting process ...");
+  process.exit(1);
+});
+tape("Deserialization Test", function (t) {
   t.plan(1);
 
-  t.equal(typeof Date.now, "function");
-  var start = Date.now();
-  /*
-  setTimeout(function () {
-    t.equal(Date.now() - start, 100);
-  }, 100);
-  */
-});
-
-let OMMS = {
-  xml: [],
-  csv: [],
-  json: [],
-  fb: null,
-};
-
-let LEGACY = {
-  tle: [],
-  raw: [],
-};
-
-(async function () {
-  OMMS.xml = await readOMMXML(readFileSync("./test/data/spacedatastandards/omm.xml"), schema);
-  OMMS.json = readOMMJSON(readFileSync("./test/data/spacedatastandards/omm.json", { encoding: "utf8" }), schema);
-  OMMS.csv = await readOMMCSV(readFileSync("./test/data/spacedatastandards/omm.csv", { encoding: "utf8" }), schema);
-  OMMS.fb = readFB(readFileSync("./test/data/spacedatastandards/omm.fbs"), schema, true);
-  let { results, raw } = await readTLE(createReadStream("./test/data/spacedatastandards/3le.txt", { encoding: "utf8" }), schema);
-  LEGACY.tle = results;
-  LEGACY.raw = raw;
-  let { methods, wasmModule } = await sgp4module;
-
-  let {
-    sizeOfsatelliteCatalog,
-    registerEntity,
-    registerEntityOMM,
-    removeEntity,
-    removeAll,
-    propagate,
-    generateEphemeris,
-    getValue,
-    getValueInReferenceFrame,
-    getSatAzElRange,
-    getSatAzElRangeForInterval,
-    getSatAzElRangePositionForInterval,
-    describeObject,
-  } = methods;
-
-  let { freePtr, free, deletePtr, malloc, HEAP8, HEAPU8, stackAlloc } = wasmModule;
-
-  const registerOMM = (jsonOMM) =>
-    registerEntityOMM(
-      null, //jsonOMM.OBJECT_ID,
-      jsonOMM.EPOCH,
-      jsonOMM.MEAN_MOTION,
-      jsonOMM.ECCENTRICITY,
-      jsonOMM.INCLINATION,
-      jsonOMM.RA_OF_ASC_NODE,
-      null, //jsonOMM.ARG_OF_PERICENTER,
-      jsonOMM.MEAN_ANOMALY,
-      null, //jsonOMM.GM,
-      null, //jsonOMM.EPHEMERIS_TYPE,
-      null, //jsonOMM.CLASSIFICATION_TYPE,
-      jsonOMM.NORAD_CAT_ID,
-      null, //jsonOMM.ELEMENT_SET_NO,
-      null, //jsonOMM.REV_AT_EPOCH,
-      jsonOMM.BSTAR,
-      null, //jsonOMM.MEAN_MOTION_DOT,
-      null, //jsonOMM.MEAN_MOTION_DDOT,
-      true,
-      0,
-      0,
-      0,
-      null
-    );
-
+  let equal = true;
   for (let i = 0; i < LEGACY.tle.length; i++) {
     let tle = LEGACY.raw[i].slice(-2);
     let jsonOMM = LEGACY.tle[i];
 
-    let tleFB = OMMS.fb[i];
+    for (let sFormat in OMMS) {
+      for (let prop in schema.definitions.OMM.properties) {
+        if (jsonOMM[prop] && jsonOMM[prop] !== OMMS[sFormat][i][prop]) {
+          console.error(prop, " ", "tle JSON: ", jsonOMM[prop], " ", sFormat, ": ", OMMS[sFormat][i][prop]);
+          equal = false;
+        }
+      }
+    }
+  }
+  t.equal(equal, true);
+});
 
-    writeFileSync("./test/data/spacedatastandards/omm.sizePrefixed.fbs", writeFB(jsonOMM, schema));
-    let sPTest = readFB(readFileSync("./test/data/spacedatastandards/omm.sizePrefixed.fbs"), schema);
+tape("Propagation Test", function (t) {
+  t.plan(1);
+
+  let passes = true;
+  for (let i = 0; i < LEGACY.tle.length; i++) {
+    let tle = LEGACY.raw[i].slice(-2);
+    let jsonOMM = LEGACY.tle[i];
 
     let pointer = registerEntity(tle[0], tle[1], true, 0, 0, 0, null);
 
-    let pointerFB = registerOMM(tleFB);
-    let _now = new Date(jsonOMM.EPOCH).getTime();
+    let sPointers = {};
+
+    for (let sFormat in OMMS) {
+      sPointers[sFormat] = registerOMM(OMMS[sFormat][i]);
+    }
+
+    let epoch = new Date(jsonOMM.EPOCH).getTime();
 
     let flatArray = new Float64Array(
       HEAP8.buffer,
       getValueInReferenceFrame(
         pointer,
-        _now,
+        epoch,
         true, //convert in Cesium
         true
       ), // Choice of reference frames for velocity
       3
     );
 
-    let flatArrayOMM = new Float64Array(
-      HEAP8.buffer,
-      getValueInReferenceFrame(
-        pointerFB,
-        _now,
-        true, //convert in Cesium
-        true
-      ), // Choice of reference frames for velocity
-      3
-    );
-
-    for (let ii = 0; ii < flatArray.length; ii++) {}
+    for (let sFormat in sPointers) {
+      sPointers[sFormat] = new Float64Array(
+        HEAP8.buffer,
+        getValueInReferenceFrame(
+          sPointers[sFormat],
+          epoch,
+          true, //convert in Cesium
+          true
+        ), // Choice of reference frames for velocity
+        3
+      );
+    }
+    for (let sArray in sPointers) {
+      let flatArrayOMM = sPointers[sArray];
+      for (let ii = 0; ii < flatArray.length; ii++) {
+        if (flatArray[ii] !== flatArrayOMM[ii]) passes = false;
+      }
+    }
   }
-})();
+  t.equal(passes, true);
+});
+
+writeFileSync("./test/data/spacedatastandards/omm.sizePrefixed.fbs", writeFB(LEGACY.tle[0], schema));
+let sPTest = readFB(readFileSync("./test/data/spacedatastandards/omm.sizePrefixed.fbs"), schema);
