@@ -81,7 +81,7 @@ tape("Deserialization Test", function (t) {
     for (let sFormat in OMMS) {
       for (let prop in schema.definitions.OMM.properties) {
         if (jsonOMM[prop] && jsonOMM[prop] !== OMMS[sFormat][i][prop]) {
-          console.error(prop, " ", "tle JSON: ", jsonOMM[prop], " ", sFormat, ": ", OMMS[sFormat][i][prop]);
+          console.error("ERROR: ", prop, " ", "tle JSON: ", jsonOMM[prop], " ", sFormat, ": ", OMMS[sFormat][i][prop]);
           equal = false;
         }
       }
