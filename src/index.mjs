@@ -1,7 +1,7 @@
 import xml2js from "xml2js";
 import sax from "sax";
 import saxPath from "saxpath";
-
+import { readSync, statSync, openSync } from "fs";
 import csv from "neat-csv";
 import { Readable } from "stream";
 import { tle, satcat, vcm } from "./parsers/legacy.mjs";
@@ -113,7 +113,6 @@ const readFB = (input, schema, iscollection) => {
           });
         }
       }
-      console.log(buf.readInt32(flatbuffers.SIZE_PREFIX_LENGTH));
       results.push(result);
     } catch (e) {
       console.log(e);
@@ -161,10 +160,20 @@ const createFB = (jsonOMM, schema) => {
   return uint8;
 };
 
-const writeFB = (filename, buf) => {
+const writeFBFile = (filename, buf) => {};
 
-
-    
+const readFBFile = (filename, schema) => {
+  let headLen = flatbuffers.SIZE_PREFIX_LENGTH;
+  let sizeBuf = Buffer.alloc(headLen);
+  let fd = openSync(filename, "r");
+  readSync(fd, sizeBuf, { offset: 0, length: headLen, position: null /*read header*/ });
+  let ommLen = sizeBuf.readInt32LE(0, sizeBuf);
+  let spLen = ommLen + headLen;
+  let ommBuf = Buffer.alloc(spLen);
+  readSync(fd, ommBuf, { offset: 0, length: spLen, position: 0 /*reset for first read*/ });
+  let OMM = readFB(ommBuf, schema);
+  console.log(JSON.stringify(OMM));
+  console.log(statSync(filename).size, ommLen, headLen, spLen);
 };
 
-export { numCheck, readOMMXML, readOMMJSON, readOMMCSV, readTLE, readFB, createFB };
+export { numCheck, readOMMXML, readOMMJSON, readOMMCSV, readTLE, readFB, createFB, readFBFile, writeFBFile };

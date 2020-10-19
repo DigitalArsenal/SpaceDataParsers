@@ -1,5 +1,5 @@
 import tape from "tape";
-import { numCheck, readOMMXML, readOMMJSON, readOMMCSV, readTLE, readFB, createFB } from "../src/index.mjs";
+import { numCheck, readOMMXML, readOMMJSON, readOMMCSV, readTLE, readFB, createFB, readFBFile } from "../src/index.mjs";
 import { OMM, OMMCOLLECTION, MPE, schema, referenceFrame, timeSystem, meanElementTheory, ephemerisType } from "../src/class/OMM.flatbuffer.class.js";
 import btoa from "btoa";
 import { writeFileSync, readFileSync, createReadStream, fstat } from "fs";
@@ -142,9 +142,22 @@ let runTest = async () => {
     t.equal(passes, true);
   });
 
-  writeFileSync("./test/data/spacedatastandards/omm.sizePrefixed.fbs", createFB(LEGACY.tle, schema));
-  let sPTest = readFB(readFileSync("./test/data/spacedatastandards/omm.sizePrefixed.fbs"), schema);
-  console.log(sPTest.length);
+  tape("File I/O Test", function (t) {
+    t.plan(1);
+    /** TODO:
+     *
+     * - Convert from array
+     * - Write / read from disk using size-prefixed headers
+     * -
+     *
+     */
+    console.log(LEGACY.tle[0]);
+    writeFileSync("./test/data/spacedatastandards/omm.sizePrefixed.fbs", createFB(LEGACY.tle[0], schema));
+    let sPTest = readFB(readFileSync("./test/data/spacedatastandards/omm.sizePrefixed.fbs"), schema);
+    console.log(JSON.stringify(sPTest));
+    readFBFile("./test/data/spacedatastandards/omm.sizePrefixed.fbs", schema);
+    t.equal(true, true);
+  });
 };
 
 export { runTest };
