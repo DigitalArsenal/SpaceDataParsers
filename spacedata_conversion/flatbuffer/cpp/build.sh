@@ -1,0 +1,1 @@
+clang++ converter.cpp -I/opt/software/spacedata_conversion/flatbuffer/cpp/include -stdlib=libstdc++ -std=c++17 -lstdc++fs -o converter && ./converter
