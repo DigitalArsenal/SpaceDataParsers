@@ -1,6 +1,24 @@
 import tape from "tape";
-import { numCheck, readOMMXML, readOMMJSON, readOMMCSV, readTLE, readFB, createFB, readFBFile } from "../src/index.mjs";
-import { OMM, OMMCOLLECTION, MPE, schema, referenceFrame, timeSystem, meanElementTheory, ephemerisType } from "../src/class/OMM.flatbuffer.class.js";
+import {
+  numCheck,
+  readOMMXML,
+  readOMMJSON,
+  readOMMCSV,
+  readTLE,
+  readFB,
+  createFB,
+  readFBFile,
+} from "../src/index.mjs";
+import {
+  OMM,
+  OMMCOLLECTION,
+  MPE,
+  schema,
+  referenceFrame,
+  timeSystem,
+  meanElementTheory,
+  ephemerisType,
+} from "../src/class/OMM.flatbuffer.class.js";
 import btoa from "btoa";
 import { writeFileSync, readFileSync, createReadStream, fstat } from "fs";
 import Ajv from "ajv";
@@ -9,13 +27,35 @@ import sgp4module from "../src/SGP4Propagator/sgp4propagator.mjs";
 
 let runTest = async () => {
   let OMMS = {
-    xml: await readOMMXML(readFileSync("./test/data/spacedatastandards/omm.xml"), schema),
-    csv: await readOMMCSV(readFileSync("./test/data/spacedatastandards/omm.csv", { encoding: "utf8" }), schema),
-    json: readOMMJSON(readFileSync("./test/data/spacedatastandards/omm.json", { encoding: "utf8" }), schema),
-    fb: readFB(readFileSync("./test/data/spacedatastandards/omm.fbs"), schema, true),
+    xml: await readOMMXML(
+      readFileSync("./test/data/spacedatastandards/omm.xml"),
+      schema
+    ),
+    csv: await readOMMCSV(
+      readFileSync("./test/data/spacedatastandards/omm.csv", {
+        encoding: "utf8",
+      }),
+      schema
+    ),
+    json: readOMMJSON(
+      readFileSync("./test/data/spacedatastandards/omm.json", {
+        encoding: "utf8",
+      }),
+      schema
+    ),
+    fb: readFB(
+      readFileSync("./test/data/spacedatastandards/omm.fbs"),
+      schema,
+      true
+    ),
   };
 
-  let LEGACY = await readTLE(createReadStream("./test/data/spacedatastandards/3le.txt", { encoding: "utf8" }), schema);
+  let LEGACY = await readTLE(
+    createReadStream("./test/data/spacedatastandards/3le.txt", {
+      encoding: "utf8",
+    }),
+    schema
+  );
   LEGACY.tle = LEGACY.results;
 
   let { methods, wasmModule } = await sgp4module;
@@ -36,7 +76,15 @@ let runTest = async () => {
     describeObject,
   } = methods;
 
-  let { freePtr, free, deletePtr, malloc, HEAP8, HEAPU8, stackAlloc } = wasmModule;
+  let {
+    freePtr,
+    free,
+    deletePtr,
+    malloc,
+    HEAP8,
+    HEAPU8,
+    stackAlloc,
+  } = wasmModule;
 
   const registerOMM = (jsonOMM) =>
     registerEntityOMM(
@@ -65,7 +113,10 @@ let runTest = async () => {
     );
 
   process.on("uncaughtException", (err) => {
-    console.log("\x1b[31m%s\x1b[0m", "✘ Fatality! Uncaught Exception within unit tests, error thrown:");
+    console.log(
+      "\x1b[31m%s\x1b[0m",
+      "✘ Fatality! Uncaught Exception within unit tests, error thrown:"
+    );
     console.log(err);
     console.log("not ok 1");
     console.log("\x1b[31m%s\x1b[0m", "Force-Exiting process ...");
@@ -82,7 +133,17 @@ let runTest = async () => {
       for (let sFormat in OMMS) {
         for (let prop in schema.definitions.OMM.properties) {
           if (jsonOMM[prop] && jsonOMM[prop] !== OMMS[sFormat][i][prop]) {
-            console.error("ERROR: ", prop, " ", "tle JSON: ", jsonOMM[prop], " ", sFormat, ": ", OMMS[sFormat][i][prop]);
+            console.error(
+              "ERROR: ",
+              prop,
+              " ",
+              "tle JSON: ",
+              jsonOMM[prop],
+              " ",
+              sFormat,
+              ": ",
+              OMMS[sFormat][i][prop]
+            );
             equal = false;
           }
         }
@@ -151,11 +212,25 @@ let runTest = async () => {
      * -
      *
      */
-    console.log(LEGACY.tle[0]);
-    writeFileSync("./test/data/spacedatastandards/omm.sizePrefixed.fbs", createFB(LEGACY.tle[0], schema));
-    let sPTest = readFB(readFileSync("./test/data/spacedatastandards/omm.sizePrefixed.fbs"), schema);
-    console.log(JSON.stringify(sPTest));
-    readFBFile("./test/data/spacedatastandards/omm.sizePrefixed.fbs", schema);
+    //console.log(LEGACY.tle[0]);
+    writeFileSync(
+      "./test/data/spacedatastandards/omm.sizePrefixed.fbs",
+      createFB(LEGACY.tle, schema)
+    );
+    let sPTest = readFB(
+      readFileSync("./test/data/spacedatastandards/omm.sizePrefixed.fbs"),
+      schema
+    );
+    let readOMM = readFBFile(
+      "./test/data/spacedatastandards/omm.sizePrefixed.fbs",
+      schema
+    );
+
+    readOMM.map((r) => {
+      console.log(r[0].NORAD_CAT_ID);
+      return r.NORAD_CAT_ID;
+    });
+
     t.equal(true, true);
   });
 };
