@@ -107,45 +107,50 @@ const readTLE = (input, schema) => {
   });
 };
 
-const readFB = (input, schema, iscollection) => {
+const readFB = (input, schema) => {
   let schemaKeys = Object.keys(schema.definitions.OMM.properties);
-  let buf = new flatbuffers.ByteBuffer(input);
-  let SCOLLECTION = OMMCOLLECTION.getRootAsOMMCOLLECTION(buf);
-
   let results = [];
-  if (SCOLLECTION.RECORDSLength()) {
-    for (let i = 0; i < SCOLLECTION.RECORDSLength(); i++) {
-      let result = SCOLLECTION.RECORDS(i);
-      for (let key in schemaKeys) {
-        let sK = schemaKeys[key];
-        if (typeof SCOLLECTION.RECORDS(i)[sK] === "function") {
-          Object.defineProperty(result, sK, {
-            get() {
-              return SCOLLECTION.RECORDS(i)[sK]();
-            },
-          });
-        }
-      }
-      results.push(result);
-    }
+  if (Array.isArray(input)) {
+    results = input.map((fb) => readFB(fb, schema)[0]);
   } else {
-    try {
-      let SOMM = OMM.getSizePrefixedRootAsOMM(buf);
-      let result = {};
-      for (let key in schemaKeys) {
-        let sK = schemaKeys[key];
-        if (typeof SOMM[sK] === "function") {
-          Object.defineProperty(result, sK, {
-            enumerable: true,
-            get() {
-              return SOMM[sK]();
-            },
-          });
+    let buf = new flatbuffers.ByteBuffer(input);
+
+    let SCOLLECTION = OMMCOLLECTION.getRootAsOMMCOLLECTION(buf);
+
+    if (SCOLLECTION.RECORDSLength()) {
+      for (let i = 0; i < SCOLLECTION.RECORDSLength(); i++) {
+        let result = SCOLLECTION.RECORDS(i);
+        for (let key in schemaKeys) {
+          let sK = schemaKeys[key];
+          if (typeof SCOLLECTION.RECORDS(i)[sK] === "function") {
+            Object.defineProperty(result, sK, {
+              get() {
+                return SCOLLECTION.RECORDS(i)[sK]();
+              },
+            });
+          }
         }
+        results.push(result);
       }
-      results.push(result);
-    } catch (e) {
-      console.log(e);
+    } else {
+      try {
+        let SOMM = OMM.getSizePrefixedRootAsOMM(buf);
+        let result = {};
+        for (let key in schemaKeys) {
+          let sK = schemaKeys[key];
+          if (typeof SOMM[sK] === "function") {
+            Object.defineProperty(result, sK, {
+              enumerable: true,
+              get() {
+                return SOMM[sK]();
+              },
+            });
+          }
+        }
+        results.push(result);
+      } catch (e) {
+        console.log(e);
+      }
     }
   }
   return results;
@@ -195,46 +200,57 @@ const createFB = (jsonOMM, schema) => {
     let uint8 = builder.asUint8Array();
     return uint8;
   }
-  return Buffer.concat(returnArray, returnArray.length * returnArray[0].length);
+  return Buffer.concat(
+    returnArray,
+    returnArray.map((n) => n.length).reduce((a, b) => a + b)
+  );
 };
 
 const writeFBFile = (filename, buf) => {};
 
-const readFBFile = (filename, schema) => {
+const readHeaderLen = (fd, position = null) => {
   let headLen = flatbuffers.SIZE_PREFIX_LENGTH;
   let sizeBuf = Buffer.alloc(headLen);
-  let fd = openSync(filename, "r");
+
+  /*read header*/
   readSync(fd, sizeBuf, {
     offset: 0,
     length: headLen,
-    position: null /*read header*/,
+    position,
   });
   let ommLen = sizeBuf.readInt32LE(0, sizeBuf);
-  let spLen = ommLen + headLen;
+  return ommLen;
+};
+
+const readFBFile = (filename, schema) => {
+  let fd = openSync(filename, "r");
+  let spLen = flatbuffers.SIZE_PREFIX_LENGTH + readHeaderLen(fd);
   let ommBuf = Buffer.alloc(spLen);
 
   let returnArray = [];
+  /*reset for first read*/
 
   let pos = readSync(fd, ommBuf, {
     offset: 0,
     length: spLen,
-    position: 0 /*reset for first read*/,
+    position: 0,
   });
   returnArray.push(ommBuf);
   while (pos < statSync(filename).size) {
-    let _ommBuf = Buffer.alloc(spLen);
-    pos = readSync(fd, _ommBuf, {
+    let _spLen = flatbuffers.SIZE_PREFIX_LENGTH + readHeaderLen(fd, pos);
+
+    let _ommBuf = Buffer.alloc(_spLen);
+
+    readSync(fd, _ommBuf, {
       offset: 0,
-      length: spLen,
+      length: _spLen,
       position: pos,
     });
     returnArray.push(_ommBuf);
-    pos = returnArray.length * spLen;
+    pos += _spLen;
   }
 
-  return returnArray.map((obuf) => readFB(obuf, schema));
-  //console.log(JSON.stringify(OMM));
-  //console.log(statSync(filename).size, ommLen, headLen, spLen);
+  return readFB(returnArray, schema);
 };
 
 export {

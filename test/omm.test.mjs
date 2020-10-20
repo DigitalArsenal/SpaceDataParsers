@@ -213,9 +213,18 @@ let runTest = async () => {
      *
      */
     //console.log(LEGACY.tle[0]);
+
     writeFileSync(
       "./test/data/spacedatastandards/omm.sizePrefixed.fbs",
-      createFB(LEGACY.tle, schema)
+      createFB(
+        LEGACY.tle.map((_omm) => {
+          _omm.USER_DEFINED_OBJECT_DESIGNATOR =
+            new Date().toISOString() +
+            new Array(Math.floor(Math.random() * 100)).join("+");
+          return _omm;
+        }),
+        schema
+      )
     );
     let sPTest = readFB(
       readFileSync("./test/data/spacedatastandards/omm.sizePrefixed.fbs"),
@@ -226,11 +235,13 @@ let runTest = async () => {
       schema
     );
 
-    readOMM.map((r) => {
-      console.log(r[0].NORAD_CAT_ID);
-      return r.NORAD_CAT_ID;
-    });
-
+    console.log(
+      JSON.stringify(
+        readOMM.map(
+          (n) => `${n.NORAD_CAT_ID} ${n.USER_DEFINED_OBJECT_DESIGNATOR}`
+        )
+      )
+    );
     t.equal(true, true);
   });
 };
