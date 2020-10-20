@@ -1,10 +1,8 @@
-import xml2js from "xml2js";
-import sax from "sax";
-import saxPath from "saxpath";
 import { readSync, statSync, openSync } from "fs";
+import { tle, satcat, vcm } from "./parsers/legacy.mjs";
+import xml2js from "xml2js";
 import csv from "neat-csv";
 import { Readable } from "stream";
-import { tle, satcat, vcm } from "./parsers/legacy.mjs";
 import flatbuffers from "./lib/flatbuffers.js";
 import { required } from "./lib/required.mjs";
 import btoa from "btoa";
@@ -208,8 +206,6 @@ const createFB = (
   );
 };
 
-const writeFBFile = (filename, buf) => {};
-
 const readHeaderLen = (fd, position = null) => {
   let headLen = flatbuffers.SIZE_PREFIX_LENGTH;
   let sizeBuf = Buffer.alloc(headLen);
@@ -220,6 +216,15 @@ const readHeaderLen = (fd, position = null) => {
     length: headLen,
     position,
   });
+  if (!position) {
+    let idBuf = Buffer.alloc(256);
+    readSync(fd, idBuf, {
+      offset: 0,
+      length: 256,
+      position: 0,
+    });
+    console.log(idBuf.toString());
+  }
   let ommLen = sizeBuf.readInt32LE(0, sizeBuf);
   return ommLen;
 };
@@ -264,5 +269,4 @@ export {
   readFB,
   createFB,
   readFBFile,
-  writeFBFile,
 };

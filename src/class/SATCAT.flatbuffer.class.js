@@ -22,7 +22,7 @@ var objType = {
   /**
    *3
    */
-  UNKNOWN: 3
+  UNKNOWN: 3,
 };
 
 /**
@@ -32,22 +32,22 @@ var objTypeName = {
   /**
    *0
    */
-  '0': 'PAYLOAD',
+  0: "PAYLOAD",
 
   /**
    *1
    */
-  '1': 'DEBRIS',
+  1: "DEBRIS",
 
   /**
    *2
    */
-  '2': 'ROCKET_BODY',
+  2: "ROCKET_BODY",
 
   /**
    *3
    */
-  '3': 'UNKNOWN'
+  3: "UNKNOWN",
 };
 
 /**
@@ -92,7 +92,7 @@ var opsStatusCode = {
   /**
    *?
    */
-  UNKNOWN: 7
+  UNKNOWN: 7,
 };
 
 /**
@@ -102,42 +102,42 @@ var opsStatusCodeName = {
   /**
    *+
    */
-  '0': 'OPERATIONAL',
+  0: "OPERATIONAL",
 
   /**
    *-
    */
-  '1': 'NONOPERATIONAL',
+  1: "NONOPERATIONAL",
 
   /**
    *P
    */
-  '2': 'PARTIALLY_OPERATIONAL',
+  2: "PARTIALLY_OPERATIONAL",
 
   /**
    *B
    */
-  '3': 'BACKUP_STANDBY',
+  3: "BACKUP_STANDBY",
 
   /**
    *S
    */
-  '4': 'SPARE',
+  4: "SPARE",
 
   /**
    *X
    */
-  '5': 'EXTENDED_MISSION',
+  5: "EXTENDED_MISSION",
 
   /**
    *D
    */
-  '6': 'DECAYED',
+  6: "DECAYED",
 
   /**
    *?
    */
-  '7': 'UNKNOWN'
+  7: "UNKNOWN",
 };
 
 /**
@@ -172,7 +172,7 @@ var orbitalStatusCode = {
   /**
    *XXN
    */
-  IN_ORBIT: 5
+  IN_ORBIT: 5,
 };
 
 /**
@@ -182,32 +182,32 @@ var orbitalStatusCodeName = {
   /**
    *NCE
    */
-  '0': 'NO_CURRENT_ELEMENTS',
+  0: "NO_CURRENT_ELEMENTS",
 
   /**
    *NIE
    */
-  '1': 'NO_INITIAL_ELEMENTS',
+  1: "NO_INITIAL_ELEMENTS",
 
   /**
    *NEA
    */
-  '2': 'NO_ELEMENTS_AVAILABLE',
+  2: "NO_ELEMENTS_AVAILABLE",
 
   /**
    *DOC
    */
-  '3': 'PERMANENTLY_DOCKED',
+  3: "PERMANENTLY_DOCKED",
 
   /**
    *ISS
    */
-  '4': 'DOCKED_TO_INTERNATIONAL_SPACE_STATION',
+  4: "DOCKED_TO_INTERNATIONAL_SPACE_STATION",
 
   /**
    *XXN
    */
-  '5': 'IN_ORBIT'
+  5: "IN_ORBIT",
 };
 
 /**
@@ -287,7 +287,7 @@ var orbitCenter = {
   /**
    *VE
    */
-  VENUS: 14
+  VENUS: 14,
 };
 
 /**
@@ -297,77 +297,77 @@ var orbitCenterName = {
   /**
    *AS
    */
-  '0': 'ASTEROID',
+  0: "ASTEROID",
 
   /**
    *EA
    */
-  '1': 'EARTH',
+  1: "EARTH",
 
   /**
    *EL
    */
-  '2': 'EARTH_LAGRANGE',
+  2: "EARTH_LAGRANGE",
 
   /**
    *EM
    */
-  '3': 'EARTH_MOON_BARYCENTER',
+  3: "EARTH_MOON_BARYCENTER",
 
   /**
    *JU
    */
-  '4': 'JUPITER',
+  4: "JUPITER",
 
   /**
    *MA
    */
-  '5': 'MARS',
+  5: "MARS",
 
   /**
    *ME
    */
-  '6': 'MERCURY',
+  6: "MERCURY",
 
   /**
    *MO
    */
-  '7': 'MOON_EARTH',
+  7: "MOON_EARTH",
 
   /**
    *NE
    */
-  '8': 'NEPTUNE',
+  8: "NEPTUNE",
 
   /**
    *PL
    */
-  '9': 'PLUTO',
+  9: "PLUTO",
 
   /**
    *SA
    */
-  '10': 'SATURN',
+  10: "SATURN",
 
   /**
    *SS
    */
-  '11': 'SOLAR_SYSTEM_ESCAPE',
+  11: "SOLAR_SYSTEM_ESCAPE",
 
   /**
    *SU
    */
-  '12': 'SUN',
+  12: "SUN",
 
   /**
    *UR
    */
-  '13': 'URANUS',
+  13: "URANUS",
 
   /**
    *VE
    */
-  '14': 'VENUS'
+  14: "VENUS",
 };
 
 /**
@@ -392,7 +392,7 @@ var orbitType = {
   /**
    *3
    */
-  IMPACT: 3
+  IMPACT: 3,
 };
 
 /**
@@ -402,22 +402,22 @@ var orbitTypeName = {
   /**
    *0
    */
-  '0': 'ORBIT',
+  0: "ORBIT",
 
   /**
    *1
    */
-  '1': 'DOCKED',
+  1: "DOCKED",
 
   /**
    *2
    */
-  '2': 'LANDING',
+  2: "LANDING",
 
   /**
    *3
    */
-  '3': 'IMPACT'
+  3: "IMPACT",
 };
 
 /**
@@ -425,15 +425,15 @@ var orbitTypeName = {
  */
 var massType = {
   DRY: 0,
-  WET: 1
+  WET: 1,
 };
 
 /**
  * @enum {string}
  */
 var massTypeName = {
-  '0': 'DRY',
-  '1': 'WET'
+  0: "DRY",
+  1: "WET",
 };
 
 /**
@@ -456,7 +456,7 @@ function SATCAT() {
  * @param {flatbuffers.ByteBuffer} bb
  * @returns {SATCAT}
  */
-SATCAT.prototype.__init = function(i, bb) {
+SATCAT.prototype.__init = function (i, bb) {
   this.bb_pos = i;
   this.bb = bb;
   return this;
@@ -467,8 +467,11 @@ SATCAT.prototype.__init = function(i, bb) {
  * @param {SATCAT=} obj
  * @returns {SATCAT}
  */
-SATCAT.getRootAsSATCAT = function(bb, obj) {
-  return (obj || new SATCAT).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+SATCAT.getRootAsSATCAT = function (bb, obj) {
+  return (obj || new SATCAT()).__init(
+    bb.readInt32(bb.position()) + bb.position(),
+    bb
+  );
 };
 
 /**
@@ -476,33 +479,40 @@ SATCAT.getRootAsSATCAT = function(bb, obj) {
  * @param {SATCAT=} obj
  * @returns {SATCAT}
  */
-SATCAT.getSizePrefixedRootAsSATCAT = function(bb, obj) {
+SATCAT.getSizePrefixedRootAsSATCAT = function (bb, obj) {
   bb.setPosition(bb.position() + flatbuffers.SIZE_PREFIX_LENGTH);
-  return (obj || new SATCAT).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+  return (obj || new SATCAT()).__init(
+    bb.readInt32(bb.position()) + bb.position(),
+    bb
+  );
 };
 
 /**
  * @param {flatbuffers.Encoding=} optionalEncoding
  * @returns {string|Uint8Array|null}
  */
-SATCAT.prototype.OBJECT_NAME = function(optionalEncoding) {
+SATCAT.prototype.OBJECT_NAME = function (optionalEncoding) {
   var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+  return offset
+    ? this.bb.__string(this.bb_pos + offset, optionalEncoding)
+    : null;
 };
 
 /**
  * @param {flatbuffers.Encoding=} optionalEncoding
  * @returns {string|Uint8Array|null}
  */
-SATCAT.prototype.OBJECT_ID = function(optionalEncoding) {
+SATCAT.prototype.OBJECT_ID = function (optionalEncoding) {
   var offset = this.bb.__offset(this.bb_pos, 6);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+  return offset
+    ? this.bb.__string(this.bb_pos + offset, optionalEncoding)
+    : null;
 };
 
 /**
  * @returns {number}
  */
-SATCAT.prototype.NORAD_CAT_ID = function() {
+SATCAT.prototype.NORAD_CAT_ID = function () {
   var offset = this.bb.__offset(this.bb_pos, 8);
   return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
 };
@@ -511,7 +521,7 @@ SATCAT.prototype.NORAD_CAT_ID = function() {
  * @param {number} value
  * @returns {boolean}
  */
-SATCAT.prototype.mutate_NORAD_CAT_ID = function(value) {
+SATCAT.prototype.mutate_NORAD_CAT_ID = function (value) {
   var offset = this.bb.__offset(this.bb_pos, 8);
 
   if (offset === 0) {
@@ -525,7 +535,7 @@ SATCAT.prototype.mutate_NORAD_CAT_ID = function(value) {
 /**
  * @returns {boolean}
  */
-SATCAT.prototype.MULTIPLE_NAMES = function() {
+SATCAT.prototype.MULTIPLE_NAMES = function () {
   var offset = this.bb.__offset(this.bb_pos, 10);
   return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
 };
@@ -534,7 +544,7 @@ SATCAT.prototype.MULTIPLE_NAMES = function() {
  * @param {boolean} value
  * @returns {boolean}
  */
-SATCAT.prototype.mutate_MULTIPLE_NAMES = function(value) {
+SATCAT.prototype.mutate_MULTIPLE_NAMES = function (value) {
   var offset = this.bb.__offset(this.bb_pos, 10);
 
   if (offset === 0) {
@@ -548,16 +558,18 @@ SATCAT.prototype.mutate_MULTIPLE_NAMES = function(value) {
 /**
  * @returns {objType}
  */
-SATCAT.prototype.OBJECT_TYPE = function() {
+SATCAT.prototype.OBJECT_TYPE = function () {
   var offset = this.bb.__offset(this.bb_pos, 12);
-  return offset ? /** @type {objType} */ (this.bb.readInt8(this.bb_pos + offset)) : objType.UNKNOWN;
+  return offset
+    ? /** @type {objType} */ (this.bb.readInt8(this.bb_pos + offset))
+    : objType.UNKNOWN;
 };
 
 /**
  * @param {objType} value
  * @returns {boolean}
  */
-SATCAT.prototype.mutate_OBJECT_TYPE = function(value) {
+SATCAT.prototype.mutate_OBJECT_TYPE = function (value) {
   var offset = this.bb.__offset(this.bb_pos, 12);
 
   if (offset === 0) {
@@ -571,16 +583,18 @@ SATCAT.prototype.mutate_OBJECT_TYPE = function(value) {
 /**
  * @returns {opsStatusCode}
  */
-SATCAT.prototype.OPS_STATUS_CODE = function() {
+SATCAT.prototype.OPS_STATUS_CODE = function () {
   var offset = this.bb.__offset(this.bb_pos, 14);
-  return offset ? /** @type {opsStatusCode} */ (this.bb.readInt8(this.bb_pos + offset)) : opsStatusCode.UNKNOWN;
+  return offset
+    ? /** @type {opsStatusCode} */ (this.bb.readInt8(this.bb_pos + offset))
+    : opsStatusCode.UNKNOWN;
 };
 
 /**
  * @param {opsStatusCode} value
  * @returns {boolean}
  */
-SATCAT.prototype.mutate_OPS_STATUS_CODE = function(value) {
+SATCAT.prototype.mutate_OPS_STATUS_CODE = function (value) {
   var offset = this.bb.__offset(this.bb_pos, 14);
 
   if (offset === 0) {
@@ -595,42 +609,50 @@ SATCAT.prototype.mutate_OPS_STATUS_CODE = function(value) {
  * @param {flatbuffers.Encoding=} optionalEncoding
  * @returns {string|Uint8Array|null}
  */
-SATCAT.prototype.OWNER = function(optionalEncoding) {
+SATCAT.prototype.OWNER = function (optionalEncoding) {
   var offset = this.bb.__offset(this.bb_pos, 16);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+  return offset
+    ? this.bb.__string(this.bb_pos + offset, optionalEncoding)
+    : null;
 };
 
 /**
  * @param {flatbuffers.Encoding=} optionalEncoding
  * @returns {string|Uint8Array|null}
  */
-SATCAT.prototype.LAUNCH_DATE = function(optionalEncoding) {
+SATCAT.prototype.LAUNCH_DATE = function (optionalEncoding) {
   var offset = this.bb.__offset(this.bb_pos, 18);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+  return offset
+    ? this.bb.__string(this.bb_pos + offset, optionalEncoding)
+    : null;
 };
 
 /**
  * @param {flatbuffers.Encoding=} optionalEncoding
  * @returns {string|Uint8Array|null}
  */
-SATCAT.prototype.LAUNCH_SITE = function(optionalEncoding) {
+SATCAT.prototype.LAUNCH_SITE = function (optionalEncoding) {
   var offset = this.bb.__offset(this.bb_pos, 20);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+  return offset
+    ? this.bb.__string(this.bb_pos + offset, optionalEncoding)
+    : null;
 };
 
 /**
  * @param {flatbuffers.Encoding=} optionalEncoding
  * @returns {string|Uint8Array|null}
  */
-SATCAT.prototype.DECAY_DATE = function(optionalEncoding) {
+SATCAT.prototype.DECAY_DATE = function (optionalEncoding) {
   var offset = this.bb.__offset(this.bb_pos, 22);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+  return offset
+    ? this.bb.__string(this.bb_pos + offset, optionalEncoding)
+    : null;
 };
 
 /**
  * @returns {number}
  */
-SATCAT.prototype.PERIOD = function() {
+SATCAT.prototype.PERIOD = function () {
   var offset = this.bb.__offset(this.bb_pos, 24);
   return offset ? this.bb.readFloat32(this.bb_pos + offset) : 0.0;
 };
@@ -639,7 +661,7 @@ SATCAT.prototype.PERIOD = function() {
  * @param {number} value
  * @returns {boolean}
  */
-SATCAT.prototype.mutate_PERIOD = function(value) {
+SATCAT.prototype.mutate_PERIOD = function (value) {
   var offset = this.bb.__offset(this.bb_pos, 24);
 
   if (offset === 0) {
@@ -653,7 +675,7 @@ SATCAT.prototype.mutate_PERIOD = function(value) {
 /**
  * @returns {number}
  */
-SATCAT.prototype.INCLINATION = function() {
+SATCAT.prototype.INCLINATION = function () {
   var offset = this.bb.__offset(this.bb_pos, 26);
   return offset ? this.bb.readFloat32(this.bb_pos + offset) : 0.0;
 };
@@ -662,7 +684,7 @@ SATCAT.prototype.INCLINATION = function() {
  * @param {number} value
  * @returns {boolean}
  */
-SATCAT.prototype.mutate_INCLINATION = function(value) {
+SATCAT.prototype.mutate_INCLINATION = function (value) {
   var offset = this.bb.__offset(this.bb_pos, 26);
 
   if (offset === 0) {
@@ -676,7 +698,7 @@ SATCAT.prototype.mutate_INCLINATION = function(value) {
 /**
  * @returns {number}
  */
-SATCAT.prototype.APOGEE = function() {
+SATCAT.prototype.APOGEE = function () {
   var offset = this.bb.__offset(this.bb_pos, 28);
   return offset ? this.bb.readFloat32(this.bb_pos + offset) : 0.0;
 };
@@ -685,7 +707,7 @@ SATCAT.prototype.APOGEE = function() {
  * @param {number} value
  * @returns {boolean}
  */
-SATCAT.prototype.mutate_APOGEE = function(value) {
+SATCAT.prototype.mutate_APOGEE = function (value) {
   var offset = this.bb.__offset(this.bb_pos, 28);
 
   if (offset === 0) {
@@ -699,7 +721,7 @@ SATCAT.prototype.mutate_APOGEE = function(value) {
 /**
  * @returns {number}
  */
-SATCAT.prototype.PERIGEE = function() {
+SATCAT.prototype.PERIGEE = function () {
   var offset = this.bb.__offset(this.bb_pos, 30);
   return offset ? this.bb.readFloat32(this.bb_pos + offset) : 0.0;
 };
@@ -708,7 +730,7 @@ SATCAT.prototype.PERIGEE = function() {
  * @param {number} value
  * @returns {boolean}
  */
-SATCAT.prototype.mutate_PERIGEE = function(value) {
+SATCAT.prototype.mutate_PERIGEE = function (value) {
   var offset = this.bb.__offset(this.bb_pos, 30);
 
   if (offset === 0) {
@@ -722,7 +744,7 @@ SATCAT.prototype.mutate_PERIGEE = function(value) {
 /**
  * @returns {number}
  */
-SATCAT.prototype.RCS = function() {
+SATCAT.prototype.RCS = function () {
   var offset = this.bb.__offset(this.bb_pos, 32);
   return offset ? this.bb.readFloat32(this.bb_pos + offset) : 0.0;
 };
@@ -731,7 +753,7 @@ SATCAT.prototype.RCS = function() {
  * @param {number} value
  * @returns {boolean}
  */
-SATCAT.prototype.mutate_RCS = function(value) {
+SATCAT.prototype.mutate_RCS = function (value) {
   var offset = this.bb.__offset(this.bb_pos, 32);
 
   if (offset === 0) {
@@ -745,16 +767,18 @@ SATCAT.prototype.mutate_RCS = function(value) {
 /**
  * @returns {orbitalStatusCode}
  */
-SATCAT.prototype.DATA_STATUS_CODE = function() {
+SATCAT.prototype.DATA_STATUS_CODE = function () {
   var offset = this.bb.__offset(this.bb_pos, 34);
-  return offset ? /** @type {orbitalStatusCode} */ (this.bb.readInt8(this.bb_pos + offset)) : orbitalStatusCode.NO_CURRENT_ELEMENTS;
+  return offset
+    ? /** @type {orbitalStatusCode} */ (this.bb.readInt8(this.bb_pos + offset))
+    : orbitalStatusCode.NO_CURRENT_ELEMENTS;
 };
 
 /**
  * @param {orbitalStatusCode} value
  * @returns {boolean}
  */
-SATCAT.prototype.mutate_DATA_STATUS_CODE = function(value) {
+SATCAT.prototype.mutate_DATA_STATUS_CODE = function (value) {
   var offset = this.bb.__offset(this.bb_pos, 34);
 
   if (offset === 0) {
@@ -769,24 +793,28 @@ SATCAT.prototype.mutate_DATA_STATUS_CODE = function(value) {
  * @param {flatbuffers.Encoding=} optionalEncoding
  * @returns {string|Uint8Array|null}
  */
-SATCAT.prototype.ORBIT_CENTER = function(optionalEncoding) {
+SATCAT.prototype.ORBIT_CENTER = function (optionalEncoding) {
   var offset = this.bb.__offset(this.bb_pos, 36);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+  return offset
+    ? this.bb.__string(this.bb_pos + offset, optionalEncoding)
+    : null;
 };
 
 /**
  * @returns {orbitType}
  */
-SATCAT.prototype.ORBIT_TYPE = function() {
+SATCAT.prototype.ORBIT_TYPE = function () {
   var offset = this.bb.__offset(this.bb_pos, 38);
-  return offset ? /** @type {orbitType} */ (this.bb.readInt8(this.bb_pos + offset)) : orbitType.ORBIT;
+  return offset
+    ? /** @type {orbitType} */ (this.bb.readInt8(this.bb_pos + offset))
+    : orbitType.ORBIT;
 };
 
 /**
  * @param {orbitType} value
  * @returns {boolean}
  */
-SATCAT.prototype.mutate_ORBIT_TYPE = function(value) {
+SATCAT.prototype.mutate_ORBIT_TYPE = function (value) {
   var offset = this.bb.__offset(this.bb_pos, 38);
 
   if (offset === 0) {
@@ -800,7 +828,7 @@ SATCAT.prototype.mutate_ORBIT_TYPE = function(value) {
 /**
  * @param {flatbuffers.Builder} builder
  */
-SATCAT.startSATCAT = function(builder) {
+SATCAT.startSATCAT = function (builder) {
   builder.startObject(18);
 };
 
@@ -808,7 +836,7 @@ SATCAT.startSATCAT = function(builder) {
  * @param {flatbuffers.Builder} builder
  * @param {flatbuffers.Offset} OBJECT_NAMEOffset
  */
-SATCAT.addOBJECT_NAME = function(builder, OBJECT_NAMEOffset) {
+SATCAT.addOBJECT_NAME = function (builder, OBJECT_NAMEOffset) {
   builder.addFieldOffset(0, OBJECT_NAMEOffset, 0);
 };
 
@@ -816,7 +844,7 @@ SATCAT.addOBJECT_NAME = function(builder, OBJECT_NAMEOffset) {
  * @param {flatbuffers.Builder} builder
  * @param {flatbuffers.Offset} OBJECT_IDOffset
  */
-SATCAT.addOBJECT_ID = function(builder, OBJECT_IDOffset) {
+SATCAT.addOBJECT_ID = function (builder, OBJECT_IDOffset) {
   builder.addFieldOffset(1, OBJECT_IDOffset, 0);
 };
 
@@ -824,7 +852,7 @@ SATCAT.addOBJECT_ID = function(builder, OBJECT_IDOffset) {
  * @param {flatbuffers.Builder} builder
  * @param {number} NORAD_CAT_ID
  */
-SATCAT.addNORAD_CAT_ID = function(builder, NORAD_CAT_ID) {
+SATCAT.addNORAD_CAT_ID = function (builder, NORAD_CAT_ID) {
   builder.addFieldInt32(2, NORAD_CAT_ID, 0);
 };
 
@@ -832,7 +860,7 @@ SATCAT.addNORAD_CAT_ID = function(builder, NORAD_CAT_ID) {
  * @param {flatbuffers.Builder} builder
  * @param {boolean} MULTIPLE_NAMES
  */
-SATCAT.addMULTIPLE_NAMES = function(builder, MULTIPLE_NAMES) {
+SATCAT.addMULTIPLE_NAMES = function (builder, MULTIPLE_NAMES) {
   builder.addFieldInt8(3, +MULTIPLE_NAMES, +false);
 };
 
@@ -840,7 +868,7 @@ SATCAT.addMULTIPLE_NAMES = function(builder, MULTIPLE_NAMES) {
  * @param {flatbuffers.Builder} builder
  * @param {objType} OBJECT_TYPE
  */
-SATCAT.addOBJECT_TYPE = function(builder, OBJECT_TYPE) {
+SATCAT.addOBJECT_TYPE = function (builder, OBJECT_TYPE) {
   builder.addFieldInt8(4, OBJECT_TYPE, objType.UNKNOWN);
 };
 
@@ -848,7 +876,7 @@ SATCAT.addOBJECT_TYPE = function(builder, OBJECT_TYPE) {
  * @param {flatbuffers.Builder} builder
  * @param {opsStatusCode} OPS_STATUS_CODE
  */
-SATCAT.addOPS_STATUS_CODE = function(builder, OPS_STATUS_CODE) {
+SATCAT.addOPS_STATUS_CODE = function (builder, OPS_STATUS_CODE) {
   builder.addFieldInt8(5, OPS_STATUS_CODE, opsStatusCode.UNKNOWN);
 };
 
@@ -856,7 +884,7 @@ SATCAT.addOPS_STATUS_CODE = function(builder, OPS_STATUS_CODE) {
  * @param {flatbuffers.Builder} builder
  * @param {flatbuffers.Offset} OWNEROffset
  */
-SATCAT.addOWNER = function(builder, OWNEROffset) {
+SATCAT.addOWNER = function (builder, OWNEROffset) {
   builder.addFieldOffset(6, OWNEROffset, 0);
 };
 
@@ -864,7 +892,7 @@ SATCAT.addOWNER = function(builder, OWNEROffset) {
  * @param {flatbuffers.Builder} builder
  * @param {flatbuffers.Offset} LAUNCH_DATEOffset
  */
-SATCAT.addLAUNCH_DATE = function(builder, LAUNCH_DATEOffset) {
+SATCAT.addLAUNCH_DATE = function (builder, LAUNCH_DATEOffset) {
   builder.addFieldOffset(7, LAUNCH_DATEOffset, 0);
 };
 
@@ -872,7 +900,7 @@ SATCAT.addLAUNCH_DATE = function(builder, LAUNCH_DATEOffset) {
  * @param {flatbuffers.Builder} builder
  * @param {flatbuffers.Offset} LAUNCH_SITEOffset
  */
-SATCAT.addLAUNCH_SITE = function(builder, LAUNCH_SITEOffset) {
+SATCAT.addLAUNCH_SITE = function (builder, LAUNCH_SITEOffset) {
   builder.addFieldOffset(8, LAUNCH_SITEOffset, 0);
 };
 
@@ -880,7 +908,7 @@ SATCAT.addLAUNCH_SITE = function(builder, LAUNCH_SITEOffset) {
  * @param {flatbuffers.Builder} builder
  * @param {flatbuffers.Offset} DECAY_DATEOffset
  */
-SATCAT.addDECAY_DATE = function(builder, DECAY_DATEOffset) {
+SATCAT.addDECAY_DATE = function (builder, DECAY_DATEOffset) {
   builder.addFieldOffset(9, DECAY_DATEOffset, 0);
 };
 
@@ -888,7 +916,7 @@ SATCAT.addDECAY_DATE = function(builder, DECAY_DATEOffset) {
  * @param {flatbuffers.Builder} builder
  * @param {number} PERIOD
  */
-SATCAT.addPERIOD = function(builder, PERIOD) {
+SATCAT.addPERIOD = function (builder, PERIOD) {
   builder.addFieldFloat32(10, PERIOD, 0.0);
 };
 
@@ -896,7 +924,7 @@ SATCAT.addPERIOD = function(builder, PERIOD) {
  * @param {flatbuffers.Builder} builder
  * @param {number} INCLINATION
  */
-SATCAT.addINCLINATION = function(builder, INCLINATION) {
+SATCAT.addINCLINATION = function (builder, INCLINATION) {
   builder.addFieldFloat32(11, INCLINATION, 0.0);
 };
 
@@ -904,7 +932,7 @@ SATCAT.addINCLINATION = function(builder, INCLINATION) {
  * @param {flatbuffers.Builder} builder
  * @param {number} APOGEE
  */
-SATCAT.addAPOGEE = function(builder, APOGEE) {
+SATCAT.addAPOGEE = function (builder, APOGEE) {
   builder.addFieldFloat32(12, APOGEE, 0.0);
 };
 
@@ -912,7 +940,7 @@ SATCAT.addAPOGEE = function(builder, APOGEE) {
  * @param {flatbuffers.Builder} builder
  * @param {number} PERIGEE
  */
-SATCAT.addPERIGEE = function(builder, PERIGEE) {
+SATCAT.addPERIGEE = function (builder, PERIGEE) {
   builder.addFieldFloat32(13, PERIGEE, 0.0);
 };
 
@@ -920,7 +948,7 @@ SATCAT.addPERIGEE = function(builder, PERIGEE) {
  * @param {flatbuffers.Builder} builder
  * @param {number} RCS
  */
-SATCAT.addRCS = function(builder, RCS) {
+SATCAT.addRCS = function (builder, RCS) {
   builder.addFieldFloat32(14, RCS, 0.0);
 };
 
@@ -928,15 +956,19 @@ SATCAT.addRCS = function(builder, RCS) {
  * @param {flatbuffers.Builder} builder
  * @param {orbitalStatusCode} DATA_STATUS_CODE
  */
-SATCAT.addDATA_STATUS_CODE = function(builder, DATA_STATUS_CODE) {
-  builder.addFieldInt8(15, DATA_STATUS_CODE, orbitalStatusCode.NO_CURRENT_ELEMENTS);
+SATCAT.addDATA_STATUS_CODE = function (builder, DATA_STATUS_CODE) {
+  builder.addFieldInt8(
+    15,
+    DATA_STATUS_CODE,
+    orbitalStatusCode.NO_CURRENT_ELEMENTS
+  );
 };
 
 /**
  * @param {flatbuffers.Builder} builder
  * @param {flatbuffers.Offset} ORBIT_CENTEROffset
  */
-SATCAT.addORBIT_CENTER = function(builder, ORBIT_CENTEROffset) {
+SATCAT.addORBIT_CENTER = function (builder, ORBIT_CENTEROffset) {
   builder.addFieldOffset(16, ORBIT_CENTEROffset, 0);
 };
 
@@ -944,7 +976,7 @@ SATCAT.addORBIT_CENTER = function(builder, ORBIT_CENTEROffset) {
  * @param {flatbuffers.Builder} builder
  * @param {orbitType} ORBIT_TYPE
  */
-SATCAT.addORBIT_TYPE = function(builder, ORBIT_TYPE) {
+SATCAT.addORBIT_TYPE = function (builder, ORBIT_TYPE) {
   builder.addFieldInt8(17, ORBIT_TYPE, orbitType.ORBIT);
 };
 
@@ -952,7 +984,7 @@ SATCAT.addORBIT_TYPE = function(builder, ORBIT_TYPE) {
  * @param {flatbuffers.Builder} builder
  * @returns {flatbuffers.Offset}
  */
-SATCAT.endSATCAT = function(builder) {
+SATCAT.endSATCAT = function (builder) {
   var offset = builder.endObject();
   return offset;
 };
@@ -961,7 +993,7 @@ SATCAT.endSATCAT = function(builder) {
  * @param {flatbuffers.Builder} builder
  * @param {flatbuffers.Offset} offset
  */
-SATCAT.finishSATCATBuffer = function(builder, offset) {
+SATCAT.finishSATCATBuffer = function (builder, offset) {
   builder.finish(offset);
 };
 
@@ -969,8 +1001,8 @@ SATCAT.finishSATCATBuffer = function(builder, offset) {
  * @param {flatbuffers.Builder} builder
  * @param {flatbuffers.Offset} offset
  */
-SATCAT.finishSizePrefixedSATCATBuffer = function(builder, offset) {
-  builder.finish(offset, undefined, true);
+SATCAT.finishSizePrefixedSATCATBuffer = function (builder, offset) {
+  builder.finish(offset, "SATC", true);
 };
 
 /**
@@ -995,7 +1027,27 @@ SATCAT.finishSizePrefixedSATCATBuffer = function(builder, offset) {
  * @param {orbitType} ORBIT_TYPE
  * @returns {flatbuffers.Offset}
  */
-SATCAT.createSATCAT = function(builder, OBJECT_NAMEOffset, OBJECT_IDOffset, NORAD_CAT_ID, MULTIPLE_NAMES, OBJECT_TYPE, OPS_STATUS_CODE, OWNEROffset, LAUNCH_DATEOffset, LAUNCH_SITEOffset, DECAY_DATEOffset, PERIOD, INCLINATION, APOGEE, PERIGEE, RCS, DATA_STATUS_CODE, ORBIT_CENTEROffset, ORBIT_TYPE) {
+SATCAT.createSATCAT = function (
+  builder,
+  OBJECT_NAMEOffset,
+  OBJECT_IDOffset,
+  NORAD_CAT_ID,
+  MULTIPLE_NAMES,
+  OBJECT_TYPE,
+  OPS_STATUS_CODE,
+  OWNEROffset,
+  LAUNCH_DATEOffset,
+  LAUNCH_SITEOffset,
+  DECAY_DATEOffset,
+  PERIOD,
+  INCLINATION,
+  APOGEE,
+  PERIGEE,
+  RCS,
+  DATA_STATUS_CODE,
+  ORBIT_CENTEROffset,
+  ORBIT_TYPE
+) {
   SATCAT.startSATCAT(builder);
   SATCAT.addOBJECT_NAME(builder, OBJECT_NAMEOffset);
   SATCAT.addOBJECT_ID(builder, OBJECT_IDOffset);
@@ -1016,7 +1068,7 @@ SATCAT.createSATCAT = function(builder, OBJECT_NAMEOffset, OBJECT_IDOffset, NORA
   SATCAT.addORBIT_CENTER(builder, ORBIT_CENTEROffset);
   SATCAT.addORBIT_TYPE(builder, ORBIT_TYPE);
   return SATCAT.endSATCAT(builder);
-}
+};
 
 /**
  * @constructor
@@ -1038,7 +1090,7 @@ function PAYLOAD() {
  * @param {flatbuffers.ByteBuffer} bb
  * @returns {PAYLOAD}
  */
-PAYLOAD.prototype.__init = function(i, bb) {
+PAYLOAD.prototype.__init = function (i, bb) {
   this.bb_pos = i;
   this.bb = bb;
   return this;
@@ -1049,8 +1101,11 @@ PAYLOAD.prototype.__init = function(i, bb) {
  * @param {PAYLOAD=} obj
  * @returns {PAYLOAD}
  */
-PAYLOAD.getRootAsPAYLOAD = function(bb, obj) {
-  return (obj || new PAYLOAD).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+PAYLOAD.getRootAsPAYLOAD = function (bb, obj) {
+  return (obj || new PAYLOAD()).__init(
+    bb.readInt32(bb.position()) + bb.position(),
+    bb
+  );
 };
 
 /**
@@ -1058,42 +1113,51 @@ PAYLOAD.getRootAsPAYLOAD = function(bb, obj) {
  * @param {PAYLOAD=} obj
  * @returns {PAYLOAD}
  */
-PAYLOAD.getSizePrefixedRootAsPAYLOAD = function(bb, obj) {
+PAYLOAD.getSizePrefixedRootAsPAYLOAD = function (bb, obj) {
   bb.setPosition(bb.position() + flatbuffers.SIZE_PREFIX_LENGTH);
-  return (obj || new PAYLOAD).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+  return (obj || new PAYLOAD()).__init(
+    bb.readInt32(bb.position()) + bb.position(),
+    bb
+  );
 };
 
 /**
  * @param {flatbuffers.Encoding=} optionalEncoding
  * @returns {string|Uint8Array|null}
  */
-PAYLOAD.prototype.OBJECT_ID = function(optionalEncoding) {
+PAYLOAD.prototype.OBJECT_ID = function (optionalEncoding) {
   var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+  return offset
+    ? this.bb.__string(this.bb_pos + offset, optionalEncoding)
+    : null;
 };
 
 /**
  * @param {flatbuffers.Encoding=} optionalEncoding
  * @returns {string|Uint8Array|null}
  */
-PAYLOAD.prototype.OBJECT_NAME = function(optionalEncoding) {
+PAYLOAD.prototype.OBJECT_NAME = function (optionalEncoding) {
   var offset = this.bb.__offset(this.bb_pos, 6);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+  return offset
+    ? this.bb.__string(this.bb_pos + offset, optionalEncoding)
+    : null;
 };
 
 /**
  * @param {flatbuffers.Encoding=} optionalEncoding
  * @returns {string|Uint8Array|null}
  */
-PAYLOAD.prototype.DEPLOYMENT_DATE = function(optionalEncoding) {
+PAYLOAD.prototype.DEPLOYMENT_DATE = function (optionalEncoding) {
   var offset = this.bb.__offset(this.bb_pos, 8);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+  return offset
+    ? this.bb.__string(this.bb_pos + offset, optionalEncoding)
+    : null;
 };
 
 /**
  * @returns {boolean}
  */
-PAYLOAD.prototype.MANEUVERABLE = function() {
+PAYLOAD.prototype.MANEUVERABLE = function () {
   var offset = this.bb.__offset(this.bb_pos, 10);
   return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
 };
@@ -1102,7 +1166,7 @@ PAYLOAD.prototype.MANEUVERABLE = function() {
  * @param {boolean} value
  * @returns {boolean}
  */
-PAYLOAD.prototype.mutate_MANEUVERABLE = function(value) {
+PAYLOAD.prototype.mutate_MANEUVERABLE = function (value) {
   var offset = this.bb.__offset(this.bb_pos, 10);
 
   if (offset === 0) {
@@ -1116,7 +1180,7 @@ PAYLOAD.prototype.mutate_MANEUVERABLE = function(value) {
 /**
  * @returns {number}
  */
-PAYLOAD.prototype.SIZE = function() {
+PAYLOAD.prototype.SIZE = function () {
   var offset = this.bb.__offset(this.bb_pos, 12);
   return offset ? this.bb.readFloat32(this.bb_pos + offset) : 0.0;
 };
@@ -1125,7 +1189,7 @@ PAYLOAD.prototype.SIZE = function() {
  * @param {number} value
  * @returns {boolean}
  */
-PAYLOAD.prototype.mutate_SIZE = function(value) {
+PAYLOAD.prototype.mutate_SIZE = function (value) {
   var offset = this.bb.__offset(this.bb_pos, 12);
 
   if (offset === 0) {
@@ -1139,7 +1203,7 @@ PAYLOAD.prototype.mutate_SIZE = function(value) {
 /**
  * @returns {number}
  */
-PAYLOAD.prototype.MASS = function() {
+PAYLOAD.prototype.MASS = function () {
   var offset = this.bb.__offset(this.bb_pos, 14);
   return offset ? this.bb.readFloat32(this.bb_pos + offset) : 0.0;
 };
@@ -1148,7 +1212,7 @@ PAYLOAD.prototype.MASS = function() {
  * @param {number} value
  * @returns {boolean}
  */
-PAYLOAD.prototype.mutate_MASS = function(value) {
+PAYLOAD.prototype.mutate_MASS = function (value) {
   var offset = this.bb.__offset(this.bb_pos, 14);
 
   if (offset === 0) {
@@ -1162,16 +1226,18 @@ PAYLOAD.prototype.mutate_MASS = function(value) {
 /**
  * @returns {massType}
  */
-PAYLOAD.prototype.MASS_TYPE = function() {
+PAYLOAD.prototype.MASS_TYPE = function () {
   var offset = this.bb.__offset(this.bb_pos, 16);
-  return offset ? /** @type {massType} */ (this.bb.readInt8(this.bb_pos + offset)) : massType.DRY;
+  return offset
+    ? /** @type {massType} */ (this.bb.readInt8(this.bb_pos + offset))
+    : massType.DRY;
 };
 
 /**
  * @param {massType} value
  * @returns {boolean}
  */
-PAYLOAD.prototype.mutate_MASS_TYPE = function(value) {
+PAYLOAD.prototype.mutate_MASS_TYPE = function (value) {
   var offset = this.bb.__offset(this.bb_pos, 16);
 
   if (offset === 0) {
@@ -1185,7 +1251,7 @@ PAYLOAD.prototype.mutate_MASS_TYPE = function(value) {
 /**
  * @param {flatbuffers.Builder} builder
  */
-PAYLOAD.startPAYLOAD = function(builder) {
+PAYLOAD.startPAYLOAD = function (builder) {
   builder.startObject(7);
 };
 
@@ -1193,7 +1259,7 @@ PAYLOAD.startPAYLOAD = function(builder) {
  * @param {flatbuffers.Builder} builder
  * @param {flatbuffers.Offset} OBJECT_IDOffset
  */
-PAYLOAD.addOBJECT_ID = function(builder, OBJECT_IDOffset) {
+PAYLOAD.addOBJECT_ID = function (builder, OBJECT_IDOffset) {
   builder.addFieldOffset(0, OBJECT_IDOffset, 0);
 };
 
@@ -1201,7 +1267,7 @@ PAYLOAD.addOBJECT_ID = function(builder, OBJECT_IDOffset) {
  * @param {flatbuffers.Builder} builder
  * @param {flatbuffers.Offset} OBJECT_NAMEOffset
  */
-PAYLOAD.addOBJECT_NAME = function(builder, OBJECT_NAMEOffset) {
+PAYLOAD.addOBJECT_NAME = function (builder, OBJECT_NAMEOffset) {
   builder.addFieldOffset(1, OBJECT_NAMEOffset, 0);
 };
 
@@ -1209,7 +1275,7 @@ PAYLOAD.addOBJECT_NAME = function(builder, OBJECT_NAMEOffset) {
  * @param {flatbuffers.Builder} builder
  * @param {flatbuffers.Offset} DEPLOYMENT_DATEOffset
  */
-PAYLOAD.addDEPLOYMENT_DATE = function(builder, DEPLOYMENT_DATEOffset) {
+PAYLOAD.addDEPLOYMENT_DATE = function (builder, DEPLOYMENT_DATEOffset) {
   builder.addFieldOffset(2, DEPLOYMENT_DATEOffset, 0);
 };
 
@@ -1217,7 +1283,7 @@ PAYLOAD.addDEPLOYMENT_DATE = function(builder, DEPLOYMENT_DATEOffset) {
  * @param {flatbuffers.Builder} builder
  * @param {boolean} MANEUVERABLE
  */
-PAYLOAD.addMANEUVERABLE = function(builder, MANEUVERABLE) {
+PAYLOAD.addMANEUVERABLE = function (builder, MANEUVERABLE) {
   builder.addFieldInt8(3, +MANEUVERABLE, +false);
 };
 
@@ -1225,7 +1291,7 @@ PAYLOAD.addMANEUVERABLE = function(builder, MANEUVERABLE) {
  * @param {flatbuffers.Builder} builder
  * @param {number} SIZE
  */
-PAYLOAD.addSIZE = function(builder, SIZE) {
+PAYLOAD.addSIZE = function (builder, SIZE) {
   builder.addFieldFloat32(4, SIZE, 0.0);
 };
 
@@ -1233,7 +1299,7 @@ PAYLOAD.addSIZE = function(builder, SIZE) {
  * @param {flatbuffers.Builder} builder
  * @param {number} MASS
  */
-PAYLOAD.addMASS = function(builder, MASS) {
+PAYLOAD.addMASS = function (builder, MASS) {
   builder.addFieldFloat32(5, MASS, 0.0);
 };
 
@@ -1241,7 +1307,7 @@ PAYLOAD.addMASS = function(builder, MASS) {
  * @param {flatbuffers.Builder} builder
  * @param {massType} MASS_TYPE
  */
-PAYLOAD.addMASS_TYPE = function(builder, MASS_TYPE) {
+PAYLOAD.addMASS_TYPE = function (builder, MASS_TYPE) {
   builder.addFieldInt8(6, MASS_TYPE, massType.DRY);
 };
 
@@ -1249,7 +1315,7 @@ PAYLOAD.addMASS_TYPE = function(builder, MASS_TYPE) {
  * @param {flatbuffers.Builder} builder
  * @returns {flatbuffers.Offset}
  */
-PAYLOAD.endPAYLOAD = function(builder) {
+PAYLOAD.endPAYLOAD = function (builder) {
   var offset = builder.endObject();
   return offset;
 };
@@ -1265,7 +1331,16 @@ PAYLOAD.endPAYLOAD = function(builder) {
  * @param {massType} MASS_TYPE
  * @returns {flatbuffers.Offset}
  */
-PAYLOAD.createPAYLOAD = function(builder, OBJECT_IDOffset, OBJECT_NAMEOffset, DEPLOYMENT_DATEOffset, MANEUVERABLE, SIZE, MASS, MASS_TYPE) {
+PAYLOAD.createPAYLOAD = function (
+  builder,
+  OBJECT_IDOffset,
+  OBJECT_NAMEOffset,
+  DEPLOYMENT_DATEOffset,
+  MANEUVERABLE,
+  SIZE,
+  MASS,
+  MASS_TYPE
+) {
   PAYLOAD.startPAYLOAD(builder);
   PAYLOAD.addOBJECT_ID(builder, OBJECT_IDOffset);
   PAYLOAD.addOBJECT_NAME(builder, OBJECT_NAMEOffset);
@@ -1275,20 +1350,20 @@ PAYLOAD.createPAYLOAD = function(builder, OBJECT_IDOffset, OBJECT_NAMEOffset, DE
   PAYLOAD.addMASS(builder, MASS);
   PAYLOAD.addMASS_TYPE(builder, MASS_TYPE);
   return PAYLOAD.endPAYLOAD(builder);
-}
+};
 
 // Exports for ECMAScript6 Modules
-export {objType};
-export {objTypeName};
-export {opsStatusCode};
-export {opsStatusCodeName};
-export {orbitalStatusCode};
-export {orbitalStatusCodeName};
-export {orbitCenter};
-export {orbitCenterName};
-export {orbitType};
-export {orbitTypeName};
-export {massType};
-export {massTypeName};
-export {SATCAT};
-export {PAYLOAD};
+export { objType };
+export { objTypeName };
+export { opsStatusCode };
+export { opsStatusCodeName };
+export { orbitalStatusCode };
+export { orbitalStatusCodeName };
+export { orbitCenter };
+export { orbitCenterName };
+export { orbitType };
+export { orbitTypeName };
+export { massType };
+export { massTypeName };
+export { SATCAT };
+export { PAYLOAD };

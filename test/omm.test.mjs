@@ -13,12 +13,13 @@ import {
   OMM,
   OMMCOLLECTION,
   MPE,
-  schema,
   referenceFrame,
   timeSystem,
   meanElementTheory,
   ephemerisType,
 } from "../src/class/OMM.flatbuffer.class.js";
+import schema from "../src/class/OMM.schema.mjs";
+
 import btoa from "btoa";
 import { writeFileSync, readFileSync, createReadStream, fstat } from "fs";
 import Ajv from "ajv";
@@ -242,7 +243,10 @@ let runTest = async () => {
         )
       )
     );
-    t.equal(true, true);
+    t.equal(
+      LEGACY.tle.map((_omm) => _omm.NORAD_CAT_ID).join(""),
+      readOMM.map((n) => n.NORAD_CAT_ID).join("")
+    );
   });
 };
 

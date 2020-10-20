@@ -27,8 +27,6 @@
     "bignumber.js": "^9.0.0",
     "btoa": "^1.2.1",
     "neat-csv": "^5.2.0",
-    "sax": "^1.2.4",
-    "saxpath": "^0.6.5",
     "xml2js": "^0.4.23"
   },
   "devDependencies": {

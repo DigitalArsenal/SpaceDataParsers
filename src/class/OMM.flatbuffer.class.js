@@ -57,7 +57,7 @@ var referenceFrame = {
   /**
    * True of Date
    */
-  TOD: 10
+  TOD: 10,
 };
 
 /**
@@ -67,57 +67,57 @@ var referenceFrameName = {
   /**
    * Earth Mean Equator and Equinox of J2000
    */
-  '0': 'EME2000',
+  0: "EME2000",
 
   /**
    *  Geocentric Celestial Reference Frame
    */
-  '1': 'GCRF',
+  1: "GCRF",
 
   /**
    * Greenwich Rotating Coordinates
    */
-  '2': 'GRC',
+  2: "GRC",
 
   /**
    * International Celestial Reference Frame
    */
-  '3': 'ICRF',
+  3: "ICRF",
 
   /**
    * International Terrestrial Reference Frame 2000
    */
-  '4': 'ITRF2000',
+  4: "ITRF2000",
 
   /**
    * International Terrestrial Reference Frame 1993
    */
-  '5': 'ITRF93',
+  5: "ITRF93",
 
   /**
    * International Terrestrial Reference Frame 1997
    */
-  '6': 'ITRF97',
+  6: "ITRF97",
 
   /**
    * Mars Centered Inertial
    */
-  '7': 'MCI',
+  7: "MCI",
 
   /**
    * True of Date, Rotating
    */
-  '8': 'TDR',
+  8: "TDR",
 
   /**
    * True Equator Mean Equinox
    */
-  '9': 'TEME',
+  9: "TEME",
 
   /**
    * True of Date
    */
-  '10': 'TOD'
+  10: "TOD",
 };
 
 /**
@@ -125,7 +125,7 @@ var referenceFrameName = {
  */
 var ephemerisType = {
   /**
-   * Simplified General Perturbation Model 
+   * Simplified General Perturbation Model
    */
   SGP: 0,
 
@@ -135,7 +135,7 @@ var ephemerisType = {
   SGP4: 1,
 
   /**
-   * Simplified Deep Space Perturbation Model 4 
+   * Simplified Deep Space Perturbation Model 4
    */
   SDP4: 2,
 
@@ -147,7 +147,7 @@ var ephemerisType = {
   /**
    * Simplified Deep Space Perturbation Model 8
    */
-  SDP8: 4
+  SDP8: 4,
 };
 
 /**
@@ -155,29 +155,29 @@ var ephemerisType = {
  */
 var ephemerisTypeName = {
   /**
-   * Simplified General Perturbation Model 
+   * Simplified General Perturbation Model
    */
-  '0': 'SGP',
+  0: "SGP",
 
   /**
    * Simplified General Perturbation Model  4
    */
-  '1': 'SGP4',
+  1: "SGP4",
 
   /**
-   * Simplified Deep Space Perturbation Model 4 
+   * Simplified Deep Space Perturbation Model 4
    */
-  '2': 'SDP4',
+  2: "SDP4",
 
   /**
    * Simplified General Perturbation Model 8
    */
-  '3': 'SGP8',
+  3: "SGP8",
 
   /**
    * Simplified Deep Space Perturbation Model 8
    */
-  '4': 'SDP8'
+  4: "SDP8",
 };
 
 /**
@@ -240,9 +240,9 @@ var timeSystem = {
   UT1: 10,
 
   /**
-   * Coordinated Universal Time 
+   * Coordinated Universal Time
    */
-  UTC: 11
+  UTC: 11,
 };
 
 /**
@@ -252,62 +252,62 @@ var timeSystemName = {
   /**
    * Greenwich Mean Sidereal Time
    */
-  '0': 'GMST',
+  0: "GMST",
 
   /**
    * Global Positioning System
    */
-  '1': 'GPS',
+  1: "GPS",
 
   /**
    * Mission Elapsed Time
    */
-  '2': 'MET',
+  2: "MET",
 
   /**
    * Mission Relative Time
    */
-  '3': 'MRT',
+  3: "MRT",
 
   /**
    * Spacecraft Clock (receiver) (requires rules for interpretation in ICD)
    */
-  '4': 'SCLK',
+  4: "SCLK",
 
   /**
    * International Atomic Time
    */
-  '5': 'TAI',
+  5: "TAI",
 
   /**
    * Barycentric Coordinate Time
    */
-  '6': 'TCB',
+  6: "TCB",
 
   /**
    * Barycentric Dynamical Time
    */
-  '7': 'TDB',
+  7: "TDB",
 
   /**
    * Geocentric Coordinate Time
    */
-  '8': 'TCG',
+  8: "TCG",
 
   /**
    * Terrestrial Time
    */
-  '9': 'TT',
+  9: "TT",
 
   /**
    * Universal Time
    */
-  '10': 'UT1',
+  10: "UT1",
 
   /**
-   * Coordinated Universal Time 
+   * Coordinated Universal Time
    */
-  '11': 'UTC'
+  11: "UTC",
 };
 
 /**
@@ -327,7 +327,7 @@ var meanElementTheory = {
   /**
    * Universal Semianalytical Method
    */
-  USM: 2
+  USM: 2,
 };
 
 /**
@@ -337,17 +337,17 @@ var meanElementTheoryName = {
   /**
    * Simplified General Perturbation Model  4
    */
-  '0': 'SGP4',
+  0: "SGP4",
 
   /**
    * Draper Semi-analytical Satellite Theory
    */
-  '1': 'DSST',
+  1: "DSST",
 
   /**
    * Universal Semianalytical Method
    */
-  '2': 'USM'
+  2: "USM",
 };
 
 /**
@@ -356,452 +356,16 @@ var meanElementTheoryName = {
 var manCovRefFrame = {
   RSW: 0,
   RTN: 1,
-  TNW: 2
+  TNW: 2,
 };
 
 /**
  * @enum {string}
  */
 var manCovRefFrameName = {
-  '0': 'RSW',
-  '1': 'RTN',
-  '2': 'TNW'
-};
-
-/**
- * @enum {number}
- */
-var objType = {
-  /**
-   *0
-   */
-  PAYLOAD: 0,
-
-  /**
-   *1
-   */
-  DEBRIS: 1,
-
-  /**
-   *2
-   */
-  ROCKET_BODY: 2,
-
-  /**
-   *3
-   */
-  UNKNOWN: 3
-};
-
-/**
- * @enum {string}
- */
-var objTypeName = {
-  /**
-   *0
-   */
-  '0': 'PAYLOAD',
-
-  /**
-   *1
-   */
-  '1': 'DEBRIS',
-
-  /**
-   *2
-   */
-  '2': 'ROCKET_BODY',
-
-  /**
-   *3
-   */
-  '3': 'UNKNOWN'
-};
-
-/**
- * @enum {number}
- */
-var opsStatusCode = {
-  /**
-   *+
-   */
-  OPERATIONAL: 0,
-
-  /**
-   *-
-   */
-  NONOPERATIONAL: 1,
-
-  /**
-   *P
-   */
-  PARTIALLY_OPERATIONAL: 2,
-
-  /**
-   *B
-   */
-  BACKUP_STANDBY: 3,
-
-  /**
-   *S
-   */
-  SPARE: 4,
-
-  /**
-   *X
-   */
-  EXTENDED_MISSION: 5,
-
-  /**
-   *D
-   */
-  DECAYED: 6,
-
-  /**
-   *?
-   */
-  UNKNOWN: 7
-};
-
-/**
- * @enum {string}
- */
-var opsStatusCodeName = {
-  /**
-   *+
-   */
-  '0': 'OPERATIONAL',
-
-  /**
-   *-
-   */
-  '1': 'NONOPERATIONAL',
-
-  /**
-   *P
-   */
-  '2': 'PARTIALLY_OPERATIONAL',
-
-  /**
-   *B
-   */
-  '3': 'BACKUP_STANDBY',
-
-  /**
-   *S
-   */
-  '4': 'SPARE',
-
-  /**
-   *X
-   */
-  '5': 'EXTENDED_MISSION',
-
-  /**
-   *D
-   */
-  '6': 'DECAYED',
-
-  /**
-   *?
-   */
-  '7': 'UNKNOWN'
-};
-
-/**
- * @enum {number}
- */
-var orbitalStatusCode = {
-  /**
-   *NCE
-   */
-  NO_CURRENT_ELEMENTS: 0,
-
-  /**
-   *NIE
-   */
-  NO_INITIAL_ELEMENTS: 1,
-
-  /**
-   *NEA
-   */
-  NO_ELEMENTS_AVAILABLE: 2,
-
-  /**
-   *DOC
-   */
-  PERMANENTLY_DOCKED: 3,
-
-  /**
-   *ISS
-   */
-  DOCKED_TO_INTERNATIONAL_SPACE_STATION: 4,
-
-  /**
-   *XXN
-   */
-  IN_ORBIT: 5
-};
-
-/**
- * @enum {string}
- */
-var orbitalStatusCodeName = {
-  /**
-   *NCE
-   */
-  '0': 'NO_CURRENT_ELEMENTS',
-
-  /**
-   *NIE
-   */
-  '1': 'NO_INITIAL_ELEMENTS',
-
-  /**
-   *NEA
-   */
-  '2': 'NO_ELEMENTS_AVAILABLE',
-
-  /**
-   *DOC
-   */
-  '3': 'PERMANENTLY_DOCKED',
-
-  /**
-   *ISS
-   */
-  '4': 'DOCKED_TO_INTERNATIONAL_SPACE_STATION',
-
-  /**
-   *XXN
-   */
-  '5': 'IN_ORBIT'
-};
-
-/**
- * @enum {number}
- */
-var orbitCenter = {
-  /**
-   *AS
-   */
-  ASTEROID: 0,
-
-  /**
-   *EA
-   */
-  EARTH: 1,
-
-  /**
-   *EL
-   */
-  EARTH_LAGRANGE: 2,
-
-  /**
-   *EM
-   */
-  EARTH_MOON_BARYCENTER: 3,
-
-  /**
-   *JU
-   */
-  JUPITER: 4,
-
-  /**
-   *MA
-   */
-  MARS: 5,
-
-  /**
-   *ME
-   */
-  MERCURY: 6,
-
-  /**
-   *MO
-   */
-  MOON_EARTH: 7,
-
-  /**
-   *NE
-   */
-  NEPTUNE: 8,
-
-  /**
-   *PL
-   */
-  PLUTO: 9,
-
-  /**
-   *SA
-   */
-  SATURN: 10,
-
-  /**
-   *SS
-   */
-  SOLAR_SYSTEM_ESCAPE: 11,
-
-  /**
-   *SU
-   */
-  SUN: 12,
-
-  /**
-   *UR
-   */
-  URANUS: 13,
-
-  /**
-   *VE
-   */
-  VENUS: 14
-};
-
-/**
- * @enum {string}
- */
-var orbitCenterName = {
-  /**
-   *AS
-   */
-  '0': 'ASTEROID',
-
-  /**
-   *EA
-   */
-  '1': 'EARTH',
-
-  /**
-   *EL
-   */
-  '2': 'EARTH_LAGRANGE',
-
-  /**
-   *EM
-   */
-  '3': 'EARTH_MOON_BARYCENTER',
-
-  /**
-   *JU
-   */
-  '4': 'JUPITER',
-
-  /**
-   *MA
-   */
-  '5': 'MARS',
-
-  /**
-   *ME
-   */
-  '6': 'MERCURY',
-
-  /**
-   *MO
-   */
-  '7': 'MOON_EARTH',
-
-  /**
-   *NE
-   */
-  '8': 'NEPTUNE',
-
-  /**
-   *PL
-   */
-  '9': 'PLUTO',
-
-  /**
-   *SA
-   */
-  '10': 'SATURN',
-
-  /**
-   *SS
-   */
-  '11': 'SOLAR_SYSTEM_ESCAPE',
-
-  /**
-   *SU
-   */
-  '12': 'SUN',
-
-  /**
-   *UR
-   */
-  '13': 'URANUS',
-
-  /**
-   *VE
-   */
-  '14': 'VENUS'
-};
-
-/**
- * @enum {number}
- */
-var orbitType = {
-  /**
-   *0
-   */
-  ORBIT: 0,
-
-  /**
-   *1
-   */
-  DOCKED: 1,
-
-  /**
-   *2
-   */
-  LANDING: 2,
-
-  /**
-   *3
-   */
-  IMPACT: 3
-};
-
-/**
- * @enum {string}
- */
-var orbitTypeName = {
-  /**
-   *0
-   */
-  '0': 'ORBIT',
-
-  /**
-   *1
-   */
-  '1': 'DOCKED',
-
-  /**
-   *2
-   */
-  '2': 'LANDING',
-
-  /**
-   *3
-   */
-  '3': 'IMPACT'
-};
-
-/**
- * @enum {number}
- */
-var massType = {
-  DRY: 0,
-  WET: 1
-};
-
-/**
- * @enum {string}
- */
-var massTypeName = {
-  '0': 'DRY',
-  '1': 'WET'
+  0: "RSW",
+  1: "RTN",
+  2: "TNW",
 };
 
 /**
@@ -836,7 +400,10 @@ OMM.prototype.__init = function (i, bb) {
  * @returns {OMM}
  */
 OMM.getRootAsOMM = function (bb, obj) {
-  return (obj || new OMM).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+  return (obj || new OMM()).__init(
+    bb.readInt32(bb.position()) + bb.position(),
+    bb
+  );
 };
 
 /**
@@ -846,7 +413,18 @@ OMM.getRootAsOMM = function (bb, obj) {
  */
 OMM.getSizePrefixedRootAsOMM = function (bb, obj) {
   bb.setPosition(bb.position() + flatbuffers.SIZE_PREFIX_LENGTH);
-  return (obj || new OMM).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+  return (obj || new OMM()).__init(
+    bb.readInt32(bb.position()) + bb.position(),
+    bb
+  );
+};
+
+/**
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {boolean}
+ */
+OMM.bufferHasIdentifier = function (bb) {
+  return bb.__has_identifier("$OMM");
 };
 
 /**
@@ -878,7 +456,9 @@ OMM.prototype.mutate_CCSDS_OMM_VERS = function (value) {
  */
 OMM.prototype.CREATION_DATE = function (optionalEncoding) {
   var offset = this.bb.__offset(this.bb_pos, 6);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+  return offset
+    ? this.bb.__string(this.bb_pos + offset, optionalEncoding)
+    : null;
 };
 
 /**
@@ -887,7 +467,9 @@ OMM.prototype.CREATION_DATE = function (optionalEncoding) {
  */
 OMM.prototype.ORIGINATOR = function (optionalEncoding) {
   var offset = this.bb.__offset(this.bb_pos, 8);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+  return offset
+    ? this.bb.__string(this.bb_pos + offset, optionalEncoding)
+    : null;
 };
 
 /**
@@ -896,7 +478,9 @@ OMM.prototype.ORIGINATOR = function (optionalEncoding) {
  */
 OMM.prototype.OBJECT_NAME = function (optionalEncoding) {
   var offset = this.bb.__offset(this.bb_pos, 10);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+  return offset
+    ? this.bb.__string(this.bb_pos + offset, optionalEncoding)
+    : null;
 };
 
 /**
@@ -905,7 +489,9 @@ OMM.prototype.OBJECT_NAME = function (optionalEncoding) {
  */
 OMM.prototype.OBJECT_ID = function (optionalEncoding) {
   var offset = this.bb.__offset(this.bb_pos, 12);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+  return offset
+    ? this.bb.__string(this.bb_pos + offset, optionalEncoding)
+    : null;
 };
 
 /**
@@ -914,7 +500,9 @@ OMM.prototype.OBJECT_ID = function (optionalEncoding) {
  */
 OMM.prototype.CENTER_NAME = function (optionalEncoding) {
   var offset = this.bb.__offset(this.bb_pos, 14);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+  return offset
+    ? this.bb.__string(this.bb_pos + offset, optionalEncoding)
+    : null;
 };
 
 /**
@@ -922,7 +510,9 @@ OMM.prototype.CENTER_NAME = function (optionalEncoding) {
  */
 OMM.prototype.REF_FRAME = function () {
   var offset = this.bb.__offset(this.bb_pos, 16);
-  return offset ? /** @type {referenceFrame} */ (this.bb.readInt8(this.bb_pos + offset)) : referenceFrame.TEME;
+  return offset
+    ? /** @type {referenceFrame} */ (this.bb.readInt8(this.bb_pos + offset))
+    : referenceFrame.TEME;
 };
 
 /**
@@ -946,7 +536,9 @@ OMM.prototype.mutate_REF_FRAME = function (value) {
  */
 OMM.prototype.REF_FRAME_EPOCH = function (optionalEncoding) {
   var offset = this.bb.__offset(this.bb_pos, 18);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+  return offset
+    ? this.bb.__string(this.bb_pos + offset, optionalEncoding)
+    : null;
 };
 
 /**
@@ -954,7 +546,9 @@ OMM.prototype.REF_FRAME_EPOCH = function (optionalEncoding) {
  */
 OMM.prototype.TIME_SYSTEM = function () {
   var offset = this.bb.__offset(this.bb_pos, 20);
-  return offset ? /** @type {timeSystem} */ (this.bb.readInt8(this.bb_pos + offset)) : timeSystem.UTC;
+  return offset
+    ? /** @type {timeSystem} */ (this.bb.readInt8(this.bb_pos + offset))
+    : timeSystem.UTC;
 };
 
 /**
@@ -977,7 +571,9 @@ OMM.prototype.mutate_TIME_SYSTEM = function (value) {
  */
 OMM.prototype.MEAN_ELEMENT_THEORY = function () {
   var offset = this.bb.__offset(this.bb_pos, 22);
-  return offset ? /** @type {meanElementTheory} */ (this.bb.readInt8(this.bb_pos + offset)) : meanElementTheory.SGP4;
+  return offset
+    ? /** @type {meanElementTheory} */ (this.bb.readInt8(this.bb_pos + offset))
+    : meanElementTheory.SGP4;
 };
 
 /**
@@ -1001,7 +597,9 @@ OMM.prototype.mutate_MEAN_ELEMENT_THEORY = function (value) {
  */
 OMM.prototype.COMMENT = function (optionalEncoding) {
   var offset = this.bb.__offset(this.bb_pos, 24);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+  return offset
+    ? this.bb.__string(this.bb_pos + offset, optionalEncoding)
+    : null;
 };
 
 /**
@@ -1010,7 +608,9 @@ OMM.prototype.COMMENT = function (optionalEncoding) {
  */
 OMM.prototype.EPOCH = function (optionalEncoding) {
   var offset = this.bb.__offset(this.bb_pos, 26);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+  return offset
+    ? this.bb.__string(this.bb_pos + offset, optionalEncoding)
+    : null;
 };
 
 /**
@@ -1317,7 +917,9 @@ OMM.prototype.mutate_DRAG_COEFF = function (value) {
  */
 OMM.prototype.EPHEMERIS_TYPE = function () {
   var offset = this.bb.__offset(this.bb_pos, 54);
-  return offset ? /** @type {ephemerisType} */ (this.bb.readInt8(this.bb_pos + offset)) : ephemerisType.SGP4;
+  return offset
+    ? /** @type {ephemerisType} */ (this.bb.readInt8(this.bb_pos + offset))
+    : ephemerisType.SGP4;
 };
 
 /**
@@ -1341,7 +943,9 @@ OMM.prototype.mutate_EPHEMERIS_TYPE = function (value) {
  */
 OMM.prototype.CLASSIFICATION_TYPE = function (optionalEncoding) {
   var offset = this.bb.__offset(this.bb_pos, 56);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+  return offset
+    ? this.bb.__string(this.bb_pos + offset, optionalEncoding)
+    : null;
 };
 
 /**
@@ -1487,7 +1091,9 @@ OMM.prototype.mutate_MEAN_MOTION_DDOT = function (value) {
  */
 OMM.prototype.COV_REF_FRAME = function () {
   var offset = this.bb.__offset(this.bb_pos, 70);
-  return offset ? /** @type {manCovRefFrame} */ (this.bb.readInt8(this.bb_pos + offset)) : manCovRefFrame.RSW;
+  return offset
+    ? /** @type {manCovRefFrame} */ (this.bb.readInt8(this.bb_pos + offset))
+    : manCovRefFrame.RSW;
 };
 
 /**
@@ -2017,7 +1623,9 @@ OMM.prototype.mutate_USER_DEFINED_BIP_0044_TYPE = function (value) {
  */
 OMM.prototype.USER_DEFINED_OBJECT_DESIGNATOR = function (optionalEncoding) {
   var offset = this.bb.__offset(this.bb_pos, 116);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+  return offset
+    ? this.bb.__string(this.bb_pos + offset, optionalEncoding)
+    : null;
 };
 
 /**
@@ -2026,7 +1634,9 @@ OMM.prototype.USER_DEFINED_OBJECT_DESIGNATOR = function (optionalEncoding) {
  */
 OMM.prototype.USER_DEFINED_EARTH_MODEL = function (optionalEncoding) {
   var offset = this.bb.__offset(this.bb_pos, 118);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
+  return offset
+    ? this.bb.__string(this.bb_pos + offset, optionalEncoding)
+    : null;
 };
 
 /**
@@ -2526,7 +2136,10 @@ OMM.addCZ_DOT_Z_DOT = function (builder, CZ_DOT_Z_DOT) {
  * @param {flatbuffers.Builder} builder
  * @param {number} USER_DEFINED_BIP_0044_TYPE
  */
-OMM.addUSER_DEFINED_BIP_0044_TYPE = function (builder, USER_DEFINED_BIP_0044_TYPE) {
+OMM.addUSER_DEFINED_BIP_0044_TYPE = function (
+  builder,
+  USER_DEFINED_BIP_0044_TYPE
+) {
   builder.addFieldInt32(55, USER_DEFINED_BIP_0044_TYPE, 0);
 };
 
@@ -2534,7 +2147,10 @@ OMM.addUSER_DEFINED_BIP_0044_TYPE = function (builder, USER_DEFINED_BIP_0044_TYP
  * @param {flatbuffers.Builder} builder
  * @param {flatbuffers.Offset} USER_DEFINED_OBJECT_DESIGNATOROffset
  */
-OMM.addUSER_DEFINED_OBJECT_DESIGNATOR = function (builder, USER_DEFINED_OBJECT_DESIGNATOROffset) {
+OMM.addUSER_DEFINED_OBJECT_DESIGNATOR = function (
+  builder,
+  USER_DEFINED_OBJECT_DESIGNATOROffset
+) {
   builder.addFieldOffset(56, USER_DEFINED_OBJECT_DESIGNATOROffset, 0);
 };
 
@@ -2542,7 +2158,10 @@ OMM.addUSER_DEFINED_OBJECT_DESIGNATOR = function (builder, USER_DEFINED_OBJECT_D
  * @param {flatbuffers.Builder} builder
  * @param {flatbuffers.Offset} USER_DEFINED_EARTH_MODELOffset
  */
-OMM.addUSER_DEFINED_EARTH_MODEL = function (builder, USER_DEFINED_EARTH_MODELOffset) {
+OMM.addUSER_DEFINED_EARTH_MODEL = function (
+  builder,
+  USER_DEFINED_EARTH_MODELOffset
+) {
   builder.addFieldOffset(57, USER_DEFINED_EARTH_MODELOffset, 0);
 };
 
@@ -2550,7 +2169,10 @@ OMM.addUSER_DEFINED_EARTH_MODEL = function (builder, USER_DEFINED_EARTH_MODELOff
  * @param {flatbuffers.Builder} builder
  * @param {number} USER_DEFINED_EPOCH_TIMESTAMP
  */
-OMM.addUSER_DEFINED_EPOCH_TIMESTAMP = function (builder, USER_DEFINED_EPOCH_TIMESTAMP) {
+OMM.addUSER_DEFINED_EPOCH_TIMESTAMP = function (
+  builder,
+  USER_DEFINED_EPOCH_TIMESTAMP
+) {
   builder.addFieldFloat64(58, USER_DEFINED_EPOCH_TIMESTAMP, 0.0);
 };
 
@@ -2558,7 +2180,10 @@ OMM.addUSER_DEFINED_EPOCH_TIMESTAMP = function (builder, USER_DEFINED_EPOCH_TIME
  * @param {flatbuffers.Builder} builder
  * @param {number} USER_DEFINED_MICROSECONDS
  */
-OMM.addUSER_DEFINED_MICROSECONDS = function (builder, USER_DEFINED_MICROSECONDS) {
+OMM.addUSER_DEFINED_MICROSECONDS = function (
+  builder,
+  USER_DEFINED_MICROSECONDS
+) {
   builder.addFieldFloat64(59, USER_DEFINED_MICROSECONDS, 0.0);
 };
 
@@ -2576,7 +2201,7 @@ OMM.endOMM = function (builder) {
  * @param {flatbuffers.Offset} offset
  */
 OMM.finishOMMBuffer = function (builder, offset) {
-  builder.finish(offset);
+  builder.finish(offset, "$OMM");
 };
 
 /**
@@ -2584,7 +2209,7 @@ OMM.finishOMMBuffer = function (builder, offset) {
  * @param {flatbuffers.Offset} offset
  */
 OMM.finishSizePrefixedOMMBuffer = function (builder, offset) {
-  builder.finish(offset, undefined, true);
+  builder.finish(offset, "$OMM", true);
 };
 
 /**
@@ -2651,7 +2276,69 @@ OMM.finishSizePrefixedOMMBuffer = function (builder, offset) {
  * @param {number} USER_DEFINED_MICROSECONDS
  * @returns {flatbuffers.Offset}
  */
-OMM.createOMM = function (builder, CCSDS_OMM_VERS, CREATION_DATEOffset, ORIGINATOROffset, OBJECT_NAMEOffset, OBJECT_IDOffset, CENTER_NAMEOffset, REF_FRAME, REF_FRAME_EPOCHOffset, TIME_SYSTEM, MEAN_ELEMENT_THEORY, COMMENTOffset, EPOCHOffset, SEMI_MAJOR_AXIS, MEAN_MOTION, ECCENTRICITY, INCLINATION, RA_OF_ASC_NODE, ARG_OF_PERICENTER, MEAN_ANOMALY, GM, MASS, SOLAR_RAD_AREA, SOLAR_RAD_COEFF, DRAG_AREA, DRAG_COEFF, EPHEMERIS_TYPE, CLASSIFICATION_TYPEOffset, NORAD_CAT_ID, ELEMENT_SET_NO, REV_AT_EPOCH, BSTAR, MEAN_MOTION_DOT, MEAN_MOTION_DDOT, COV_REF_FRAME, CX_X, CY_X, CY_Y, CZ_X, CZ_Y, CZ_Z, CX_DOT_X, CX_DOT_Y, CX_DOT_Z, CX_DOT_X_DOT, CY_DOT_X, CY_DOT_Y, CY_DOT_Z, CY_DOT_X_DOT, CY_DOT_Y_DOT, CZ_DOT_X, CZ_DOT_Y, CZ_DOT_Z, CZ_DOT_X_DOT, CZ_DOT_Y_DOT, CZ_DOT_Z_DOT, USER_DEFINED_BIP_0044_TYPE, USER_DEFINED_OBJECT_DESIGNATOROffset, USER_DEFINED_EARTH_MODELOffset, USER_DEFINED_EPOCH_TIMESTAMP, USER_DEFINED_MICROSECONDS) {
+OMM.createOMM = function (
+  builder,
+  CCSDS_OMM_VERS,
+  CREATION_DATEOffset,
+  ORIGINATOROffset,
+  OBJECT_NAMEOffset,
+  OBJECT_IDOffset,
+  CENTER_NAMEOffset,
+  REF_FRAME,
+  REF_FRAME_EPOCHOffset,
+  TIME_SYSTEM,
+  MEAN_ELEMENT_THEORY,
+  COMMENTOffset,
+  EPOCHOffset,
+  SEMI_MAJOR_AXIS,
+  MEAN_MOTION,
+  ECCENTRICITY,
+  INCLINATION,
+  RA_OF_ASC_NODE,
+  ARG_OF_PERICENTER,
+  MEAN_ANOMALY,
+  GM,
+  MASS,
+  SOLAR_RAD_AREA,
+  SOLAR_RAD_COEFF,
+  DRAG_AREA,
+  DRAG_COEFF,
+  EPHEMERIS_TYPE,
+  CLASSIFICATION_TYPEOffset,
+  NORAD_CAT_ID,
+  ELEMENT_SET_NO,
+  REV_AT_EPOCH,
+  BSTAR,
+  MEAN_MOTION_DOT,
+  MEAN_MOTION_DDOT,
+  COV_REF_FRAME,
+  CX_X,
+  CY_X,
+  CY_Y,
+  CZ_X,
+  CZ_Y,
+  CZ_Z,
+  CX_DOT_X,
+  CX_DOT_Y,
+  CX_DOT_Z,
+  CX_DOT_X_DOT,
+  CY_DOT_X,
+  CY_DOT_Y,
+  CY_DOT_Z,
+  CY_DOT_X_DOT,
+  CY_DOT_Y_DOT,
+  CZ_DOT_X,
+  CZ_DOT_Y,
+  CZ_DOT_Z,
+  CZ_DOT_X_DOT,
+  CZ_DOT_Y_DOT,
+  CZ_DOT_Z_DOT,
+  USER_DEFINED_BIP_0044_TYPE,
+  USER_DEFINED_OBJECT_DESIGNATOROffset,
+  USER_DEFINED_EARTH_MODELOffset,
+  USER_DEFINED_EPOCH_TIMESTAMP,
+  USER_DEFINED_MICROSECONDS
+) {
   OMM.startOMM(builder);
   OMM.addCCSDS_OMM_VERS(builder, CCSDS_OMM_VERS);
   OMM.addCREATION_DATE(builder, CREATION_DATEOffset);
@@ -2709,12 +2396,15 @@ OMM.createOMM = function (builder, CCSDS_OMM_VERS, CREATION_DATEOffset, ORIGINAT
   OMM.addCZ_DOT_Y_DOT(builder, CZ_DOT_Y_DOT);
   OMM.addCZ_DOT_Z_DOT(builder, CZ_DOT_Z_DOT);
   OMM.addUSER_DEFINED_BIP_0044_TYPE(builder, USER_DEFINED_BIP_0044_TYPE);
-  OMM.addUSER_DEFINED_OBJECT_DESIGNATOR(builder, USER_DEFINED_OBJECT_DESIGNATOROffset);
+  OMM.addUSER_DEFINED_OBJECT_DESIGNATOR(
+    builder,
+    USER_DEFINED_OBJECT_DESIGNATOROffset
+  );
   OMM.addUSER_DEFINED_EARTH_MODEL(builder, USER_DEFINED_EARTH_MODELOffset);
   OMM.addUSER_DEFINED_EPOCH_TIMESTAMP(builder, USER_DEFINED_EPOCH_TIMESTAMP);
   OMM.addUSER_DEFINED_MICROSECONDS(builder, USER_DEFINED_MICROSECONDS);
   return OMM.endOMM(builder);
-}
+};
 
 /**
  * @constructor
@@ -2748,7 +2438,10 @@ MPE.prototype.__init = function (i, bb) {
  * @returns {MPE}
  */
 MPE.getRootAsMPE = function (bb, obj) {
-  return (obj || new MPE).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+  return (obj || new MPE()).__init(
+    bb.readInt32(bb.position()) + bb.position(),
+    bb
+  );
 };
 
 /**
@@ -2758,7 +2451,10 @@ MPE.getRootAsMPE = function (bb, obj) {
  */
 MPE.getSizePrefixedRootAsMPE = function (bb, obj) {
   bb.setPosition(bb.position() + flatbuffers.SIZE_PREFIX_LENGTH);
-  return (obj || new MPE).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+  return (obj || new MPE()).__init(
+    bb.readInt32(bb.position()) + bb.position(),
+    bb
+  );
 };
 
 /**
@@ -3012,7 +2708,10 @@ MPE.addBSTAR = function (builder, BSTAR) {
  * @param {flatbuffers.Builder} builder
  * @param {number} USER_DEFINED_EPOCH_TIMESTAMP
  */
-MPE.addUSER_DEFINED_EPOCH_TIMESTAMP = function (builder, USER_DEFINED_EPOCH_TIMESTAMP) {
+MPE.addUSER_DEFINED_EPOCH_TIMESTAMP = function (
+  builder,
+  USER_DEFINED_EPOCH_TIMESTAMP
+) {
   builder.addFieldFloat64(7, USER_DEFINED_EPOCH_TIMESTAMP, 0.0);
 };
 
@@ -3037,7 +2736,17 @@ MPE.endMPE = function (builder) {
  * @param {number} USER_DEFINED_EPOCH_TIMESTAMP
  * @returns {flatbuffers.Offset}
  */
-MPE.createMPE = function (builder, MEAN_MOTION, ECCENTRICITY, INCLINATION, RA_OF_ASC_NODE, MEAN_ANOMALY, NORAD_CAT_ID, BSTAR, USER_DEFINED_EPOCH_TIMESTAMP) {
+MPE.createMPE = function (
+  builder,
+  MEAN_MOTION,
+  ECCENTRICITY,
+  INCLINATION,
+  RA_OF_ASC_NODE,
+  MEAN_ANOMALY,
+  NORAD_CAT_ID,
+  BSTAR,
+  USER_DEFINED_EPOCH_TIMESTAMP
+) {
   MPE.startMPE(builder);
   MPE.addMEAN_MOTION(builder, MEAN_MOTION);
   MPE.addECCENTRICITY(builder, ECCENTRICITY);
@@ -3048,7 +2757,7 @@ MPE.createMPE = function (builder, MEAN_MOTION, ECCENTRICITY, INCLINATION, RA_OF
   MPE.addBSTAR(builder, BSTAR);
   MPE.addUSER_DEFINED_EPOCH_TIMESTAMP(builder, USER_DEFINED_EPOCH_TIMESTAMP);
   return MPE.endMPE(builder);
-}
+};
 
 /**
  * @constructor
@@ -3082,7 +2791,10 @@ OMMCOLLECTION.prototype.__init = function (i, bb) {
  * @returns {OMMCOLLECTION}
  */
 OMMCOLLECTION.getRootAsOMMCOLLECTION = function (bb, obj) {
-  return (obj || new OMMCOLLECTION).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+  return (obj || new OMMCOLLECTION()).__init(
+    bb.readInt32(bb.position()) + bb.position(),
+    bb
+  );
 };
 
 /**
@@ -3092,7 +2804,10 @@ OMMCOLLECTION.getRootAsOMMCOLLECTION = function (bb, obj) {
  */
 OMMCOLLECTION.getSizePrefixedRootAsOMMCOLLECTION = function (bb, obj) {
   bb.setPosition(bb.position() + flatbuffers.SIZE_PREFIX_LENGTH);
-  return (obj || new OMMCOLLECTION).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+  return (obj || new OMMCOLLECTION()).__init(
+    bb.readInt32(bb.position()) + bb.position(),
+    bb
+  );
 };
 
 /**
@@ -3102,7 +2817,12 @@ OMMCOLLECTION.getSizePrefixedRootAsOMMCOLLECTION = function (bb, obj) {
  */
 OMMCOLLECTION.prototype.RECORDS = function (index, obj) {
   var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? (obj || new OMM).__init(this.bb.__indirect(this.bb.__vector(this.bb_pos + offset) + index * 4), this.bb) : null;
+  return offset
+    ? (obj || new OMM()).__init(
+        this.bb.__indirect(this.bb.__vector(this.bb_pos + offset) + index * 4),
+        this.bb
+      )
+    : null;
 };
 
 /**
@@ -3167,7 +2887,7 @@ OMMCOLLECTION.createOMMCOLLECTION = function (builder, RECORDSOffset) {
   OMMCOLLECTION.startOMMCOLLECTION(builder);
   OMMCOLLECTION.addRECORDS(builder, RECORDSOffset);
   return OMMCOLLECTION.endOMMCOLLECTION(builder);
-}
+};
 
 /**
  * @constructor
@@ -3201,7 +2921,10 @@ MPECOLLECTION.prototype.__init = function (i, bb) {
  * @returns {MPECOLLECTION}
  */
 MPECOLLECTION.getRootAsMPECOLLECTION = function (bb, obj) {
-  return (obj || new MPECOLLECTION).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+  return (obj || new MPECOLLECTION()).__init(
+    bb.readInt32(bb.position()) + bb.position(),
+    bb
+  );
 };
 
 /**
@@ -3211,7 +2934,10 @@ MPECOLLECTION.getRootAsMPECOLLECTION = function (bb, obj) {
  */
 MPECOLLECTION.getSizePrefixedRootAsMPECOLLECTION = function (bb, obj) {
   bb.setPosition(bb.position() + flatbuffers.SIZE_PREFIX_LENGTH);
-  return (obj || new MPECOLLECTION).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+  return (obj || new MPECOLLECTION()).__init(
+    bb.readInt32(bb.position()) + bb.position(),
+    bb
+  );
 };
 
 /**
@@ -3221,7 +2947,12 @@ MPECOLLECTION.getSizePrefixedRootAsMPECOLLECTION = function (bb, obj) {
  */
 MPECOLLECTION.prototype.RECORDS = function (index, obj) {
   var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? (obj || new MPE).__init(this.bb.__indirect(this.bb.__vector(this.bb_pos + offset) + index * 4), this.bb) : null;
+  return offset
+    ? (obj || new MPE()).__init(
+        this.bb.__indirect(this.bb.__vector(this.bb_pos + offset) + index * 4),
+        this.bb
+      )
+    : null;
 };
 
 /**
@@ -3286,1291 +3017,6 @@ MPECOLLECTION.createMPECOLLECTION = function (builder, RECORDSOffset) {
   MPECOLLECTION.startMPECOLLECTION(builder);
   MPECOLLECTION.addRECORDS(builder, RECORDSOffset);
   return MPECOLLECTION.endMPECOLLECTION(builder);
-}
-
-/**
- * @constructor
- */
-function SATCAT() {
-  /**
-   * @type {flatbuffers.ByteBuffer}
-   */
-  this.bb = null;
-
-  /**
-   * @type {number}
-   */
-  this.bb_pos = 0;
-}
-
-/**
- * @param {number} i
- * @param {flatbuffers.ByteBuffer} bb
- * @returns {SATCAT}
- */
-SATCAT.prototype.__init = function (i, bb) {
-  this.bb_pos = i;
-  this.bb = bb;
-  return this;
-};
-
-/**
- * @param {flatbuffers.ByteBuffer} bb
- * @param {SATCAT=} obj
- * @returns {SATCAT}
- */
-SATCAT.getRootAsSATCAT = function (bb, obj) {
-  return (obj || new SATCAT).__init(bb.readInt32(bb.position()) + bb.position(), bb);
-};
-
-/**
- * @param {flatbuffers.ByteBuffer} bb
- * @param {SATCAT=} obj
- * @returns {SATCAT}
- */
-SATCAT.getSizePrefixedRootAsSATCAT = function (bb, obj) {
-  bb.setPosition(bb.position() + flatbuffers.SIZE_PREFIX_LENGTH);
-  return (obj || new SATCAT).__init(bb.readInt32(bb.position()) + bb.position(), bb);
-};
-
-/**
- * @param {flatbuffers.Encoding=} optionalEncoding
- * @returns {string|Uint8Array|null}
- */
-SATCAT.prototype.OBJECT_NAME = function (optionalEncoding) {
-  var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
-};
-
-/**
- * @param {flatbuffers.Encoding=} optionalEncoding
- * @returns {string|Uint8Array|null}
- */
-SATCAT.prototype.OBJECT_ID = function (optionalEncoding) {
-  var offset = this.bb.__offset(this.bb_pos, 6);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
-};
-
-/**
- * @returns {number}
- */
-SATCAT.prototype.NORAD_CAT_ID = function () {
-  var offset = this.bb.__offset(this.bb_pos, 8);
-  return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
-};
-
-/**
- * @param {number} value
- * @returns {boolean}
- */
-SATCAT.prototype.mutate_NORAD_CAT_ID = function (value) {
-  var offset = this.bb.__offset(this.bb_pos, 8);
-
-  if (offset === 0) {
-    return false;
-  }
-
-  this.bb.writeUint32(this.bb_pos + offset, value);
-  return true;
-};
-
-/**
- * @returns {boolean}
- */
-SATCAT.prototype.MULTIPLE_NAMES = function () {
-  var offset = this.bb.__offset(this.bb_pos, 10);
-  return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
-};
-
-/**
- * @param {boolean} value
- * @returns {boolean}
- */
-SATCAT.prototype.mutate_MULTIPLE_NAMES = function (value) {
-  var offset = this.bb.__offset(this.bb_pos, 10);
-
-  if (offset === 0) {
-    return false;
-  }
-
-  this.bb.writeInt8(this.bb_pos + offset, value);
-  return true;
-};
-
-/**
- * @returns {objType}
- */
-SATCAT.prototype.OBJECT_TYPE = function () {
-  var offset = this.bb.__offset(this.bb_pos, 12);
-  return offset ? /** @type {objType} */ (this.bb.readInt8(this.bb_pos + offset)) : objType.UNKNOWN;
-};
-
-/**
- * @param {objType} value
- * @returns {boolean}
- */
-SATCAT.prototype.mutate_OBJECT_TYPE = function (value) {
-  var offset = this.bb.__offset(this.bb_pos, 12);
-
-  if (offset === 0) {
-    return false;
-  }
-
-  this.bb.writeInt8(this.bb_pos + offset, value);
-  return true;
-};
-
-/**
- * @returns {opsStatusCode}
- */
-SATCAT.prototype.OPS_STATUS_CODE = function () {
-  var offset = this.bb.__offset(this.bb_pos, 14);
-  return offset ? /** @type {opsStatusCode} */ (this.bb.readInt8(this.bb_pos + offset)) : opsStatusCode.UNKNOWN;
-};
-
-/**
- * @param {opsStatusCode} value
- * @returns {boolean}
- */
-SATCAT.prototype.mutate_OPS_STATUS_CODE = function (value) {
-  var offset = this.bb.__offset(this.bb_pos, 14);
-
-  if (offset === 0) {
-    return false;
-  }
-
-  this.bb.writeInt8(this.bb_pos + offset, value);
-  return true;
-};
-
-/**
- * @param {flatbuffers.Encoding=} optionalEncoding
- * @returns {string|Uint8Array|null}
- */
-SATCAT.prototype.OWNER = function (optionalEncoding) {
-  var offset = this.bb.__offset(this.bb_pos, 16);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
-};
-
-/**
- * @param {flatbuffers.Encoding=} optionalEncoding
- * @returns {string|Uint8Array|null}
- */
-SATCAT.prototype.LAUNCH_DATE = function (optionalEncoding) {
-  var offset = this.bb.__offset(this.bb_pos, 18);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
-};
-
-/**
- * @param {flatbuffers.Encoding=} optionalEncoding
- * @returns {string|Uint8Array|null}
- */
-SATCAT.prototype.LAUNCH_SITE = function (optionalEncoding) {
-  var offset = this.bb.__offset(this.bb_pos, 20);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
-};
-
-/**
- * @param {flatbuffers.Encoding=} optionalEncoding
- * @returns {string|Uint8Array|null}
- */
-SATCAT.prototype.DECAY_DATE = function (optionalEncoding) {
-  var offset = this.bb.__offset(this.bb_pos, 22);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
-};
-
-/**
- * @returns {number}
- */
-SATCAT.prototype.PERIOD = function () {
-  var offset = this.bb.__offset(this.bb_pos, 24);
-  return offset ? this.bb.readFloat32(this.bb_pos + offset) : 0.0;
-};
-
-/**
- * @param {number} value
- * @returns {boolean}
- */
-SATCAT.prototype.mutate_PERIOD = function (value) {
-  var offset = this.bb.__offset(this.bb_pos, 24);
-
-  if (offset === 0) {
-    return false;
-  }
-
-  this.bb.writeFloat32(this.bb_pos + offset, value);
-  return true;
-};
-
-/**
- * @returns {number}
- */
-SATCAT.prototype.INCLINATION = function () {
-  var offset = this.bb.__offset(this.bb_pos, 26);
-  return offset ? this.bb.readFloat32(this.bb_pos + offset) : 0.0;
-};
-
-/**
- * @param {number} value
- * @returns {boolean}
- */
-SATCAT.prototype.mutate_INCLINATION = function (value) {
-  var offset = this.bb.__offset(this.bb_pos, 26);
-
-  if (offset === 0) {
-    return false;
-  }
-
-  this.bb.writeFloat32(this.bb_pos + offset, value);
-  return true;
-};
-
-/**
- * @returns {number}
- */
-SATCAT.prototype.APOGEE = function () {
-  var offset = this.bb.__offset(this.bb_pos, 28);
-  return offset ? this.bb.readFloat32(this.bb_pos + offset) : 0.0;
-};
-
-/**
- * @param {number} value
- * @returns {boolean}
- */
-SATCAT.prototype.mutate_APOGEE = function (value) {
-  var offset = this.bb.__offset(this.bb_pos, 28);
-
-  if (offset === 0) {
-    return false;
-  }
-
-  this.bb.writeFloat32(this.bb_pos + offset, value);
-  return true;
-};
-
-/**
- * @returns {number}
- */
-SATCAT.prototype.PERIGEE = function () {
-  var offset = this.bb.__offset(this.bb_pos, 30);
-  return offset ? this.bb.readFloat32(this.bb_pos + offset) : 0.0;
-};
-
-/**
- * @param {number} value
- * @returns {boolean}
- */
-SATCAT.prototype.mutate_PERIGEE = function (value) {
-  var offset = this.bb.__offset(this.bb_pos, 30);
-
-  if (offset === 0) {
-    return false;
-  }
-
-  this.bb.writeFloat32(this.bb_pos + offset, value);
-  return true;
-};
-
-/**
- * @returns {number}
- */
-SATCAT.prototype.RCS = function () {
-  var offset = this.bb.__offset(this.bb_pos, 32);
-  return offset ? this.bb.readFloat32(this.bb_pos + offset) : 0.0;
-};
-
-/**
- * @param {number} value
- * @returns {boolean}
- */
-SATCAT.prototype.mutate_RCS = function (value) {
-  var offset = this.bb.__offset(this.bb_pos, 32);
-
-  if (offset === 0) {
-    return false;
-  }
-
-  this.bb.writeFloat32(this.bb_pos + offset, value);
-  return true;
-};
-
-/**
- * @returns {orbitalStatusCode}
- */
-SATCAT.prototype.DATA_STATUS_CODE = function () {
-  var offset = this.bb.__offset(this.bb_pos, 34);
-  return offset ? /** @type {orbitalStatusCode} */ (this.bb.readInt8(this.bb_pos + offset)) : orbitalStatusCode.NO_CURRENT_ELEMENTS;
-};
-
-/**
- * @param {orbitalStatusCode} value
- * @returns {boolean}
- */
-SATCAT.prototype.mutate_DATA_STATUS_CODE = function (value) {
-  var offset = this.bb.__offset(this.bb_pos, 34);
-
-  if (offset === 0) {
-    return false;
-  }
-
-  this.bb.writeInt8(this.bb_pos + offset, value);
-  return true;
-};
-
-/**
- * @param {flatbuffers.Encoding=} optionalEncoding
- * @returns {string|Uint8Array|null}
- */
-SATCAT.prototype.ORBIT_CENTER = function (optionalEncoding) {
-  var offset = this.bb.__offset(this.bb_pos, 36);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
-};
-
-/**
- * @returns {orbitType}
- */
-SATCAT.prototype.ORBIT_TYPE = function () {
-  var offset = this.bb.__offset(this.bb_pos, 38);
-  return offset ? /** @type {orbitType} */ (this.bb.readInt8(this.bb_pos + offset)) : orbitType.ORBIT;
-};
-
-/**
- * @param {orbitType} value
- * @returns {boolean}
- */
-SATCAT.prototype.mutate_ORBIT_TYPE = function (value) {
-  var offset = this.bb.__offset(this.bb_pos, 38);
-
-  if (offset === 0) {
-    return false;
-  }
-
-  this.bb.writeInt8(this.bb_pos + offset, value);
-  return true;
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- */
-SATCAT.startSATCAT = function (builder) {
-  builder.startObject(18);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {flatbuffers.Offset} OBJECT_NAMEOffset
- */
-SATCAT.addOBJECT_NAME = function (builder, OBJECT_NAMEOffset) {
-  builder.addFieldOffset(0, OBJECT_NAMEOffset, 0);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {flatbuffers.Offset} OBJECT_IDOffset
- */
-SATCAT.addOBJECT_ID = function (builder, OBJECT_IDOffset) {
-  builder.addFieldOffset(1, OBJECT_IDOffset, 0);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {number} NORAD_CAT_ID
- */
-SATCAT.addNORAD_CAT_ID = function (builder, NORAD_CAT_ID) {
-  builder.addFieldInt32(2, NORAD_CAT_ID, 0);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {boolean} MULTIPLE_NAMES
- */
-SATCAT.addMULTIPLE_NAMES = function (builder, MULTIPLE_NAMES) {
-  builder.addFieldInt8(3, +MULTIPLE_NAMES, +false);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {objType} OBJECT_TYPE
- */
-SATCAT.addOBJECT_TYPE = function (builder, OBJECT_TYPE) {
-  builder.addFieldInt8(4, OBJECT_TYPE, objType.UNKNOWN);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {opsStatusCode} OPS_STATUS_CODE
- */
-SATCAT.addOPS_STATUS_CODE = function (builder, OPS_STATUS_CODE) {
-  builder.addFieldInt8(5, OPS_STATUS_CODE, opsStatusCode.UNKNOWN);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {flatbuffers.Offset} OWNEROffset
- */
-SATCAT.addOWNER = function (builder, OWNEROffset) {
-  builder.addFieldOffset(6, OWNEROffset, 0);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {flatbuffers.Offset} LAUNCH_DATEOffset
- */
-SATCAT.addLAUNCH_DATE = function (builder, LAUNCH_DATEOffset) {
-  builder.addFieldOffset(7, LAUNCH_DATEOffset, 0);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {flatbuffers.Offset} LAUNCH_SITEOffset
- */
-SATCAT.addLAUNCH_SITE = function (builder, LAUNCH_SITEOffset) {
-  builder.addFieldOffset(8, LAUNCH_SITEOffset, 0);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {flatbuffers.Offset} DECAY_DATEOffset
- */
-SATCAT.addDECAY_DATE = function (builder, DECAY_DATEOffset) {
-  builder.addFieldOffset(9, DECAY_DATEOffset, 0);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {number} PERIOD
- */
-SATCAT.addPERIOD = function (builder, PERIOD) {
-  builder.addFieldFloat32(10, PERIOD, 0.0);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {number} INCLINATION
- */
-SATCAT.addINCLINATION = function (builder, INCLINATION) {
-  builder.addFieldFloat32(11, INCLINATION, 0.0);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {number} APOGEE
- */
-SATCAT.addAPOGEE = function (builder, APOGEE) {
-  builder.addFieldFloat32(12, APOGEE, 0.0);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {number} PERIGEE
- */
-SATCAT.addPERIGEE = function (builder, PERIGEE) {
-  builder.addFieldFloat32(13, PERIGEE, 0.0);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {number} RCS
- */
-SATCAT.addRCS = function (builder, RCS) {
-  builder.addFieldFloat32(14, RCS, 0.0);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {orbitalStatusCode} DATA_STATUS_CODE
- */
-SATCAT.addDATA_STATUS_CODE = function (builder, DATA_STATUS_CODE) {
-  builder.addFieldInt8(15, DATA_STATUS_CODE, orbitalStatusCode.NO_CURRENT_ELEMENTS);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {flatbuffers.Offset} ORBIT_CENTEROffset
- */
-SATCAT.addORBIT_CENTER = function (builder, ORBIT_CENTEROffset) {
-  builder.addFieldOffset(16, ORBIT_CENTEROffset, 0);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {orbitType} ORBIT_TYPE
- */
-SATCAT.addORBIT_TYPE = function (builder, ORBIT_TYPE) {
-  builder.addFieldInt8(17, ORBIT_TYPE, orbitType.ORBIT);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @returns {flatbuffers.Offset}
- */
-SATCAT.endSATCAT = function (builder) {
-  var offset = builder.endObject();
-  return offset;
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {flatbuffers.Offset} OBJECT_NAMEOffset
- * @param {flatbuffers.Offset} OBJECT_IDOffset
- * @param {number} NORAD_CAT_ID
- * @param {boolean} MULTIPLE_NAMES
- * @param {objType} OBJECT_TYPE
- * @param {opsStatusCode} OPS_STATUS_CODE
- * @param {flatbuffers.Offset} OWNEROffset
- * @param {flatbuffers.Offset} LAUNCH_DATEOffset
- * @param {flatbuffers.Offset} LAUNCH_SITEOffset
- * @param {flatbuffers.Offset} DECAY_DATEOffset
- * @param {number} PERIOD
- * @param {number} INCLINATION
- * @param {number} APOGEE
- * @param {number} PERIGEE
- * @param {number} RCS
- * @param {orbitalStatusCode} DATA_STATUS_CODE
- * @param {flatbuffers.Offset} ORBIT_CENTEROffset
- * @param {orbitType} ORBIT_TYPE
- * @returns {flatbuffers.Offset}
- */
-SATCAT.createSATCAT = function (builder, OBJECT_NAMEOffset, OBJECT_IDOffset, NORAD_CAT_ID, MULTIPLE_NAMES, OBJECT_TYPE, OPS_STATUS_CODE, OWNEROffset, LAUNCH_DATEOffset, LAUNCH_SITEOffset, DECAY_DATEOffset, PERIOD, INCLINATION, APOGEE, PERIGEE, RCS, DATA_STATUS_CODE, ORBIT_CENTEROffset, ORBIT_TYPE) {
-  SATCAT.startSATCAT(builder);
-  SATCAT.addOBJECT_NAME(builder, OBJECT_NAMEOffset);
-  SATCAT.addOBJECT_ID(builder, OBJECT_IDOffset);
-  SATCAT.addNORAD_CAT_ID(builder, NORAD_CAT_ID);
-  SATCAT.addMULTIPLE_NAMES(builder, MULTIPLE_NAMES);
-  SATCAT.addOBJECT_TYPE(builder, OBJECT_TYPE);
-  SATCAT.addOPS_STATUS_CODE(builder, OPS_STATUS_CODE);
-  SATCAT.addOWNER(builder, OWNEROffset);
-  SATCAT.addLAUNCH_DATE(builder, LAUNCH_DATEOffset);
-  SATCAT.addLAUNCH_SITE(builder, LAUNCH_SITEOffset);
-  SATCAT.addDECAY_DATE(builder, DECAY_DATEOffset);
-  SATCAT.addPERIOD(builder, PERIOD);
-  SATCAT.addINCLINATION(builder, INCLINATION);
-  SATCAT.addAPOGEE(builder, APOGEE);
-  SATCAT.addPERIGEE(builder, PERIGEE);
-  SATCAT.addRCS(builder, RCS);
-  SATCAT.addDATA_STATUS_CODE(builder, DATA_STATUS_CODE);
-  SATCAT.addORBIT_CENTER(builder, ORBIT_CENTEROffset);
-  SATCAT.addORBIT_TYPE(builder, ORBIT_TYPE);
-  return SATCAT.endSATCAT(builder);
-}
-
-/**
- * @constructor
- */
-function PAYLOAD() {
-  /**
-   * @type {flatbuffers.ByteBuffer}
-   */
-  this.bb = null;
-
-  /**
-   * @type {number}
-   */
-  this.bb_pos = 0;
-}
-
-/**
- * @param {number} i
- * @param {flatbuffers.ByteBuffer} bb
- * @returns {PAYLOAD}
- */
-PAYLOAD.prototype.__init = function (i, bb) {
-  this.bb_pos = i;
-  this.bb = bb;
-  return this;
-};
-
-/**
- * @param {flatbuffers.ByteBuffer} bb
- * @param {PAYLOAD=} obj
- * @returns {PAYLOAD}
- */
-PAYLOAD.getRootAsPAYLOAD = function (bb, obj) {
-  return (obj || new PAYLOAD).__init(bb.readInt32(bb.position()) + bb.position(), bb);
-};
-
-/**
- * @param {flatbuffers.ByteBuffer} bb
- * @param {PAYLOAD=} obj
- * @returns {PAYLOAD}
- */
-PAYLOAD.getSizePrefixedRootAsPAYLOAD = function (bb, obj) {
-  bb.setPosition(bb.position() + flatbuffers.SIZE_PREFIX_LENGTH);
-  return (obj || new PAYLOAD).__init(bb.readInt32(bb.position()) + bb.position(), bb);
-};
-
-/**
- * @param {flatbuffers.Encoding=} optionalEncoding
- * @returns {string|Uint8Array|null}
- */
-PAYLOAD.prototype.OBJECT_ID = function (optionalEncoding) {
-  var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
-};
-
-/**
- * @param {flatbuffers.Encoding=} optionalEncoding
- * @returns {string|Uint8Array|null}
- */
-PAYLOAD.prototype.OBJECT_NAME = function (optionalEncoding) {
-  var offset = this.bb.__offset(this.bb_pos, 6);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
-};
-
-/**
- * @param {flatbuffers.Encoding=} optionalEncoding
- * @returns {string|Uint8Array|null}
- */
-PAYLOAD.prototype.DEPLOYMENT_DATE = function (optionalEncoding) {
-  var offset = this.bb.__offset(this.bb_pos, 8);
-  return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
-};
-
-/**
- * @returns {boolean}
- */
-PAYLOAD.prototype.MANEUVERABLE = function () {
-  var offset = this.bb.__offset(this.bb_pos, 10);
-  return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
-};
-
-/**
- * @param {boolean} value
- * @returns {boolean}
- */
-PAYLOAD.prototype.mutate_MANEUVERABLE = function (value) {
-  var offset = this.bb.__offset(this.bb_pos, 10);
-
-  if (offset === 0) {
-    return false;
-  }
-
-  this.bb.writeInt8(this.bb_pos + offset, value);
-  return true;
-};
-
-/**
- * @returns {number}
- */
-PAYLOAD.prototype.SIZE = function () {
-  var offset = this.bb.__offset(this.bb_pos, 12);
-  return offset ? this.bb.readFloat32(this.bb_pos + offset) : 0.0;
-};
-
-/**
- * @param {number} value
- * @returns {boolean}
- */
-PAYLOAD.prototype.mutate_SIZE = function (value) {
-  var offset = this.bb.__offset(this.bb_pos, 12);
-
-  if (offset === 0) {
-    return false;
-  }
-
-  this.bb.writeFloat32(this.bb_pos + offset, value);
-  return true;
-};
-
-/**
- * @returns {number}
- */
-PAYLOAD.prototype.MASS = function () {
-  var offset = this.bb.__offset(this.bb_pos, 14);
-  return offset ? this.bb.readFloat32(this.bb_pos + offset) : 0.0;
-};
-
-/**
- * @param {number} value
- * @returns {boolean}
- */
-PAYLOAD.prototype.mutate_MASS = function (value) {
-  var offset = this.bb.__offset(this.bb_pos, 14);
-
-  if (offset === 0) {
-    return false;
-  }
-
-  this.bb.writeFloat32(this.bb_pos + offset, value);
-  return true;
-};
-
-/**
- * @returns {massType}
- */
-PAYLOAD.prototype.MASS_TYPE = function () {
-  var offset = this.bb.__offset(this.bb_pos, 16);
-  return offset ? /** @type {massType} */ (this.bb.readInt8(this.bb_pos + offset)) : massType.DRY;
-};
-
-/**
- * @param {massType} value
- * @returns {boolean}
- */
-PAYLOAD.prototype.mutate_MASS_TYPE = function (value) {
-  var offset = this.bb.__offset(this.bb_pos, 16);
-
-  if (offset === 0) {
-    return false;
-  }
-
-  this.bb.writeInt8(this.bb_pos + offset, value);
-  return true;
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- */
-PAYLOAD.startPAYLOAD = function (builder) {
-  builder.startObject(7);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {flatbuffers.Offset} OBJECT_IDOffset
- */
-PAYLOAD.addOBJECT_ID = function (builder, OBJECT_IDOffset) {
-  builder.addFieldOffset(0, OBJECT_IDOffset, 0);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {flatbuffers.Offset} OBJECT_NAMEOffset
- */
-PAYLOAD.addOBJECT_NAME = function (builder, OBJECT_NAMEOffset) {
-  builder.addFieldOffset(1, OBJECT_NAMEOffset, 0);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {flatbuffers.Offset} DEPLOYMENT_DATEOffset
- */
-PAYLOAD.addDEPLOYMENT_DATE = function (builder, DEPLOYMENT_DATEOffset) {
-  builder.addFieldOffset(2, DEPLOYMENT_DATEOffset, 0);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {boolean} MANEUVERABLE
- */
-PAYLOAD.addMANEUVERABLE = function (builder, MANEUVERABLE) {
-  builder.addFieldInt8(3, +MANEUVERABLE, +false);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {number} SIZE
- */
-PAYLOAD.addSIZE = function (builder, SIZE) {
-  builder.addFieldFloat32(4, SIZE, 0.0);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {number} MASS
- */
-PAYLOAD.addMASS = function (builder, MASS) {
-  builder.addFieldFloat32(5, MASS, 0.0);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {massType} MASS_TYPE
- */
-PAYLOAD.addMASS_TYPE = function (builder, MASS_TYPE) {
-  builder.addFieldInt8(6, MASS_TYPE, massType.DRY);
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @returns {flatbuffers.Offset}
- */
-PAYLOAD.endPAYLOAD = function (builder) {
-  var offset = builder.endObject();
-  return offset;
-};
-
-/**
- * @param {flatbuffers.Builder} builder
- * @param {flatbuffers.Offset} OBJECT_IDOffset
- * @param {flatbuffers.Offset} OBJECT_NAMEOffset
- * @param {flatbuffers.Offset} DEPLOYMENT_DATEOffset
- * @param {boolean} MANEUVERABLE
- * @param {number} SIZE
- * @param {number} MASS
- * @param {massType} MASS_TYPE
- * @returns {flatbuffers.Offset}
- */
-PAYLOAD.createPAYLOAD = function (builder, OBJECT_IDOffset, OBJECT_NAMEOffset, DEPLOYMENT_DATEOffset, MANEUVERABLE, SIZE, MASS, MASS_TYPE) {
-  PAYLOAD.startPAYLOAD(builder);
-  PAYLOAD.addOBJECT_ID(builder, OBJECT_IDOffset);
-  PAYLOAD.addOBJECT_NAME(builder, OBJECT_NAMEOffset);
-  PAYLOAD.addDEPLOYMENT_DATE(builder, DEPLOYMENT_DATEOffset);
-  PAYLOAD.addMANEUVERABLE(builder, MANEUVERABLE);
-  PAYLOAD.addSIZE(builder, SIZE);
-  PAYLOAD.addMASS(builder, MASS);
-  PAYLOAD.addMASS_TYPE(builder, MASS_TYPE);
-  return PAYLOAD.endPAYLOAD(builder);
-}
-const schema = {
-  "definitions": {
-    "referenceFrame": {
-      "type": "string",
-      "enum": [
-        "EME2000",
-        "GCRF",
-        "GRC",
-        "ICRF",
-        "ITRF2000",
-        "ITRF93",
-        "ITRF97",
-        "MCI",
-        "TDR",
-        "TEME",
-        "TOD"
-      ]
-    },
-    "ephemerisType": {
-      "type": "string",
-      "enum": [
-        "SGP",
-        "SGP4",
-        "SDP4",
-        "SGP8",
-        "SDP8"
-      ]
-    },
-    "timeSystem": {
-      "type": "string",
-      "enum": [
-        "GMST",
-        "GPS",
-        "MET",
-        "MRT",
-        "SCLK",
-        "TAI",
-        "TCB",
-        "TDB",
-        "TCG",
-        "TT",
-        "UT1",
-        "UTC"
-      ]
-    },
-    "meanElementTheory": {
-      "type": "string",
-      "enum": [
-        "SGP4",
-        "DSST",
-        "USM"
-      ]
-    },
-    "manCovRefFrame": {
-      "type": "string",
-      "enum": [
-        "RSW",
-        "RTN",
-        "TNW"
-      ]
-    },
-    "objType": {
-      "type": "string",
-      "enum": [
-        "PAYLOAD",
-        "DEBRIS",
-        "ROCKET_BODY",
-        "UNKNOWN"
-      ]
-    },
-    "opsStatusCode": {
-      "type": "string",
-      "enum": [
-        "OPERATIONAL",
-        "NONOPERATIONAL",
-        "PARTIALLY_OPERATIONAL",
-        "BACKUP_STANDBY",
-        "SPARE",
-        "EXTENDED_MISSION",
-        "DECAYED",
-        "UNKNOWN"
-      ]
-    },
-    "orbitalStatusCode": {
-      "type": "string",
-      "enum": [
-        "NO_CURRENT_ELEMENTS",
-        "NO_INITIAL_ELEMENTS",
-        "NO_ELEMENTS_AVAILABLE",
-        "PERMANENTLY_DOCKED",
-        "DOCKED_TO_INTERNATIONAL_SPACE_STATION",
-        "IN_ORBIT"
-      ]
-    },
-    "orbitCenter": {
-      "type": "string",
-      "enum": [
-        "ASTEROID",
-        "EARTH",
-        "EARTH_LAGRANGE",
-        "EARTH_MOON_BARYCENTER",
-        "JUPITER",
-        "MARS",
-        "MERCURY",
-        "MOON_EARTH",
-        "NEPTUNE",
-        "PLUTO",
-        "SATURN",
-        "SOLAR_SYSTEM_ESCAPE",
-        "SUN",
-        "URANUS",
-        "VENUS"
-      ]
-    },
-    "orbitType": {
-      "type": "string",
-      "enum": [
-        "ORBIT",
-        "DOCKED",
-        "LANDING",
-        "IMPACT"
-      ]
-    },
-    "massType": {
-      "type": "string",
-      "enum": [
-        "DRY",
-        "WET"
-      ]
-    },
-    "OMM": {
-      "type": "object",
-      "properties": {
-        "CCSDS_OMM_VERS": {
-          "type": "number"
-        },
-        "CREATION_DATE": {
-          "type": "string"
-        },
-        "ORIGINATOR": {
-          "type": "string"
-        },
-        "OBJECT_NAME": {
-          "type": "string"
-        },
-        "OBJECT_ID": {
-          "type": "string"
-        },
-        "CENTER_NAME": {
-          "type": "string"
-        },
-        "REF_FRAME": {
-          "$ref": "#/definitions/referenceFrame"
-        },
-        "REF_FRAME_EPOCH": {
-          "type": "string"
-        },
-        "TIME_SYSTEM": {
-          "$ref": "#/definitions/timeSystem"
-        },
-        "MEAN_ELEMENT_THEORY": {
-          "$ref": "#/definitions/meanElementTheory"
-        },
-        "COMMENT": {
-          "type": "string"
-        },
-        "EPOCH": {
-          "type": "string"
-        },
-        "SEMI_MAJOR_AXIS": {
-          "type": "number"
-        },
-        "MEAN_MOTION": {
-          "type": "number"
-        },
-        "ECCENTRICITY": {
-          "type": "number"
-        },
-        "INCLINATION": {
-          "type": "number"
-        },
-        "RA_OF_ASC_NODE": {
-          "type": "number"
-        },
-        "ARG_OF_PERICENTER": {
-          "type": "number"
-        },
-        "MEAN_ANOMALY": {
-          "type": "number"
-        },
-        "GM": {
-          "type": "number"
-        },
-        "MASS": {
-          "type": "number"
-        },
-        "SOLAR_RAD_AREA": {
-          "type": "number"
-        },
-        "SOLAR_RAD_COEFF": {
-          "type": "number"
-        },
-        "DRAG_AREA": {
-          "type": "number"
-        },
-        "DRAG_COEFF": {
-          "type": "number"
-        },
-        "EPHEMERIS_TYPE": {
-          "$ref": "#/definitions/ephemerisType"
-        },
-        "CLASSIFICATION_TYPE": {
-          "type": "string"
-        },
-        "NORAD_CAT_ID": {
-          "type": "number"
-        },
-        "ELEMENT_SET_NO": {
-          "type": "number"
-        },
-        "REV_AT_EPOCH": {
-          "type": "number"
-        },
-        "BSTAR": {
-          "type": "number"
-        },
-        "MEAN_MOTION_DOT": {
-          "type": "number"
-        },
-        "MEAN_MOTION_DDOT": {
-          "type": "number"
-        },
-        "COV_REF_FRAME": {
-          "$ref": "#/definitions/manCovRefFrame"
-        },
-        "CX_X": {
-          "type": "number"
-        },
-        "CY_X": {
-          "type": "number"
-        },
-        "CY_Y": {
-          "type": "number"
-        },
-        "CZ_X": {
-          "type": "number"
-        },
-        "CZ_Y": {
-          "type": "number"
-        },
-        "CZ_Z": {
-          "type": "number"
-        },
-        "CX_DOT_X": {
-          "type": "number"
-        },
-        "CX_DOT_Y": {
-          "type": "number"
-        },
-        "CX_DOT_Z": {
-          "type": "number"
-        },
-        "CX_DOT_X_DOT": {
-          "type": "number"
-        },
-        "CY_DOT_X": {
-          "type": "number"
-        },
-        "CY_DOT_Y": {
-          "type": "number"
-        },
-        "CY_DOT_Z": {
-          "type": "number"
-        },
-        "CY_DOT_X_DOT": {
-          "type": "number"
-        },
-        "CY_DOT_Y_DOT": {
-          "type": "number"
-        },
-        "CZ_DOT_X": {
-          "type": "number"
-        },
-        "CZ_DOT_Y": {
-          "type": "number"
-        },
-        "CZ_DOT_Z": {
-          "type": "number"
-        },
-        "CZ_DOT_X_DOT": {
-          "type": "number"
-        },
-        "CZ_DOT_Y_DOT": {
-          "type": "number"
-        },
-        "CZ_DOT_Z_DOT": {
-          "type": "number"
-        },
-        "USER_DEFINED_BIP_0044_TYPE": {
-          "type": "number"
-        },
-        "USER_DEFINED_OBJECT_DESIGNATOR": {
-          "type": "string"
-        },
-        "USER_DEFINED_EARTH_MODEL": {
-          "type": "string"
-        },
-        "USER_DEFINED_EPOCH_TIMESTAMP": {
-          "type": "number"
-        },
-        "USER_DEFINED_MICROSECONDS": {
-          "type": "number"
-        }
-      },
-      "additionalProperties": false
-    },
-    "MPE": {
-      "type": "object",
-      "properties": {
-        "MEAN_MOTION": {
-          "type": "number"
-        },
-        "ECCENTRICITY": {
-          "type": "number"
-        },
-        "INCLINATION": {
-          "type": "number"
-        },
-        "RA_OF_ASC_NODE": {
-          "type": "number"
-        },
-        "MEAN_ANOMALY": {
-          "type": "number"
-        },
-        "NORAD_CAT_ID": {
-          "type": "number"
-        },
-        "BSTAR": {
-          "type": "number"
-        },
-        "USER_DEFINED_EPOCH_TIMESTAMP": {
-          "type": "number"
-        }
-      },
-      "additionalProperties": false
-    },
-    "OMMCOLLECTION": {
-      "type": "object",
-      "properties": {
-        "RECORDS": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/OMM"
-          }
-        }
-      },
-      "additionalProperties": false
-    },
-    "MPECOLLECTION": {
-      "type": "object",
-      "properties": {
-        "RECORDS": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/MPE"
-          }
-        }
-      },
-      "additionalProperties": false
-    },
-    "SATCAT": {
-      "type": "object",
-      "properties": {
-        "OBJECT_NAME": {
-          "type": "string"
-        },
-        "OBJECT_ID": {
-          "type": "string"
-        },
-        "NORAD_CAT_ID": {
-          "type": "number"
-        },
-        "MULTIPLE_NAMES": {
-          "type": "boolean"
-        },
-        "OBJECT_TYPE": {
-          "$ref": "#/definitions/objType"
-        },
-        "OPS_STATUS_CODE": {
-          "$ref": "#/definitions/opsStatusCode"
-        },
-        "OWNER": {
-          "type": "string"
-        },
-        "LAUNCH_DATE": {
-          "type": "string"
-        },
-        "LAUNCH_SITE": {
-          "type": "string"
-        },
-        "DECAY_DATE": {
-          "type": "string"
-        },
-        "PERIOD": {
-          "type": "number"
-        },
-        "INCLINATION": {
-          "type": "number"
-        },
-        "APOGEE": {
-          "type": "number"
-        },
-        "PERIGEE": {
-          "type": "number"
-        },
-        "RCS": {
-          "type": "number"
-        },
-        "DATA_STATUS_CODE": {
-          "$ref": "#/definitions/orbitalStatusCode"
-        },
-        "ORBIT_CENTER": {
-          "type": "string"
-        },
-        "ORBIT_TYPE": {
-          "$ref": "#/definitions/orbitType"
-        }
-      },
-      "additionalProperties": false
-    },
-    "PAYLOAD": {
-      "type": "object",
-      "properties": {
-        "OBJECT_ID": {
-          "type": "string"
-        },
-        "OBJECT_NAME": {
-          "type": "string"
-        },
-        "DEPLOYMENT_DATE": {
-          "type": "string"
-        },
-        "MANEUVERABLE": {
-          "type": "boolean"
-        },
-        "SIZE": {
-          "type": "number"
-        },
-        "MASS": {
-          "type": "number"
-        },
-        "MASS_TYPE": {
-          "$ref": "#/definitions/massType"
-        }
-      },
-      "additionalProperties": false
-    }
-  },
-  "$ref": "#/definitions/OMM"
 };
 
 // Exports for ECMAScript6 Modules
@@ -4584,22 +3030,7 @@ export { meanElementTheory };
 export { meanElementTheoryName };
 export { manCovRefFrame };
 export { manCovRefFrameName };
-export { objType };
-export { objTypeName };
-export { opsStatusCode };
-export { opsStatusCodeName };
-export { orbitalStatusCode };
-export { orbitalStatusCodeName };
-export { orbitCenter };
-export { orbitCenterName };
-export { orbitType };
-export { orbitTypeName };
-export { massType };
-export { massTypeName };
 export { OMM };
 export { MPE };
 export { OMMCOLLECTION };
 export { MPECOLLECTION };
-export { SATCAT };
-export { PAYLOAD };
-export { schema };
