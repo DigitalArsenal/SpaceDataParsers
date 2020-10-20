@@ -1,5 +1,3 @@
-import { JulianDate, TimeStandard } from "./JulianDate.mjs";
-
 import bignumber from "bignumber.js";
 
 const decimalAssumed = (value) => {
@@ -7,12 +5,16 @@ const decimalAssumed = (value) => {
   return n.isFinite() && !n.isNaN() ? n : 0;
 };
 const dpAParse = (value) => {
-  let result = (value.slice(0, 1) === "-" ? -1 : 1) * decimalAssumed(`${value.slice(1, 6)}e${value.slice(6)}`);
+  let result =
+    (value.slice(0, 1) === "-" ? -1 : 1) *
+    decimalAssumed(`${value.slice(1, 6)}e${value.slice(6)}`);
   return result;
 };
 const whatCentury = (digits) => {
   digits = parseInt(digits);
-  return digits || digits === 0 ? (digits < 50 ? "20" : "19") + digits.toString().padStart(2, 0) : null;
+  return digits || digits === 0
+    ? (digits < 50 ? "20" : "19") + digits.toString().padStart(2, 0)
+    : null;
 };
 
 const satcat_map = {
@@ -48,7 +50,10 @@ const satcat_transform = {
       return 1;
     } else if (!_payload && _name && _name.indexOf(" DEB") > -1) {
       return 2;
-    } else if (_name && (_name.indexOf(" R/B") > -1 || _name.indexOf(" AKM") > -1)) {
+    } else if (
+      _name &&
+      (_name.indexOf(" R/B") > -1 || _name.indexOf(" AKM") > -1)
+    ) {
       return 3;
     }
     return 4;
@@ -73,7 +78,23 @@ const satcat_transform = {
     _satcat.ORBIT_TYPE = null;
     if (_d === -1) {
       _d = null;
-      let _dd = ["AS", "EA", "EL", "EM", "JU", "MA", "ME", "MO", "NE", "PL", "SA", "SS", "SU", "UR", "VE"].indexOf(d.slice(0, 2));
+      let _dd = [
+        "AS",
+        "EA",
+        "EL",
+        "EM",
+        "JU",
+        "MA",
+        "ME",
+        "MO",
+        "NE",
+        "PL",
+        "SA",
+        "SS",
+        "SU",
+        "UR",
+        "VE",
+      ].indexOf(d.slice(0, 2));
       if (_dd > -1) {
         _satcat.ORBIT_CENTER = _d;
         let _n = parseInt(d.slice(2));
@@ -81,11 +102,13 @@ const satcat_transform = {
       }
     }
     if (_satcat.ORBIT_TYPE === null) {
-      let _decayed = _satcat.OPS_STATUS_CODE === 6 || !isNaN(_satcat.DECAY_DATE.getTime());
+      let _decayed =
+        _satcat.OPS_STATUS_CODE === 6 || !isNaN(_satcat.DECAY_DATE.getTime());
       if (_decayed) {
         _satcat.ORBIT_TYPE = 2;
       } else {
-        _satcat.ORBIT_TYPE = [0, 2, 3, 4, 5].indexOf(_satcat.OPS_STATUS_CODE) > -1 ? 0 : null;
+        _satcat.ORBIT_TYPE =
+          [0, 2, 3, 4, 5].indexOf(_satcat.OPS_STATUS_CODE) > -1 ? 0 : null;
       }
     }
     return _d;
@@ -131,7 +154,19 @@ const tle_transform = {
   MEAN_MOTION_DDOT: dpAParse,
   EPOCH: (value) => {
     value = value.trim();
-    let tA = [whatCentury(value.slice(0, 2)), 0, parseFloat(value.substr(2)), 0, 24, 0, 60, 0, 60, 0, 1000];
+    let tA = [
+      whatCentury(value.slice(0, 2)),
+      0,
+      parseFloat(value.substr(2)),
+      0,
+      24,
+      0,
+      60,
+      0,
+      60,
+      0,
+      1000,
+    ];
     tA.forEach((v, i) => {
       if (i % 2 && i !== 1) {
         tA[i] = Math.floor(tA[i - 1]);
@@ -142,9 +177,17 @@ const tle_transform = {
     tA = tA.filter((v, i) => {
       return i % 2 || i == 0 || i == tA.length - 1;
     });
-    return (new Date(Date.UTC.apply(0, tA))).toISOString().replace(/z/ig, '').split('.')[0] + '.' + (parseFloat(tA[tA.length - 1].toFixed(3) * 1000).toString()).padStart(6,'0');
+    return (
+      new Date(Date.UTC.apply(0, tA))
+        .toISOString()
+        .replace(/z/gi, "")
+        .split(".")[0] +
+      "." +
+      parseFloat(tA[tA.length - 1].toFixed(3) * 1000)
+        .toString()
+        .padStart(6, "0")
+    );
   },
-
 };
 
 export { satcat_map, satcat_transform, tle_map, tle_transform };

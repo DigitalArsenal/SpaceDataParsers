@@ -27,21 +27,20 @@ class lineReader {
         done = result === null;
         if (result?.value) {
           value = result.value;
-
         } else {
           value = result;
         }
 
         let startIndex = 0;
 
-        for (; ;) {
+        for (;;) {
           let remline = leRegex.exec(value);
           //only progress if there are more lines
           if (!remline) {
             if (done) break;
             //loop through each successive line
             let remainder = value.substr(startIndex);
-            (result = await reader.read());
+            result = await reader.read();
             if (result?.value) {
               value = result.value;
               done = result.done;
@@ -106,8 +105,9 @@ class tle extends lineReader {
             let value = _line.substring(_tp[0], _tp[1]);
 
             _OMM[prop] = (tle_transform[prop] || bignumber)(value);
-       
-            if (_OMM[prop] instanceof bignumber) _OMM[prop] = _OMM[prop].toNumber();
+
+            if (_OMM[prop] instanceof bignumber)
+              _OMM[prop] = _OMM[prop].toNumber();
           }
         });
         if (OBJECT_NAME) _OMM.OBJECT_NAME = OBJECT_NAME;
@@ -117,7 +117,7 @@ class tle extends lineReader {
   }
 }
 
-const satcat = class tle extends lineReader {
+class satcat extends lineReader {
   constructor(reader) {
     super(reader);
     this.lines = [];
@@ -144,7 +144,7 @@ const satcat = class tle extends lineReader {
       },
     };
   }
-};
+}
 const vcm = null;
 
 export { tle, satcat, vcm };

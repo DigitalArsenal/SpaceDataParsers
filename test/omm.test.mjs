@@ -205,16 +205,8 @@ let runTest = async () => {
     t.equal(passes, true);
   });
 
-  tape("File I/O Test", function (t) {
+  tape("Size Prefixed File I/O Test", function (t) {
     t.plan(1);
-    /** TODO:
-     *
-     * - Convert from array
-     * - Write / read from disk using size-prefixed headers
-     * -
-     *
-     */
-    //console.log(LEGACY.tle[0]);
 
     writeFileSync(
       "./test/data/spacedatastandards/omm.sizePrefixed.fbs",
@@ -236,13 +228,6 @@ let runTest = async () => {
       OMM
     );
 
-    console.log(
-      JSON.stringify(
-        readOMM.map(
-          (n) => `${n.NORAD_CAT_ID} ${n.USER_DEFINED_OBJECT_DESIGNATOR}`
-        )
-      )
-    );
     t.equal(
       LEGACY.tle.map((_omm) => _omm.NORAD_CAT_ID).join(""),
       readOMM.map((n) => n.NORAD_CAT_ID).join("")

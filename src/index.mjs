@@ -1,102 +1,15 @@
 import { readSync, statSync, openSync } from "fs";
-import { tle, satcat, vcm } from "./parsers/legacy.mjs";
-import xml2js from "xml2js";
-import csv from "neat-csv";
-import { Readable } from "stream";
-import flatbuffers from "./lib/flatbuffers.js";
+import flatbuffers from "./lib/flatbuffers.mjs";
 import { required } from "./lib/required.mjs";
 import btoa from "btoa";
 
-globalThis.flatbuffers = flatbuffers;
-
-const useAsNumber = ["#/definitions/ephemerisType"]; //Hack until we can formalize fields between each format
-
-const numCheck = (schema, pkey, pval) => {
-  let sD = schema.definitions.OMM.properties[pkey];
-  return sD?.type === "number" || useAsNumber.indexOf(sD?.$ref) > -1
-    ? parseFloat(pval) ?? null
-    : pval ?? null;
-};
-
-const readOMMXML = async (input, schema) => {
-  let xp = await new xml2js.Parser({
-    parseNumbers: true,
-  }).parseStringPromise(input);
-  return xp.ndm.omm.map((om) => {
-    let intermediate = {};
-    [
-      om.header[0],
-      om.body[0].segment[0].metadata[0],
-      om.body[0].segment[0].data[0],
-    ].forEach((xmlPath) => {
-      for (let prop in xmlPath) {
-        if (
-          [
-            "meanElements",
-            "covarianceMatrix",
-            "userDefinedParameters",
-            "tleParameters",
-            "spacecraftParameters",
-          ].indexOf(prop) === -1
-        ) {
-          intermediate[prop] = numCheck(schema, prop, xmlPath[prop][0]);
-        } else {
-          for (let pprop in xmlPath[prop][0]) {
-            intermediate[pprop] = numCheck(
-              schema,
-              pprop,
-              xmlPath[prop][0][pprop][0]
-            );
-          }
-        }
-      }
-    });
-    for (let prop in intermediate) {
-      if (intermediate[prop]?.hasOwnProperty("$")) {
-        intermediate[intermediate[prop].$.parameter] = numCheck(
-          schema,
-          prop,
-          intermediate[prop]._
-        );
-        delete intermediate[prop];
-      }
-    }
-    return intermediate;
-  });
-};
-
-const readOMMJSON = (input, schema) => {
-  return JSON.parse(input, function (key, value) {
-    return numCheck(schema, key, value);
-  });
-};
-
-const readOMMCSV = async (input, schema) => {
-  let results = (await csv(input)).map((row) => {
-    for (let prop in row) {
-      row[prop] = numCheck(schema, prop, row[prop]);
-    }
-    return row;
-  });
-
-  return results;
-};
-
-const readTLE = (input, schema) => {
-  return new Promise((resolve, reject) => {
-    input = input instanceof Readable ? input : Readable.from(input);
-    let tles = new tle(input);
-    let started = false;
-    input.on("readable", async () => {
-      if (started) return;
-      started = true;
-      let stop = await tles.readLines();
-      let results = tles.lines.map(tles.format.OMM);
-      let raw = tles.lines;
-      resolve({ results, raw });
-    });
-  });
-};
+export {
+  numCheck,
+  readOMMXML,
+  readOMMJSON,
+  readOMMCSV,
+  readTLE,
+} from "./parsers/omm.converter.mjs";
 
 const readFB = (
   input = required`input`,
@@ -129,15 +42,15 @@ const readFB = (
       }
     } else {
       try {
-        let SOMM = fbClass[`getSizePrefixedRootAs${fbClass.name}`](buf);
+        let SFBDATA = fbClass[`getSizePrefixedRootAs${fbClass.name}`](buf);
         let result = {};
         for (let key in schemaKeys) {
           let sK = schemaKeys[key];
-          if (typeof SOMM[sK] === "function") {
+          if (typeof SFBDATA[sK] === "function") {
             Object.defineProperty(result, sK, {
               enumerable: true,
               get() {
-                return SOMM[sK]();
+                return SFBDATA[sK]();
               },
             });
           }
@@ -167,35 +80,35 @@ const transformType = (builder, _value, type) => {
 };
 
 const createFB = (
-  jsonOMM = required`jsonOMM`,
+  jsonFBDATA = required`jsonFBDATA`,
   schema = required`schema`,
   fbClass = required`fbClass`
 ) => {
   let returnArray;
 
-  if (Array.isArray(jsonOMM)) {
-    returnArray = jsonOMM.map((omm) => createFB(omm, schema, fbClass));
+  if (Array.isArray(jsonFBDATA)) {
+    returnArray = jsonFBDATA.map((fbdata) => createFB(fbdata, schema, fbClass));
   } else {
     let schemaKeys = Object.keys(schema.definitions[fbClass.name].properties);
     let builder = new flatbuffers.Builder(0);
-    let _jsonOMM = {};
+    let _jsonFBDATA = {};
     for (let k = 0; k < schemaKeys.length; k++) {
       let sK = schemaKeys[k];
-      let { type } = schema.definitions.OMM.properties[sK];
-      if (jsonOMM[sK] ?? false) {
-        _jsonOMM[sK] = transformType(builder, jsonOMM[sK], type);
+      let { type } = schema.definitions[fbClass.name].properties[sK];
+      if (jsonFBDATA[sK] ?? false) {
+        _jsonFBDATA[sK] = transformType(builder, jsonFBDATA[sK], type);
       }
     }
     fbClass[`start${fbClass.name}`](builder);
 
-    for (let key in _jsonOMM) {
+    for (let key in _jsonFBDATA) {
       if (schemaKeys.indexOf(key) === -1) continue;
       let addKey = `add${key}`;
-      fbClass[addKey](builder, _jsonOMM[key]);
+      fbClass[addKey](builder, _jsonFBDATA[key]);
     }
 
-    var BuiltOMM = fbClass[`end${fbClass.name}`](builder);
-    builder.finishSizePrefixed(BuiltOMM);
+    var BuiltFBDATA = fbClass[`end${fbClass.name}`](builder);
+    fbClass[`finishSizePrefixed${fbClass.name}Buffer`](builder, BuiltFBDATA);
 
     let uint8 = builder.asUint8Array();
     return uint8;
@@ -206,7 +119,7 @@ const createFB = (
   );
 };
 
-const readHeaderLen = (fd, position = null) => {
+const readHeader = (fd, position = null) => {
   let headLen = flatbuffers.SIZE_PREFIX_LENGTH;
   let sizeBuf = Buffer.alloc(headLen);
 
@@ -216,57 +129,50 @@ const readHeaderLen = (fd, position = null) => {
     length: headLen,
     position,
   });
-  if (!position) {
-    let idBuf = Buffer.alloc(256);
-    readSync(fd, idBuf, {
-      offset: 0,
-      length: 256,
-      position: 0,
-    });
-    console.log(idBuf.toString());
-  }
-  let ommLen = sizeBuf.readInt32LE(0, sizeBuf);
-  return ommLen;
+
+  let idBuf = Buffer.alloc(flatbuffers.FILE_IDENTIFIER_LENGTH);
+  readSync(fd, idBuf, {
+    offset: 0,
+    length: idBuf.length,
+    position: position + 8,
+  });
+
+  return {
+    byteLength: sizeBuf.readInt32LE(0, sizeBuf),
+    file_identifier: idBuf.toString(),
+  };
 };
 
 const readFBFile = (filename, schema, fbClass, fbCollection) => {
   let fd = openSync(filename, "r");
-  let spLen = flatbuffers.SIZE_PREFIX_LENGTH + readHeaderLen(fd);
-  let ommBuf = Buffer.alloc(spLen);
+  let spLen = flatbuffers.SIZE_PREFIX_LENGTH + readHeader(fd).byteLength;
+  let fbdataBuf = Buffer.alloc(spLen);
 
   let returnArray = [];
   /*reset for first read*/
 
-  let pos = readSync(fd, ommBuf, {
+  let pos = readSync(fd, fbdataBuf, {
     offset: 0,
     length: spLen,
     position: 0,
   });
-  returnArray.push(ommBuf);
+  returnArray.push(fbdataBuf);
   while (pos < statSync(filename).size) {
-    let _spLen = flatbuffers.SIZE_PREFIX_LENGTH + readHeaderLen(fd, pos);
+    let _spLen =
+      flatbuffers.SIZE_PREFIX_LENGTH + readHeader(fd, pos).byteLength;
 
-    let _ommBuf = Buffer.alloc(_spLen);
+    let _fbdataBuf = Buffer.alloc(_spLen);
 
-    readSync(fd, _ommBuf, {
+    readSync(fd, _fbdataBuf, {
       offset: 0,
       length: _spLen,
       position: pos,
     });
-    returnArray.push(_ommBuf);
+    returnArray.push(_fbdataBuf);
     pos += _spLen;
   }
 
   return readFB(returnArray, schema, fbClass, fbCollection);
 };
 
-export {
-  numCheck,
-  readOMMXML,
-  readOMMJSON,
-  readOMMCSV,
-  readTLE,
-  readFB,
-  createFB,
-  readFBFile,
-};
+export { readFB, createFB, readFBFile };
