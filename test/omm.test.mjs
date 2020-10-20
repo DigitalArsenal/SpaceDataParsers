@@ -46,7 +46,8 @@ let runTest = async () => {
     fb: readFB(
       readFileSync("./test/data/spacedatastandards/omm.fbs"),
       schema,
-      true
+      OMM,
+      OMMCOLLECTION
     ),
   };
 
@@ -223,16 +224,15 @@ let runTest = async () => {
             new Array(Math.floor(Math.random() * 100)).join("+");
           return _omm;
         }),
-        schema
+        schema,
+        OMM
       )
     );
-    let sPTest = readFB(
-      readFileSync("./test/data/spacedatastandards/omm.sizePrefixed.fbs"),
-      schema
-    );
+
     let readOMM = readFBFile(
       "./test/data/spacedatastandards/omm.sizePrefixed.fbs",
-      schema
+      schema,
+      OMM
     );
 
     console.log(

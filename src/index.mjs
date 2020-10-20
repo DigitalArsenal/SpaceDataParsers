@@ -5,17 +5,10 @@ import { readSync, statSync, openSync } from "fs";
 import csv from "neat-csv";
 import { Readable } from "stream";
 import { tle, satcat, vcm } from "./parsers/legacy.mjs";
-import {
-  OMM,
-  OMMCOLLECTION,
-  schema,
-  referenceFrame,
-  timeSystem,
-  meanElementTheory,
-  ephemerisType,
-} from "./class/OMM.flatbuffer.class.js";
 import flatbuffers from "./lib/flatbuffers.js";
+import { required } from "./lib/required.mjs";
 import btoa from "btoa";
+
 globalThis.flatbuffers = flatbuffers;
 
 const useAsNumber = ["#/definitions/ephemerisType"]; //Hack until we can formalize fields between each format
@@ -107,17 +100,21 @@ const readTLE = (input, schema) => {
   });
 };
 
-const readFB = (input, schema) => {
-  let schemaKeys = Object.keys(schema.definitions.OMM.properties);
+const readFB = (
+  input = required`input`,
+  schema = required`schema`,
+  fbClass = required`class`,
+  fbCollection
+) => {
+  let schemaKeys = Object.keys(schema.definitions[fbClass.name].properties);
   let results = [];
   if (Array.isArray(input)) {
-    results = input.map((fb) => readFB(fb, schema)[0]);
+    results = input.map((fb) => readFB(fb, schema, fbClass, fbCollection)[0]);
   } else {
     let buf = new flatbuffers.ByteBuffer(input);
 
-    let SCOLLECTION = OMMCOLLECTION.getRootAsOMMCOLLECTION(buf);
-
-    if (SCOLLECTION.RECORDSLength()) {
+    if (fbCollection) {
+      let SCOLLECTION = fbCollection[`getRootAs${fbCollection.name}`](buf);
       for (let i = 0; i < SCOLLECTION.RECORDSLength(); i++) {
         let result = SCOLLECTION.RECORDS(i);
         for (let key in schemaKeys) {
@@ -134,7 +131,7 @@ const readFB = (input, schema) => {
       }
     } else {
       try {
-        let SOMM = OMM.getSizePrefixedRootAsOMM(buf);
+        let SOMM = fbClass[`getSizePrefixedRootAs${fbClass.name}`](buf);
         let result = {};
         for (let key in schemaKeys) {
           let sK = schemaKeys[key];
@@ -171,12 +168,17 @@ const transformType = (builder, _value, type) => {
   return _value;
 };
 
-const createFB = (jsonOMM, schema) => {
+const createFB = (
+  jsonOMM = required`jsonOMM`,
+  schema = required`schema`,
+  fbClass = required`fbClass`
+) => {
   let returnArray;
+
   if (Array.isArray(jsonOMM)) {
-    returnArray = jsonOMM.map((omm) => createFB(omm, schema));
+    returnArray = jsonOMM.map((omm) => createFB(omm, schema, fbClass));
   } else {
-    let schemaKeys = Object.keys(schema.definitions.OMM.properties);
+    let schemaKeys = Object.keys(schema.definitions[fbClass.name].properties);
     let builder = new flatbuffers.Builder(0);
     let _jsonOMM = {};
     for (let k = 0; k < schemaKeys.length; k++) {
@@ -186,15 +188,15 @@ const createFB = (jsonOMM, schema) => {
         _jsonOMM[sK] = transformType(builder, jsonOMM[sK], type);
       }
     }
-    OMM.startOMM(builder);
+    fbClass[`start${fbClass.name}`](builder);
 
     for (let key in _jsonOMM) {
       if (schemaKeys.indexOf(key) === -1) continue;
       let addKey = `add${key}`;
-      OMM[addKey](builder, _jsonOMM[key]);
+      fbClass[addKey](builder, _jsonOMM[key]);
     }
 
-    var BuiltOMM = OMM.endOMM(builder);
+    var BuiltOMM = fbClass[`end${fbClass.name}`](builder);
     builder.finishSizePrefixed(BuiltOMM);
 
     let uint8 = builder.asUint8Array();
@@ -222,7 +224,7 @@ const readHeaderLen = (fd, position = null) => {
   return ommLen;
 };
 
-const readFBFile = (filename, schema) => {
+const readFBFile = (filename, schema, fbClass, fbCollection) => {
   let fd = openSync(filename, "r");
   let spLen = flatbuffers.SIZE_PREFIX_LENGTH + readHeaderLen(fd);
   let ommBuf = Buffer.alloc(spLen);
@@ -250,7 +252,7 @@ const readFBFile = (filename, schema) => {
     pos += _spLen;
   }
 
-  return readFB(returnArray, schema);
+  return readFB(returnArray, schema, fbClass, fbCollection);
 };
 
 export {
