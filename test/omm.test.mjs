@@ -22,7 +22,6 @@ import schema from "../src/class/OMM.schema.mjs";
 
 import btoa from "btoa";
 import { writeFileSync, readFileSync, createReadStream, fstat } from "fs";
-import Ajv from "ajv";
 import { tmpdir } from "os";
 import sgp4module from "../src/SGP4Propagator/sgp4propagator.mjs";
 

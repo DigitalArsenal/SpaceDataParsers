@@ -2,6 +2,7 @@
   "name": "external",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "sgp4propagator.mjs",
   "ignore": [
     "wasmmodule.mjs"
@@ -14,7 +15,6 @@
     "build:llvm": "emcc -v -fPIC -lm -O3 astmath/astMath/astMath.cpp asttime/astTime/astTime.cpp SGP4/SGP4/SGP4.cpp coordfk5/coordFK5/coordFK5.cpp astro.cpp -o external.bc",
     "build:clang++": "clang++ -v -g -lm -fPIC -v -nostartfiles -static -undefined dynamic_lookup astmath/astMath/astMath.cpp asttime/astTime/astTime.cpp SGP4/SGP4/SGP4.cpp coordfk5/coordFK5/coordFK5.cpp sgp4sdp4/sgp4sdp4.c  sgp4sdp4/sgp_in.c sgp4sdp4/sgp_math.c  sgp4sdp4/sgp_obs.c  sgp4sdp4/sgp_time.c  sgp4sdp4/solar.c astro.cpp -o external.a",
     "build:clang++:wasm": "clang++ -O3 -fno-exceptions -Wl,--no-entry,--export=registerEntity,--export=describeObject,--export=sizeOfsatelliteCatalog,--export=propagate,--export=generateEphemeris,--export=getValue,--export=getValueInReferenceFrame,--export=free,--export=freePtr,--export=deletePtr,--export=removeEntity,--export=removeAll,--export=getSatAzElRange,--export=getSatAzElRangeForInterval,--export=getSatAzElRangePositionForInterval --target=wasm32-unknown --sysroot=/opt/wasi-sdk/share/wasi-sysroot -v -g -lm -fPIC -v -nostartfiles astmath/astMath/astMath.cpp asttime/astTime/astTime.cpp SGP4/SGP4/SGP4.cpp coordfk5/coordFK5/coordFK5.cpp sgp4sdp4/sgp4sdp4.c  sgp4sdp4/sgp_in.c sgp4sdp4/sgp_math.c  sgp4sdp4/sgp_obs.c  sgp4sdp4/sgp_time.c  sgp4sdp4/solar.c astro.cpp -o sgp4.wasm"
-
   },
   "author": "",
   "license": "CLOSED"

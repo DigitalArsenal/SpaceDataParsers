@@ -1,5 +1,5 @@
 import { tle, satcat, vcm } from "../parsers/legacy.mjs";
-import xml2js from "xml2js";
+import convert from "xml-js";
 import csv from "neat-csv";
 import { Readable } from "stream";
 const useAsNumber = ["#/definitions/ephemerisType"]; //Hack until we can formalize fields between each format
@@ -12,50 +12,36 @@ const numCheck = (schema, pkey, pval) => {
 };
 
 const readOMMXML = async (input, schema) => {
-  let xp = await new xml2js.Parser({
-    parseNumbers: true,
-  }).parseStringPromise(input);
-  return xp.ndm.omm.map((om) => {
-    let intermediate = {};
-    [
-      om.header[0],
-      om.body[0].segment[0].metadata[0],
-      om.body[0].segment[0].data[0],
-    ].forEach((xmlPath) => {
-      for (let prop in xmlPath) {
-        if (
-          [
-            "meanElements",
-            "covarianceMatrix",
-            "userDefinedParameters",
-            "tleParameters",
-            "spacecraftParameters",
-          ].indexOf(prop) === -1
-        ) {
-          intermediate[prop] = numCheck(schema, prop, xmlPath[prop][0]);
+  return convert
+    .xml2js(input)
+    .elements.filter((e) => e.name === "ndm")[0]
+    .elements.filter((e) => e.name === "omm")
+    .map((omm) => {
+      let intermediate = {};
+      let eCheck = (e) => {
+        if (e.elements) findElements(e.elements);
+      };
+      let findElements = (el) => {
+        if (Array.isArray(el)) {
+          el.forEach((e) => {
+            if (
+              e.type === "element" &&
+              Object.keys(schema.definitions.OMM.properties).indexOf(e.name) >
+                -1
+            ) {
+              intermediate[e.name] = e.elements
+                ? numCheck(schema, e.name, e.elements[0].text)
+                : undefined;
+            }
+            eCheck(e);
+          });
         } else {
-          for (let pprop in xmlPath[prop][0]) {
-            intermediate[pprop] = numCheck(
-              schema,
-              pprop,
-              xmlPath[prop][0][pprop][0]
-            );
-          }
+          eCheck(el);
         }
-      }
+      };
+      eCheck(omm);
+      return intermediate;
     });
-    for (let prop in intermediate) {
-      if (intermediate[prop]?.hasOwnProperty("$")) {
-        intermediate[intermediate[prop].$.parameter] = numCheck(
-          schema,
-          prop,
-          intermediate[prop]._
-        );
-        delete intermediate[prop];
-      }
-    }
-    return intermediate;
-  });
 };
 
 const readOMMJSON = (input, schema) => {

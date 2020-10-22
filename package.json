@@ -7,8 +7,9 @@
     "test": "test"
   },
   "scripts": {
+    "build": "./node_modules/.bin/rollup  -c rollup.config.js && ./node_modules/.bin/pkg ./build/test.js --options max_old_space_size=4096 -t node14-linux-x64,node14-win-x64,node14-macos-x64 --debug --out-path build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon  --harmony-top-level-await --trace-deprecation --experimental-wasm-modules test/test.mjs -w test/test.mjs -w  test/omm.test.mjs -w  test/satcat.test.mjs -w src/index.mjs",
+    "dev": "nodemon  --harmony-top-level-await --trace-deprecation --experimental-wasm-modules test/test.mjs -w test/test.mjs -w  test/omm.test.mjs -w  test/satcat.test.mjs -w src/index.mjs -w ./src/parsers/omm.converter.mjs",
     "update:schema": "./node_modules/.bin/ajv migrate -s ./test/_root_IDLDocument.schema.json",
     "build:sgp4:wasm": "cd ./src/SGP4Propagator && npm run build && sed -i -E 's/__dirname//' ./wasmmodule.mjs"
   },
@@ -27,11 +28,18 @@
     "bignumber.js": "^9.0.0",
     "btoa": "^1.2.1",
     "neat-csv": "^5.2.0",
+    "xml-js": "^1.6.11",
     "xml2js": "^0.4.23"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^15.1.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
     "ajv-cli": "^3.2.1",
     "nodemon": "^2.0.4",
+    "pkg": "^4.4.9",
+    "rollup": "^2.32.1",
+    "rollup-plugin-terser": "^7.0.2",
     "tape": "^5.0.1"
   },
   "type": "module"
