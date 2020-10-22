@@ -37,6 +37,7 @@
     "@rollup/plugin-node-resolve": "^9.0.0",
     "ajv-cli": "^3.2.1",
     "nodemon": "^2.0.4",
+    "os-service": "^2.2.0",
     "pkg": "^4.4.9",
     "rollup": "^2.32.1",
     "rollup-plugin-terser": "^7.0.2",
