@@ -1,0 +1,3 @@
+[submodule "src/SGP4Propagator"]
+	path = src/SGP4Propagator
+	url = git@github.com:DigitalArsenal/SGP4Propagator.git
