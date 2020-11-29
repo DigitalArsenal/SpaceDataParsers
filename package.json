@@ -2,7 +2,7 @@
   "name": "spacedataparsers",
   "version": "1.0.0",
   "description": "Parsers for Space Data Messages",
-  "main": "index.js",
+  "main": "/src/index.mjs",
   "directories": {
     "test": "test"
   },
