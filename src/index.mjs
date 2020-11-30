@@ -1,22 +1,11 @@
 import { readSync, statSync, openSync } from "fs";
 import flatbuffers from "./lib/flatbuffers.mjs";
 import { required } from "./lib/required.mjs";
-import btoa from "btoa";
+import schema from "./class/OMM.schema.mjs";
+import { OMM, OMMCOLLECTION, MPE, referenceFrame, timeSystem, meanElementTheory, ephemerisType } from "./class/OMM.flatbuffer.class.js";
+import { numCheck, readOMMXML, readOMMJSON, readOMMCSV, readTLE } from "./parsers/omm.converter.mjs";
 
-export {
-  numCheck,
-  readOMMXML,
-  readOMMJSON,
-  readOMMCSV,
-  readTLE,
-} from "./parsers/omm.converter.mjs";
-
-const readFB = (
-  input = required`input`,
-  schema = required`schema`,
-  fbClass = required`class`,
-  fbCollection
-) => {
+const readFB = (input = required`input`, schema = required`schema`, fbClass = required`class`, fbCollection) => {
   let schemaKeys = Object.keys(schema.definitions[fbClass.name].properties);
   let results = [];
   if (Array.isArray(input)) {
@@ -70,20 +59,12 @@ const transformType = (builder, _value, type) => {
       _value = +_value;
       break;
     case "string":
-      _value = builder.createString(
-        new Uint8Array(
-          Buffer.from(typeof _value === "string" ? _value : _value.toString())
-        )
-      );
+      _value = builder.createString(new Uint8Array(Buffer.from(typeof _value === "string" ? _value : _value.toString())));
   }
   return _value;
 };
 
-const createFB = (
-  jsonFBDATA = required`jsonFBDATA`,
-  schema = required`schema`,
-  fbClass = required`fbClass`
-) => {
+const createFB = (jsonFBDATA = required`jsonFBDATA`, schema = required`schema`, fbClass = required`fbClass`) => {
   let returnArray;
 
   if (Array.isArray(jsonFBDATA)) {
@@ -158,8 +139,7 @@ const readFBFile = (filename, schema, fbClass, fbCollection) => {
   });
   returnArray.push(fbdataBuf);
   while (pos < statSync(filename).size) {
-    let _spLen =
-      flatbuffers.SIZE_PREFIX_LENGTH + readHeader(fd, pos).byteLength;
+    let _spLen = flatbuffers.SIZE_PREFIX_LENGTH + readHeader(fd, pos).byteLength;
 
     let _fbdataBuf = Buffer.alloc(_spLen);
 
@@ -175,4 +155,18 @@ const readFBFile = (filename, schema, fbClass, fbCollection) => {
   return readFB(returnArray, schema, fbClass, fbCollection);
 };
 
-export { readFB, createFB, readFBFile };
+const readOMM = async (data = required`data`, format = "flatbuffer") => {
+  let formatters = {
+    xml: readOMMXML,
+    csv: readOMMCSV,
+    json: readOMMJSON,
+    tle: readTLE,
+    flatbuffer: readFB,
+    fb: readFB,
+  };
+  let formatter = formatters[format] || readFB;
+
+  return formatter(data, schema, OMM, OMMCOLLECTION);
+};
+
+export { readFB, createFB, readFBFile, readOMM, numCheck, readOMMXML, readOMMJSON, readOMMCSV, readTLE };
