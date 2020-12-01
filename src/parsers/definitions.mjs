@@ -121,7 +121,7 @@ const tle_map = {
   1: {
     NORAD_CAT_ID: [3, 7],
     CLASSIFICATION_TYPE: [8],
-    OBJECT_ID: [10, 17],
+    OBJECT_ID: [10, 18],
     EPOCH: [19, 32],
     MEAN_MOTION_DOT: [34, 43],
     MEAN_MOTION_DDOT: [45, 52],

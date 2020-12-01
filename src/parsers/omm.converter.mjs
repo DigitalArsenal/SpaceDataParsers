@@ -1,7 +1,7 @@
 import { tle, satcat, vcm } from "../parsers/legacy.mjs";
 import convert from "xml-js";
 import csv from "neat-csv";
-import { Readable } from "stream";
+import { Readable } from "readable-stream";
 const useAsNumber = ["#/definitions/ephemerisType"]; //Hack until we can formalize fields between each format
 
 const numCheck = (schema, pkey, pval) => {
@@ -27,7 +27,7 @@ const readOMMXML = async (input, schema) => {
             if (
               e.type === "element" &&
               Object.keys(schema.definitions.OMM.properties).indexOf(e.name) >
-                -1
+              -1
             ) {
               intermediate[e.name] = e.elements
                 ? numCheck(schema, e.name, e.elements[0].text)

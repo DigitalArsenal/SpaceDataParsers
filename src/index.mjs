@@ -1,9 +1,10 @@
-import { readSync, statSync, openSync } from "fs";
+import { readSync, statSync, openSync, createReadStream } from "fs";
 import flatbuffers from "./lib/flatbuffers.mjs";
 import { required } from "./lib/required.mjs";
 import schema from "./class/OMM.schema.mjs";
 import { OMM, OMMCOLLECTION, MPE, referenceFrame, timeSystem, meanElementTheory, ephemerisType } from "./class/OMM.flatbuffer.class.js";
 import { numCheck, readOMMXML, readOMMJSON, readOMMCSV, readTLE } from "./parsers/omm.converter.mjs";
+import { Buffer } from "buffer";
 
 const readFB = (input = required`input`, schema = required`schema`, fbClass = required`class`, fbCollection) => {
   let schemaKeys = Object.keys(schema.definitions[fbClass.name].properties);
@@ -124,32 +125,36 @@ const readHeader = (fd, position = null) => {
   };
 };
 
-const readFBFile = (filename, schema, fbClass, fbCollection) => {
-  let fd = openSync(filename, "r");
-  let spLen = flatbuffers.SIZE_PREFIX_LENGTH + readHeader(fd).byteLength;
-  let fbdataBuf = Buffer.alloc(spLen);
-
+const readFBFile = (fileData, schema, fbClass, fbCollection) => {
   let returnArray = [];
   /*reset for first read*/
+  let tempBuff, startPos, size, lastPos = 0;
 
-  let pos = readSync(fd, fbdataBuf, {
-    offset: 0,
-    length: spLen,
-    position: 0,
-  });
-  returnArray.push(fbdataBuf);
-  while (pos < statSync(filename).size) {
-    let _spLen = flatbuffers.SIZE_PREFIX_LENGTH + readHeader(fd, pos).byteLength;
+  const resetTemp = () => {
+    tempBuff = Buffer.from("");
+    startPos = -1;
+    size = -1;
+  }
 
-    let _fbdataBuf = Buffer.alloc(_spLen);
+  resetTemp();
 
-    readSync(fd, _fbdataBuf, {
-      offset: 0,
-      length: _spLen,
-      position: pos,
-    });
-    returnArray.push(_fbdataBuf);
-    pos += _spLen;
+  let totalHeaderSize = flatbuffers.SIZE_PREFIX_LENGTH + flatbuffers.FILE_IDENTIFIER_LENGTH;
+
+  fileData = Buffer.from(fileData);
+  for (let d = 0; d < fileData.length; d++) {
+    tempBuff = Buffer.concat([tempBuff, fileData.slice(d, d + 1)]);
+
+    let idIndex = tempBuff.indexOf("$OMM");
+
+    if (tempBuff.length >= totalHeaderSize && idIndex > -1 && startPos === -1) {
+      let id = tempBuff.slice(idIndex, idIndex + flatbuffers.FILE_IDENTIFIER_LENGTH);
+      startPos = idIndex - totalHeaderSize;
+      size = tempBuff.slice(startPos, idIndex).readInt32LE(0);
+    } else if (startPos > -1 && tempBuff.length - startPos === size + 1) {
+      /*start over*/
+      returnArray.push(tempBuff.slice(startPos,));
+      resetTemp();
+    }
   }
 
   return readFB(returnArray, schema, fbClass, fbCollection);

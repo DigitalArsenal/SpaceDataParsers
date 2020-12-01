@@ -209,27 +209,39 @@ let runTest = async () => {
 
     writeFileSync(
       "./test/data/spacedatastandards/omm.sizePrefixed.fbs",
-      createFB(
-        LEGACY.tle.map((_omm) => {
-          _omm.USER_DEFINED_OBJECT_DESIGNATOR =
-            new Date().toISOString() +
-            new Array(Math.floor(Math.random() * 100)).join("+");
-          return _omm;
-        }),
-        schema,
-        OMM
+      Buffer.concat(
+        [Buffer.from('NOISEANDRANDOMSTUFF'), createFB(
+          LEGACY.tle.map((_omm) => {
+            _omm.USER_DEFINED_OBJECT_DESIGNATOR =
+              new Date().toISOString() +
+              new Array(Math.floor(Math.random() * 100)).join("+");
+            _omm.EPHEMERIS_TYPE = 1;
+            delete _omm.CHECKSUM;
+            return _omm;
+          }),
+          schema,
+          OMM
+        )]
       )
     );
 
     let readOMM = readFBFile(
-      "./test/data/spacedatastandards/omm.sizePrefixed.fbs",
+      readFileSync("./test/data/spacedatastandards/omm.sizePrefixed.fbs"),
       schema,
       OMM
     );
 
-    t.equal(
-      LEGACY.tle.map((_omm) => _omm.NORAD_CAT_ID).join(""),
-      readOMM.map((n) => n.NORAD_CAT_ID).join("")
+    let _keys = Object.keys(LEGACY.tle[0]);
+    const mfunc = (omm) => {
+      let _omm = {};
+      for (let k = 0; k < _keys.length; k++) {
+        _omm[_keys[k]] = omm[_keys[k]];
+      }
+      return _omm;
+    };
+
+    t.equal(JSON.stringify(LEGACY.tle.map(mfunc)[0]),
+      JSON.stringify(readOMM.map(mfunc)[0])
     );
   });
 };

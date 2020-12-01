@@ -24,7 +24,7 @@ class lineReader {
 
         let startIndex = 0;
 
-        for (;;) {
+        for (; ;) {
           let remline = leRegex.exec(value);
           //only progress if there are more lines
           if (!remline) {
