@@ -1,7 +1,7 @@
 import tape from "tape";
 import {
   readTLE,
-  createFB,
+  writeOMM,
   readOMM
 } from "../src/index.mjs";
 import {
@@ -195,7 +195,7 @@ let runTest = async () => {
 
     writeFileSync(
       "./test/data/spacedatastandards/omm.collection.fbs",
-      createFB(
+      writeOMM(
         LEGACY.tle.map((_omm) => {
           _omm.USER_DEFINED_OBJECT_DESIGNATOR =
             new Date().toISOString() +
@@ -204,8 +204,7 @@ let runTest = async () => {
           delete _omm.CHECKSUM;
           return _omm;
         }),
-        schema,
-        OMM,
+        null,
         true
       )
     );
@@ -234,7 +233,7 @@ let runTest = async () => {
     writeFileSync(
       "./test/data/spacedatastandards/omm.sizePrefixed.fbs",
       Buffer.concat(
-        [Buffer.from('NOISEANDRANDOMSTUFF'), createFB(
+        [Buffer.from('NOISEANDRANDOMSTUFF'), writeOMM(
           LEGACY.tle.map((_omm) => {
             _omm.USER_DEFINED_OBJECT_DESIGNATOR =
               new Date().toISOString() +
@@ -242,9 +241,7 @@ let runTest = async () => {
             _omm.EPHEMERIS_TYPE = 1;
             delete _omm.CHECKSUM;
             return _omm;
-          }),
-          schema,
-          OMM
+          })
         )]
       )
     );

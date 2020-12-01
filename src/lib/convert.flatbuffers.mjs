@@ -1,6 +1,17 @@
 import flatbuffers from "./flatbuffers.mjs";
 import { required } from "../lib/required.mjs";
+import { Buffer } from "buffer";
 
+const transformType = (builder, _value, type) => {
+    switch (type) {
+        case "number":
+            _value = +_value;
+            break;
+        case "string":
+            _value = builder.createString(new Uint8Array(Buffer.from(_value.toString())));
+    }
+    return _value;
+};
 const wrapFlatBuffer = (input = required`input`, schema = required`schema`, fbClass = required`class`, fbCollection, SCOLLECTION, scollBUF) => {
     let schemaKeys = Object.keys(schema.definitions[fbClass.name].properties);
     let results = [];
@@ -62,4 +73,4 @@ const wrapFlatBuffer = (input = required`input`, schema = required`schema`, fbCl
     return results;
 };
 
-export { wrapFlatBuffer };
+export { wrapFlatBuffer, transformType };
