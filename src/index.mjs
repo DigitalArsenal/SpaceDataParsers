@@ -5,55 +5,7 @@ import schema from "./class/OMM.schema.mjs";
 import { OMM, OMMCOLLECTION, MPE, referenceFrame, timeSystem, meanElementTheory, ephemerisType } from "./class/OMM.flatbuffer.class.js";
 import { numCheck, readOMMXML, readOMMJSON, readOMMCSV, readTLE } from "./parsers/omm.converter.mjs";
 import { Buffer } from "buffer";
-
-const readFB = (input = required`input`, schema = required`schema`, fbClass = required`class`, fbCollection) => {
-  let schemaKeys = Object.keys(schema.definitions[fbClass.name].properties);
-  let results = [];
-  if (Array.isArray(input)) {
-    results = input.map((fb) => readFB(fb, schema, fbClass, fbCollection)[0]);
-  } else {
-    let buf = new flatbuffers.ByteBuffer(input);
-
-    if (fbCollection) {
-      let SCOLLECTION = fbCollection[`getRootAs${fbCollection.name}`](buf);
-      for (let i = 0; i < SCOLLECTION.RECORDSLength(); i++) {
-        let _result = {};//SCOLLECTION.RECORDS(i);
-        for (let key in schemaKeys) {
-          let sK = schemaKeys[key];
-          _result[sK] = null;
-          if (typeof SCOLLECTION.RECORDS(i)[sK] === "function") {
-            Object.defineProperty(_result, sK, {
-              get() {
-                return SCOLLECTION.RECORDS(i)[sK]();
-              },
-            });
-          }
-        }
-        results.push(_result);
-      }
-    } else {
-      try {
-        let SFBDATA = fbClass[`getSizePrefixedRootAs${fbClass.name}`](buf);
-        let result = {};
-        for (let key in schemaKeys) {
-          let sK = schemaKeys[key];
-          if (typeof SFBDATA[sK] === "function") {
-            Object.defineProperty(result, sK, {
-              enumerable: true,
-              get() {
-                return SFBDATA[sK]();
-              },
-            });
-          }
-        }
-        results.push(result);
-      } catch (e) {
-        console.log(e);
-      }
-    }
-  }
-  return results;
-};
+import { wrapFlatBuffer } from "./lib/convert.flatbuffers.mjs";
 
 const transformType = (builder, _value, type) => {
   switch (type) {
@@ -61,15 +13,50 @@ const transformType = (builder, _value, type) => {
       _value = +_value;
       break;
     case "string":
-      _value = builder.createString(new Uint8Array(Buffer.from(typeof _value === "string" ? _value : _value.toString())));
+      _value = builder.createString(new Uint8Array(Buffer.from(_value.toString())));
   }
   return _value;
 };
 
-const createFB = (jsonFBDATA = required`jsonFBDATA`, schema = required`schema`, fbClass = required`fbClass`) => {
+const createFB = (jsonFBDATA = required`jsonFBDATA`, schema = required`schema`, fbClass = required`fbClass`, useCollection = false) => {
   let returnArray;
 
-  if (Array.isArray(jsonFBDATA)) {
+  if (useCollection) {
+
+    let builder = new flatbuffers.Builder(0);
+
+    let records = jsonFBDATA.map(intermediate => {
+      let transformIntermediate = Object.assign({}, intermediate);
+      for (let prop in transformIntermediate) {
+        let { type } = schema.definitions[fbClass.name].properties[prop];
+        transformIntermediate[prop] = transformType(builder, transformIntermediate[prop], type);
+      }
+      OMM.startOMM(builder);
+      for (let prop in transformIntermediate) {
+        OMM[`add${prop}`](builder, transformIntermediate[prop]);
+      }
+      let BuiltOMM = OMM.endOMM(builder)
+      builder.finish(BuiltOMM);
+      return BuiltOMM;
+    });
+
+    let OMMRECORDS = OMMCOLLECTION.createRECORDSVector(builder, records);
+
+    OMMCOLLECTION.startOMMCOLLECTION(builder);
+
+    OMMCOLLECTION.addRECORDS(builder, OMMRECORDS);
+
+    let COLLECTION = OMMCOLLECTION.endOMMCOLLECTION(builder);
+
+    builder.finish(COLLECTION);
+
+    let buf = builder.dataBuffer();
+    let uint8 = builder.asUint8Array();
+    let decoder = new TextDecoder("utf8");
+
+    return uint8;
+
+  } else if (Array.isArray(jsonFBDATA)) {
     returnArray = jsonFBDATA.map((fbdata) => createFB(fbdata, schema, fbClass));
   } else {
     let schemaKeys = Object.keys(schema.definitions[fbClass.name].properties);
@@ -90,7 +77,7 @@ const createFB = (jsonFBDATA = required`jsonFBDATA`, schema = required`schema`, 
       fbClass[addKey](builder, _jsonFBDATA[key]);
     }
 
-    var BuiltFBDATA = fbClass[`end${fbClass.name}`](builder);
+    let BuiltFBDATA = fbClass[`end${fbClass.name}`](builder);
     fbClass[`finishSizePrefixed${fbClass.name}Buffer`](builder, BuiltFBDATA);
 
     let uint8 = builder.asUint8Array();
@@ -103,38 +90,41 @@ const createFB = (jsonFBDATA = required`jsonFBDATA`, schema = required`schema`, 
 };
 
 const readFBFile = (fileData, schema, fbClass, fbCollection) => {
-  let returnArray = [];
-  /*reset for first read*/
-  let tempBuff, startPos, size, lastPos = 0;
+  let wrapInput = [];
+  if (fbCollection) {
+    wrapInput = fileData;
+  } else {
+    /*reset for first read*/
+    let tempBuff, startPos, size, lastPos = 0;
 
-  const resetTemp = () => {
-    tempBuff = Buffer.from("");
-    startPos = -1;
-    size = -1;
-  }
+    const resetTemp = () => {
+      tempBuff = Buffer.from("");
+      startPos = -1;
+      size = -1;
+    }
 
-  resetTemp();
+    resetTemp();
 
-  let totalHeaderSize = flatbuffers.SIZE_PREFIX_LENGTH + flatbuffers.FILE_IDENTIFIER_LENGTH;
+    let totalHeaderSize = flatbuffers.SIZE_PREFIX_LENGTH + flatbuffers.FILE_IDENTIFIER_LENGTH;
 
-  fileData = Buffer.from(fileData);
-  for (let d = 0; d < fileData.length; d++) {
-    tempBuff = Buffer.concat([tempBuff, fileData.slice(d, d + 1)]);
+    fileData = Buffer.from(fileData);
+    for (let d = 0; d < fileData.length; d++) {
+      tempBuff = Buffer.concat([tempBuff, fileData.slice(d, d + 1)]);
 
-    let idIndex = tempBuff.indexOf("$OMM");
+      let idIndex = tempBuff.indexOf("$OMM");
 
-    if (tempBuff.length >= totalHeaderSize && idIndex > -1 && startPos === -1) {
-      let id = tempBuff.slice(idIndex, idIndex + flatbuffers.FILE_IDENTIFIER_LENGTH);
-      startPos = idIndex - totalHeaderSize;
-      size = tempBuff.slice(startPos, idIndex).readInt32LE(0);
-    } else if (startPos > -1 && tempBuff.length - startPos === size + 1) {
-      /*start over*/
-      returnArray.push(tempBuff.slice(startPos,));
-      resetTemp();
+      if (tempBuff.length >= totalHeaderSize && idIndex > -1 && startPos === -1) {
+        let id = tempBuff.slice(idIndex, idIndex + flatbuffers.FILE_IDENTIFIER_LENGTH);
+        startPos = idIndex - totalHeaderSize;
+        size = tempBuff.slice(startPos, idIndex).readInt32LE(0);
+      } else if (startPos > -1 && tempBuff.length - startPos === size + 1) {
+        /*start over*/
+        wrapInput.push(tempBuff.slice(startPos,));
+        resetTemp();
+      }
     }
   }
-
-  return readFB(returnArray, schema, fbClass, fbCollection);
+  return wrapFlatBuffer(wrapInput, schema, fbClass, fbCollection);
 };
 
 const readOMM = async (data = required`data`, format = "flatbuffer") => {
@@ -151,4 +141,4 @@ const readOMM = async (data = required`data`, format = "flatbuffer") => {
   return formatter(data, schema, OMM, OMMCOLLECTION);
 };
 
-export { readFB, createFB, readFBFile, readOMM, numCheck, readOMMXML, readOMMJSON, readOMMCSV, readTLE };
+export { wrapFlatBuffer, createFB, readFBFile, readOMM, numCheck, readOMMXML, readOMMJSON, readOMMCSV, readTLE };

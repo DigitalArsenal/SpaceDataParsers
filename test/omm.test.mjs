@@ -5,7 +5,7 @@ import {
   readOMMJSON,
   readOMMCSV,
   readTLE,
-  readFB,
+  wrapFlatBuffer,
   createFB,
   readFBFile,
 } from "../src/index.mjs";
@@ -43,7 +43,7 @@ let runTest = async () => {
       }),
       schema
     ),
-    fb: readFB(
+    fb: wrapFlatBuffer(
       readFileSync("./test/data/spacedatastandards/omm.fbs"),
       schema,
       OMM,
@@ -143,7 +143,8 @@ let runTest = async () => {
               " ",
               sFormat,
               ": ",
-              OMMS[sFormat][i][prop]
+              OMMS[sFormat][i][prop],
+              JSON.stringify(OMMS[sFormat])
             );
             equal = false;
           }
@@ -202,6 +203,48 @@ let runTest = async () => {
       }
     }
     t.equal(passes, true);
+  });
+  tape("Collection File I/O Test", function (t) {
+    t.plan(1);
+
+    writeFileSync(
+      "./test/data/spacedatastandards/omm.collection.fbs",
+      createFB(
+        LEGACY.tle.map((_omm) => {
+          _omm.USER_DEFINED_OBJECT_DESIGNATOR =
+            new Date().toISOString() +
+            new Array(Math.floor(Math.random() * 100)).join("+");
+          _omm.EPHEMERIS_TYPE = 1;
+          delete _omm.CHECKSUM;
+          return _omm;
+        }),
+        schema,
+        OMM,
+        true
+      )
+    );
+
+    let fbColFile = readFileSync("./test/data/spacedatastandards/omm.collection.fbs");
+
+    let readOMM = readFBFile(
+      fbColFile,
+      schema,
+      OMM,
+      OMMCOLLECTION
+    );
+
+    let _keys = Object.keys(LEGACY.tle[0]);
+    const mfunc = (omm) => {
+      let _omm = {};
+      for (let k = 0; k < _keys.length; k++) {
+        _omm[_keys[k]] = omm[_keys[k]];
+      }
+      return _omm;
+    };
+
+    t.equal(JSON.stringify(LEGACY.tle.map(mfunc)[0]),
+      JSON.stringify(readOMM.map(mfunc)[0])
+    );
   });
 
   tape("Size Prefixed File I/O Test", function (t) {
