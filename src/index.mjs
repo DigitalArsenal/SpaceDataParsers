@@ -90,10 +90,13 @@ const createFB = (jsonFBDATA = required`jsonFBDATA`, schema = required`schema`, 
 };
 
 const readFBFile = (fileData, schema, fbClass, fbCollection) => {
-  let wrapInput = [];
-  if (fbCollection) {
-    wrapInput = fileData;
-  } else {
+  let wrapInput = false;
+  let scollBUF = new flatbuffers.ByteBuffer(fileData);
+  let SCOLLECTION = fbCollection[`getRootAs${fbCollection.name}`](scollBUF);
+
+  if (SCOLLECTION.RECORDSLength() === 0) {
+    wrapInput = [];
+    SCOLLECTION = false;
     /*reset for first read*/
     let tempBuff, startPos, size, lastPos = 0;
 
@@ -124,21 +127,21 @@ const readFBFile = (fileData, schema, fbClass, fbCollection) => {
       }
     }
   }
-  return wrapFlatBuffer(wrapInput, schema, fbClass, fbCollection);
+  return wrapFlatBuffer(wrapInput, schema, fbClass, fbCollection, SCOLLECTION, scollBUF);
 };
 
-const readOMM = async (data = required`data`, format = "flatbuffer") => {
+const readOMM = (data = required`data`, format = "flatbuffer") => {
   let formatters = {
     xml: readOMMXML,
     csv: readOMMCSV,
     json: readOMMJSON,
     tle: readTLE,
-    flatbuffer: readFB,
-    fb: readFB,
+    flatbuffer: readFBFile,
+    fb: readFBFile,
   };
-  let formatter = formatters[format] || readFB;
+  let formatter = formatters[format] || readFBFile;
 
   return formatter(data, schema, OMM, OMMCOLLECTION);
 };
 
-export { wrapFlatBuffer, createFB, readFBFile, readOMM, numCheck, readOMMXML, readOMMJSON, readOMMCSV, readTLE };
+export { createFB, readFBFile, readOMM, numCheck, readOMMXML, readOMMJSON, readOMMCSV, readTLE };

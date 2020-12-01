@@ -5,9 +5,9 @@ import {
   readOMMJSON,
   readOMMCSV,
   readTLE,
-  wrapFlatBuffer,
   createFB,
   readFBFile,
+  readOMM
 } from "../src/index.mjs";
 import {
   OMM,
@@ -24,6 +24,17 @@ import btoa from "btoa";
 import { writeFileSync, readFileSync, createReadStream, fstat } from "fs";
 import { tmpdir } from "os";
 import sgp4module from "../src/SGP4Propagator/sgp4propagator.mjs";
+
+process.on("uncaughtException", (err) => {
+  console.log(
+    "\x1b[31m%s\x1b[0m",
+    "✘ Fatality! Uncaught Exception within unit tests, error thrown:"
+  );
+  console.log(err);
+  console.log("not ok 1");
+  console.log("\x1b[31m%s\x1b[0m", "Force-Exiting process ...");
+  process.exit(1);
+});
 
 let runTest = async () => {
   let OMMS = {
@@ -43,11 +54,8 @@ let runTest = async () => {
       }),
       schema
     ),
-    fb: wrapFlatBuffer(
-      readFileSync("./test/data/spacedatastandards/omm.fbs"),
-      schema,
-      OMM,
-      OMMCOLLECTION
+    fb: readOMM(
+      readFileSync("./test/data/spacedatastandards/omm.fbs")
     ),
   };
 
@@ -58,7 +66,6 @@ let runTest = async () => {
     schema
   );
   LEGACY.tle = LEGACY.results;
-
   let { methods, wasmModule } = await sgp4module;
 
   let {
@@ -113,16 +120,6 @@ let runTest = async () => {
       null
     );
 
-  process.on("uncaughtException", (err) => {
-    console.log(
-      "\x1b[31m%s\x1b[0m",
-      "✘ Fatality! Uncaught Exception within unit tests, error thrown:"
-    );
-    console.log(err);
-    console.log("not ok 1");
-    console.log("\x1b[31m%s\x1b[0m", "Force-Exiting process ...");
-    process.exit(1);
-  });
   tape("Deserialization Test", function (t) {
     t.plan(1);
 
@@ -224,13 +221,8 @@ let runTest = async () => {
       )
     );
 
-    let fbColFile = readFileSync("./test/data/spacedatastandards/omm.collection.fbs");
-
-    let readOMM = readFBFile(
-      fbColFile,
-      schema,
-      OMM,
-      OMMCOLLECTION
+    let redOMM = readOMM(
+      readFileSync("./test/data/spacedatastandards/omm.collection.fbs")
     );
 
     let _keys = Object.keys(LEGACY.tle[0]);
@@ -243,7 +235,7 @@ let runTest = async () => {
     };
 
     t.equal(JSON.stringify(LEGACY.tle.map(mfunc)[0]),
-      JSON.stringify(readOMM.map(mfunc)[0])
+      JSON.stringify(redOMM.map(mfunc)[0])
     );
   });
 
@@ -268,10 +260,9 @@ let runTest = async () => {
       )
     );
 
-    let readOMM = readFBFile(
+    let redOMM = readOMM(
       readFileSync("./test/data/spacedatastandards/omm.sizePrefixed.fbs"),
-      schema,
-      OMM
+      schema
     );
 
     let _keys = Object.keys(LEGACY.tle[0]);
@@ -283,9 +274,10 @@ let runTest = async () => {
       return _omm;
     };
 
-    t.equal(JSON.stringify(LEGACY.tle.map(mfunc)),
-      JSON.stringify(readOMM.map(mfunc))
+    t.equal(JSON.stringify(LEGACY.tle.map(mfunc)[0]),
+      JSON.stringify(redOMM.map(mfunc)[0])
     );
+
   });
 };
 

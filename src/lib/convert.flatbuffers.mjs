@@ -1,15 +1,13 @@
 import flatbuffers from "./flatbuffers.mjs";
 import { required } from "../lib/required.mjs";
 
-const wrapFlatBuffer = (input = required`input`, schema = required`schema`, fbClass = required`class`, fbCollection) => {
+const wrapFlatBuffer = (input = required`input`, schema = required`schema`, fbClass = required`class`, fbCollection, SCOLLECTION, scollBUF) => {
     let schemaKeys = Object.keys(schema.definitions[fbClass.name].properties);
     let results = [];
-    if (Array.isArray(input)) {
-        results = input.map((fb) => wrapFlatBuffer(fb, schema, fbClass, fbCollection)[0]);
+    if (Array.isArray(input) && input.length) {
+        results = input.map((fb) => wrapFlatBuffer(fb, schema, fbClass, fbCollection, false, false)[0]);
     } else {
-        let buf = new flatbuffers.ByteBuffer(input);
-        if (fbCollection) {
-            let SCOLLECTION = fbCollection[`getRootAs${fbCollection.name}`](buf);
+        if (SCOLLECTION && SCOLLECTION.RECORDSLength() > 0) {
             for (let i = 0; i < SCOLLECTION.RECORDSLength(); i++) {
                 let result = {};
                 Object.defineProperty(result, "flatbuffer", {
@@ -34,7 +32,8 @@ const wrapFlatBuffer = (input = required`input`, schema = required`schema`, fbCl
             }
         } else {
             try {
-                let SFBDATA = fbClass[`getSizePrefixedRootAs${fbClass.name}`](buf);
+
+                let SFBDATA = fbClass[`getSizePrefixedRootAs${fbClass.name}`](new flatbuffers.ByteBuffer(input));
                 let result = {};
                 Object.defineProperty(result, "flatbuffer", {
                     get() {
