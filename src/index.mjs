@@ -17,18 +17,19 @@ const readFB = (input = required`input`, schema = required`schema`, fbClass = re
     if (fbCollection) {
       let SCOLLECTION = fbCollection[`getRootAs${fbCollection.name}`](buf);
       for (let i = 0; i < SCOLLECTION.RECORDSLength(); i++) {
-        let result = SCOLLECTION.RECORDS(i);
+        let _result = {};//SCOLLECTION.RECORDS(i);
         for (let key in schemaKeys) {
           let sK = schemaKeys[key];
+          _result[sK] = null;
           if (typeof SCOLLECTION.RECORDS(i)[sK] === "function") {
-            Object.defineProperty(result, sK, {
+            Object.defineProperty(_result, sK, {
               get() {
                 return SCOLLECTION.RECORDS(i)[sK]();
               },
             });
           }
         }
-        results.push(result);
+        results.push(_result);
       }
     } else {
       try {
@@ -99,30 +100,6 @@ const createFB = (jsonFBDATA = required`jsonFBDATA`, schema = required`schema`, 
     returnArray,
     returnArray.map((n) => n.length).reduce((a, b) => a + b)
   );
-};
-
-const readHeader = (fd, position = null) => {
-  let headLen = flatbuffers.SIZE_PREFIX_LENGTH;
-  let sizeBuf = Buffer.alloc(headLen);
-
-  /*read header*/
-  readSync(fd, sizeBuf, {
-    offset: 0,
-    length: headLen,
-    position,
-  });
-
-  let idBuf = Buffer.alloc(flatbuffers.FILE_IDENTIFIER_LENGTH);
-  readSync(fd, idBuf, {
-    offset: 0,
-    length: idBuf.length,
-    position: position + 8,
-  });
-
-  return {
-    byteLength: sizeBuf.readInt32LE(0, sizeBuf),
-    file_identifier: idBuf.toString(),
-  };
 };
 
 const readFBFile = (fileData, schema, fbClass, fbCollection) => {

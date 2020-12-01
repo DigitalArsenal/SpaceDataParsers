@@ -240,8 +240,8 @@ let runTest = async () => {
       return _omm;
     };
 
-    t.equal(JSON.stringify(LEGACY.tle.map(mfunc)[0]),
-      JSON.stringify(readOMM.map(mfunc)[0])
+    t.equal(JSON.stringify(LEGACY.tle.map(mfunc)),
+      JSON.stringify(readOMM.map(mfunc))
     );
   });
 };
