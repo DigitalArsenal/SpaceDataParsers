@@ -1,22 +1,11 @@
 import tape from "tape";
 import {
-  numCheck,
-  readOMMXML,
-  readOMMJSON,
-  readOMMCSV,
   readTLE,
   createFB,
-  readFBFile,
   readOMM
 } from "../src/index.mjs";
 import {
-  OMM,
-  OMMCOLLECTION,
-  MPE,
-  referenceFrame,
-  timeSystem,
-  meanElementTheory,
-  ephemerisType,
+  OMM
 } from "../src/class/OMM.flatbuffer.class.js";
 import schema from "../src/class/OMM.schema.mjs";
 
@@ -38,21 +27,21 @@ process.on("uncaughtException", (err) => {
 
 let runTest = async () => {
   let OMMS = {
-    xml: await readOMMXML(
+    xml: await readOMM(
       readFileSync("./test/data/spacedatastandards/omm.xml"),
-      schema
+      "xml"
     ),
-    csv: await readOMMCSV(
+    csv: await readOMM(
       readFileSync("./test/data/spacedatastandards/omm.csv", {
         encoding: "utf8",
       }),
-      schema
+      "csv"
     ),
-    json: readOMMJSON(
+    json: readOMM(
       readFileSync("./test/data/spacedatastandards/omm.json", {
         encoding: "utf8",
       }),
-      schema
+      "json"
     ),
     fb: readOMM(
       readFileSync("./test/data/spacedatastandards/omm.fbs")
