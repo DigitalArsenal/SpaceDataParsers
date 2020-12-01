@@ -4,9 +4,7 @@ import {
   writeOMM,
   readOMM
 } from "../src/index.mjs";
-import {
-  OMM
-} from "../src/class/OMM.flatbuffer.class.js";
+
 import schema from "../src/class/OMM.schema.mjs";
 
 import btoa from "btoa";
