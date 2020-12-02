@@ -47,7 +47,7 @@ let runTest = async () => {
   };
 
   let LEGACY = await readTLE(
-    createReadStream("./test/data/spacedatastandards/3le.txt", {
+    readFileSync("./test/data/spacedatastandards/3le.txt", {
       encoding: "utf8",
     }),
     schema

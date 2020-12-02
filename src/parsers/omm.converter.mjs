@@ -1,7 +1,6 @@
 import { tle, satcat, vcm } from "../parsers/legacy.mjs";
 import convert from "xml-js";
 import csv from "neat-csv";
-import { Readable } from "readable-stream";
 const useAsNumber = ["#/definitions/ephemerisType"]; //Hack until we can formalize fields between each format
 
 const numCheck = (schema, pkey, pval) => {
@@ -61,19 +60,37 @@ const readOMMCSV = async (input, schema) => {
   return results;
 };
 
+/*
+    let rStream = */
+
 const readTLE = (input, schema) => {
   return new Promise((resolve, reject) => {
-    input = input instanceof Readable ? input : Readable.from(input);
+    let isRStream = input.hasOwnProperty('_readableState');
+    input = isRStream ? input : {
+      data: input, init: false, async read() {
+        if (!this.init) {
+          this.init = true;
+          return ""
+        } else {
+          return { value: this.data, done: true }
+        }
+      }
+    };
     let tles = new tle(input);
     let started = false;
-    input.on("readable", async () => {
+    const init = async () => {
       if (started) return;
       started = true;
       let stop = await tles.readLines();
       let results = tles.lines.map(tles.format.OMM);
       let raw = tles.lines;
       resolve({ results, raw });
-    });
+    }
+    if (!isRStream) {
+      init();
+    } else {
+      input.on("readable", init);
+    }
   });
 };
 

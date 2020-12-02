@@ -33,7 +33,7 @@ class lineReader {
 
         let startIndex = 0;
 
-        for (;;) {
+        for (; ;) {
           let remline = leRegex.exec(value);
           //only progress if there are more lines
           if (!remline) {
@@ -49,7 +49,7 @@ class lineReader {
               done = result === null;
             }
             //add more if available
-            value = remainder + (value ? utf8Decoder.decode(value) : "");
+            value = remainder + (value ? value instanceof ArrayBuffer || ArrayBuffer.isView(value) ? utf8Decoder.decode(value) : value : "");
             startIndex = leRegex.lastIndex = 0;
           } else {
             yield value.substring(startIndex, remline.index);
