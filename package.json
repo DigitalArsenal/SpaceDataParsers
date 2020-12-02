@@ -30,8 +30,6 @@
     "btoa": "^1.2.1",
     "buffer": "^6.0.3",
     "neat-csv": "^5.2.0",
-    "readable-stream": "^3.6.0",
-    "web-streams-polyfill": "^3.0.1",
     "xml-js": "^1.6.11",
     "xml2js": "^0.4.23"
   },
