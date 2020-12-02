@@ -1,9 +1,8 @@
-import { readSync, statSync, openSync, createReadStream } from "fs";
 import flatbuffers from "./lib/flatbuffers.mjs";
 import { required } from "./lib/required.mjs";
 import schema from "./class/OMM.schema.mjs";
-import { OMM, OMMCOLLECTION, MPE, referenceFrame, timeSystem, meanElementTheory, ephemerisType } from "./class/OMM.flatbuffer.class.js";
-import { numCheck, readOMMXML, readOMMJSON, readOMMCSV, readTLE } from "./parsers/omm.converter.mjs";
+import { OMM, OMMCOLLECTION } from "./class/OMM.flatbuffer.class.js";
+import { readOMMXML, readOMMJSON, readOMMCSV, readTLE } from "./parsers/omm.converter.mjs";
 import { Buffer } from "buffer";
 import { wrapFlatBuffer, transformType } from "./lib/convert.flatbuffers.mjs";
 
