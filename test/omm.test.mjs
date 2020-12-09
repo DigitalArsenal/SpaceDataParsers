@@ -25,22 +25,22 @@ process.on("uncaughtException", (err) => {
 
 let runTest = async () => {
   let OMMS = {
-    xml: await readOMM(
+    xml: (await readOMM(
       readFileSync("./test/data/spacedatastandards/omm.xml"),
       "xml"
-    ),
-    csv: await readOMM(
+    )).results,
+    csv: (await readOMM(
       readFileSync("./test/data/spacedatastandards/omm.csv", {
         encoding: "utf8",
       }),
       "csv"
-    ),
-    json: readOMM(
+    )).results,
+    json: (readOMM(
       readFileSync("./test/data/spacedatastandards/omm.json", {
         encoding: "utf8",
       }),
       "json"
-    ),
+    )).results,
     fb: readOMM(
       readFileSync("./test/data/spacedatastandards/omm.fbs")
     ),
@@ -55,7 +55,7 @@ let runTest = async () => {
   LEGACY.tle = LEGACY.results;
 
   let mm = await sgp4module;
-  console.log(mm)
+
   let {
     sizeOfsatelliteCatalog,
     registerEntity,
@@ -113,7 +113,6 @@ let runTest = async () => {
 
     let equal = true;
     for (let i = 0; i < LEGACY.tle.length; i++) {
-      let tle = LEGACY.raw[i].slice(-2);
       let jsonOMM = LEGACY.tle[i];
 
       for (let sFormat in OMMS) {
