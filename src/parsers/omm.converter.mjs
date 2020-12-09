@@ -9,7 +9,7 @@ const numCheck = (schema, pkey, pval) => {
 
 let tagTemplate = (tagName) => new RegExp(`<${tagName}[^>]*>([\\s\\S]*?)<\\/${tagName}>`, "gi");
 
-const readOMMXML = async (input, schema) => {
+const readOMMXML = (input, schema) => {
   let results = [];
   let xmlOMMArray = input.toString().match(tagTemplate("omm"));
   let schemaTags = Object.keys(schema.definitions.OMM.properties);
@@ -35,6 +35,7 @@ const readOMMJSON = (input, schema) => {
     }
     return r;
   });
+
   return { results };
 };
 

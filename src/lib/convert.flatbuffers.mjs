@@ -16,7 +16,7 @@ const wrapFlatBuffer = (input = required`input`, schema = required`schema`, fbCl
     let schemaKeys = Object.keys(schema.definitions[fbClass.name].properties);
     let results = [];
     if (Array.isArray(input) && input.length) {
-        results = input.map((fb) => wrapFlatBuffer(fb, schema, fbClass, fbCollection, false, false)[0]);
+        results = input.map((fb) => wrapFlatBuffer(fb, schema, fbClass, fbCollection, false, false).results[0]);
     } else {
         if (SCOLLECTION && SCOLLECTION.RECORDSLength() > 0) {
             for (let i = 0; i < SCOLLECTION.RECORDSLength(); i++) {
@@ -70,7 +70,8 @@ const wrapFlatBuffer = (input = required`input`, schema = required`schema`, fbCl
             }
         }
     }
-    return results;
+
+    return { results };
 };
 
 export { wrapFlatBuffer, transformType };

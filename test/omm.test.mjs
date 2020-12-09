@@ -35,15 +35,15 @@ let runTest = async () => {
       }),
       "csv"
     )).results,
-    json: (readOMM(
+    json: (await readOMM(
       readFileSync("./test/data/spacedatastandards/omm.json", {
         encoding: "utf8",
       }),
       "json"
     )).results,
-    fb: readOMM(
+    fb: (await readOMM(
       readFileSync("./test/data/spacedatastandards/omm.fbs")
-    ),
+    )).results,
   };
 
   let LEGACY = await readTLE(
@@ -209,7 +209,7 @@ let runTest = async () => {
 
     let redOMM = readOMM(
       readFileSync("./test/data/spacedatastandards/omm.collection.fbs")
-    );
+    ).results;
 
     let _keys = Object.keys(LEGACY.tle[0]);
     const mfunc = (omm) => {
@@ -247,7 +247,7 @@ let runTest = async () => {
     let redOMM = readOMM(
       readFileSync("./test/data/spacedatastandards/omm.sizePrefixed.fbs"),
       schema
-    );
+    ).results;
 
     let _keys = Object.keys(LEGACY.tle[0]);
     const mfunc = (omm) => {
