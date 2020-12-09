@@ -48,7 +48,7 @@ const readFB = (fileData, schema, fbClass, fbCollection) => {
       }
     }
   }
-  console.log(wrapInput);
+
   return wrapFlatBuffer(wrapInput, schema, fbClass, fbCollection, SCOLLECTION, scollBUF);
 };
 
