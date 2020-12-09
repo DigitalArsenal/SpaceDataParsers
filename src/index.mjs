@@ -59,8 +59,12 @@ const writeFB = (jsonFBDATA = required`jsonFBDATA`, schema = required`schema`, f
     let records = jsonFBDATA.map(intermediate => {
       let transformIntermediate = Object.assign({}, intermediate);
       for (let prop in transformIntermediate) {
-        let { type } = schema.definitions[fbClass.name].properties[prop];
-        transformIntermediate[prop] = transformType(builder, transformIntermediate[prop], type);
+        if (schema.definitions[fbClass.name].properties.hasOwnProperty(prop)) {
+          let { type } = schema.definitions[fbClass.name].properties[prop];
+          transformIntermediate[prop] = transformType(builder, transformIntermediate[prop], type);
+        } else {
+          delete transformIntermediate[prop];
+        }
       }
       OMM.startOMM(builder);
       for (let prop in transformIntermediate) {
