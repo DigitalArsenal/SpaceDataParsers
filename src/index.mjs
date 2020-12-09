@@ -6,9 +6,10 @@ import { readOMMXML, readOMMJSON, readOMMCSV, readTLE } from "./parsers/omm.conv
 import { Buffer } from "buffer";
 import { wrapFlatBuffer, transformType } from "./lib/convert.flatbuffers.mjs";
 
-
-
 const readFB = (fileData, schema, fbClass, fbCollection) => {
+  if (!(fileData instanceof Uint8Array)) {
+    fileData = new Uint8Array(fileData);
+  }
   let wrapInput = false;
   let scollBUF = new flatbuffers.ByteBuffer(fileData);
   let SCOLLECTION = fbCollection[`getRootAs${fbCollection.name}`](scollBUF);
@@ -31,6 +32,7 @@ const readFB = (fileData, schema, fbClass, fbCollection) => {
 
     fileData = Buffer.from(fileData);
     for (let d = 0; d < fileData.length; d++) {
+      if (d == 1000 && !wrapInput.length) return { results: [], error: "No $OMM within 1000 chars, you sure this is an OMM?" };
       tempBuff = Buffer.concat([tempBuff, fileData.slice(d, d + 1)]);
 
       let idIndex = tempBuff.indexOf("$OMM");
@@ -46,6 +48,7 @@ const readFB = (fileData, schema, fbClass, fbCollection) => {
       }
     }
   }
+  console.log(wrapInput);
   return wrapFlatBuffer(wrapInput, schema, fbClass, fbCollection, SCOLLECTION, scollBUF);
 };
 
@@ -59,12 +62,8 @@ const writeFB = (jsonFBDATA = required`jsonFBDATA`, schema = required`schema`, f
     let records = jsonFBDATA.map(intermediate => {
       let transformIntermediate = Object.assign({}, intermediate);
       for (let prop in transformIntermediate) {
-        if (schema.definitions[fbClass.name].properties.hasOwnProperty(prop)) {
-          let { type } = schema.definitions[fbClass.name].properties[prop];
-          transformIntermediate[prop] = transformType(builder, transformIntermediate[prop], type);
-        } else {
-          delete transformIntermediate[prop];
-        }
+        let { type } = schema.definitions[fbClass.name].properties[prop];
+        transformIntermediate[prop] = transformType(builder, transformIntermediate[prop], type);
       }
       OMM.startOMM(builder);
       for (let prop in transformIntermediate) {
