@@ -10,7 +10,7 @@ const numCheck = (schema, pkey, pval) => {
 let tagTemplate = (tagName) => new RegExp(`<${tagName}[^>]*>([\\s\\S]*?)<\\/${tagName}>`, "gi");
 
 const readOMMXML = async (input, schema) => {
-  let intermediate = [];
+  let results = [];
   let xmlOMMArray = input.toString().match(tagTemplate("omm"));
   let schemaTags = Object.keys(schema.definitions.OMM.properties);
   for (let x = 0; x < xmlOMMArray.length; x++) {
@@ -23,19 +23,19 @@ const readOMMXML = async (input, schema) => {
         }
       }
     }
-    intermediate.push(iOMM);
+    results.push(iOMM);
   }
-  return intermediate;
+  return { results };
 };
 
 const readOMMJSON = (input, schema) => {
-  let results = JSON.parse(input);
-  return results.map((r) => {
+  let results = (JSON.parse(input)).map((r) => {
     for (let p in r) {
       r[p] = numCheck(schema, p, r[p]);
     }
     return r;
   });
+  return { results };
 };
 
 const readOMMCSV = async (input, schema) => {
@@ -46,7 +46,7 @@ const readOMMCSV = async (input, schema) => {
     return row;
   });
 
-  return results;
+  return { results };
 };
 
 /*
@@ -58,17 +58,17 @@ const readTLE = (input, schema) => {
     input = isRStream
       ? input
       : {
-          data: input,
-          init: false,
-          async read() {
-            if (!this.init) {
-              this.init = true;
-              return "";
-            } else {
-              return { value: this.data, done: true };
-            }
-          },
-        };
+        data: input,
+        init: false,
+        async read() {
+          if (!this.init) {
+            this.init = true;
+            return "";
+          } else {
+            return { value: this.data, done: true };
+          }
+        },
+      };
     let tles = new tle(input);
     let started = false;
     const init = async () => {
