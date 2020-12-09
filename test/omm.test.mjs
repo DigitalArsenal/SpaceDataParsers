@@ -53,8 +53,9 @@ let runTest = async () => {
     schema
   );
   LEGACY.tle = LEGACY.results;
-  let { methods, wasmModule } = await sgp4module;
 
+  let mm = await sgp4module;
+  console.log(mm)
   let {
     sizeOfsatelliteCatalog,
     registerEntity,
@@ -69,7 +70,7 @@ let runTest = async () => {
     getSatAzElRangeForInterval,
     getSatAzElRangePositionForInterval,
     describeObject,
-  } = methods;
+  } = mm;
 
   let {
     freePtr,
@@ -79,7 +80,7 @@ let runTest = async () => {
     HEAP8,
     HEAPU8,
     stackAlloc,
-  } = wasmModule;
+  } = mm.wasm;
 
   const registerOMM = (jsonOMM) =>
     registerEntityOMM(
