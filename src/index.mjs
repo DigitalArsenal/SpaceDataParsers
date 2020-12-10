@@ -40,7 +40,6 @@ const readFB = (fileData, schema, fbClass, fbCollection) => {
     }
 
     for (let d = 0; d < fileData.length; d++) {
-      console.log(d, d === 1000 || d === fileData.length - 1, wrapInput.length);
       if ((d === 1000 || d === fileData.length - 1) && !wrapInput.length) {
         error = "No $OMM within 1000 chars, you sure this is an OMM?";
         break;
