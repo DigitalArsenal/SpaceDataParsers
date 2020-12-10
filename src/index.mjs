@@ -7,9 +7,12 @@ import { Buffer } from "buffer";
 import { wrapFlatBuffer, transformType } from "./lib/convert.flatbuffers.mjs";
 
 const readFB = (fileData, schema, fbClass, fbCollection) => {
+  let error = false;
+
   if (!(fileData instanceof Uint8Array)) {
     fileData = new Uint8Array(fileData);
   }
+
   let wrapInput = false;
   let scollBUF = new flatbuffers.ByteBuffer(fileData);
   let SCOLLECTION = fbCollection[`getRootAs${fbCollection.name}`](scollBUF);
@@ -18,7 +21,7 @@ const readFB = (fileData, schema, fbClass, fbCollection) => {
     wrapInput = [];
     SCOLLECTION = false;
     /*reset for first read*/
-    let tempBuff, startPos, size, lastPos = 0;
+    let tempBuff, startPos, size;
 
     const resetTemp = () => {
       tempBuff = Buffer.from("");
@@ -31,8 +34,17 @@ const readFB = (fileData, schema, fbClass, fbCollection) => {
     let totalHeaderSize = flatbuffers.SIZE_PREFIX_LENGTH + flatbuffers.FILE_IDENTIFIER_LENGTH;
 
     fileData = Buffer.from(fileData);
+
+    if (!fileData.length) {
+      error = "Zero length Buffer.";
+    }
+
     for (let d = 0; d < fileData.length; d++) {
-      if (d == 1000 && !wrapInput.length) return { results: [], error: "No $OMM within 1000 chars, you sure this is an OMM?" };
+      console.log(d, d === 1000 || d === fileData.length - 1, wrapInput.length);
+      if ((d === 1000 || d === fileData.length - 1) && !wrapInput.length) {
+        error = "No $OMM within 1000 chars, you sure this is an OMM?";
+        break;
+      }
       tempBuff = Buffer.concat([tempBuff, fileData.slice(d, d + 1)]);
 
       let idIndex = tempBuff.indexOf("$OMM");
@@ -48,8 +60,12 @@ const readFB = (fileData, schema, fbClass, fbCollection) => {
       }
     }
   }
-
-  return wrapFlatBuffer(wrapInput, schema, fbClass, fbCollection, SCOLLECTION, scollBUF);
+  console.log(error);
+  if (error) {
+    return { results: [], error };
+  } else {
+    return wrapFlatBuffer(wrapInput, schema, fbClass, fbCollection, SCOLLECTION, scollBUF);
+  }
 };
 
 const writeFB = (jsonFBDATA = required`jsonFBDATA`, schema = required`schema`, fbClass = required`fbClass`, useCollection = false) => {
