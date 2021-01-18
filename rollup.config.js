@@ -1,9 +1,9 @@
-import path from "path";
-import commonjs from "@rollup/plugin-commonjs";
-import { terser } from "rollup-plugin-terser";
-import json from "@rollup/plugin-json";
 import { builtinModules } from "module";
+import commonjs from "@rollup/plugin-commonjs";
+import json from "@rollup/plugin-json";
+import path from "path";
 import resolve from "@rollup/plugin-node-resolve";
+import { terser } from "rollup-plugin-terser";
 
 let ignoreGlobal = {};
 builtinModules.forEach((g) => (ignoreGlobal[g] = g));
@@ -16,7 +16,7 @@ const resolveMetaUrl = () => ({
   },
 });
 const production = !process.env.ROLLUP_WATCH;
-export default {
+export default [{
   input: "test/test.mjs",
   output: {
     file: "build/test.js",
@@ -32,4 +32,21 @@ export default {
     json(),
     //production && terser(), // minify, but only in production
   ],
-};
+},
+{
+  input: "src/index.mjs",
+  output: {
+    file: "build/SpaceDataParsers.mjs",
+    format: "esm",
+    sourcemap: false,
+    globals: ignoreGlobal,
+  },
+  external: builtinModules,
+  plugins: [
+    resolveMetaUrl(),
+    resolve({ preferBuiltins: true }),
+    commonjs(), // converts date-fns to ES modules
+    json(),
+    terser(), // minify, but only in production
+  ],
+}];
