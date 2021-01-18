@@ -59,7 +59,7 @@ const readFB = (fileData, schema, fbClass, fbCollection) => {
       }
     }
   }
-  console.log(error);
+
   if (error) {
     return { results: [], error };
   } else {
