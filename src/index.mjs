@@ -27,7 +27,7 @@ const readFB = (fileData, schema, fbClass, fbCollection) => {
       tempBuff = Buffer.from("");
       startPos = -1;
       size = -1;
-    }
+    };
 
     resetTemp();
 
@@ -54,7 +54,7 @@ const readFB = (fileData, schema, fbClass, fbCollection) => {
         size = tempBuff.slice(startPos, idIndex).readInt32LE(0);
       } else if (startPos > -1 && tempBuff.length - startPos === size + 1) {
         /*start over*/
-        wrapInput.push(tempBuff.slice(startPos,));
+        wrapInput.push(tempBuff.slice(startPos));
         resetTemp();
       }
     }
@@ -71,20 +71,26 @@ const writeFB = (jsonFBDATA = required`jsonFBDATA`, schema = required`schema`, f
   let returnArray;
 
   if (useCollection) {
-
     let builder = new flatbuffers.Builder(0);
 
-    let records = jsonFBDATA.map(intermediate => {
+    let records = jsonFBDATA.map((intermediate) => {
       let transformIntermediate = Object.assign({}, intermediate);
+      let props = schema.definitions[fbClass.name].properties;
       for (let prop in transformIntermediate) {
-        let { type } = schema.definitions[fbClass.name].properties[prop];
-        transformIntermediate[prop] = transformType(builder, transformIntermediate[prop], type);
+        if (props.hasOwnProperty(prop)) {
+          let { type } = props[prop];
+          transformIntermediate[prop] = transformType(builder, transformIntermediate[prop], type);
+        }
       }
       OMM.startOMM(builder);
       for (let prop in transformIntermediate) {
-        OMM[`add${prop}`](builder, transformIntermediate[prop]);
+        if (OMM[`add${prop}`]) {
+          OMM[`add${prop}`](builder, transformIntermediate[prop]);
+        } else {
+          // error = `OMM Parsed Property: ${prop} is not available on OMM Schema`;
+        }
       }
-      let BuiltOMM = OMM.endOMM(builder)
+      let BuiltOMM = OMM.endOMM(builder);
       builder.finish(BuiltOMM);
       return BuiltOMM;
     });
@@ -104,7 +110,6 @@ const writeFB = (jsonFBDATA = required`jsonFBDATA`, schema = required`schema`, f
     let decoder = new TextDecoder("utf8");
 
     return uint8;
-
   } else if (Array.isArray(jsonFBDATA)) {
     returnArray = jsonFBDATA.map((fbdata) => writeFB(fbdata, schema, fbClass));
   } else {
