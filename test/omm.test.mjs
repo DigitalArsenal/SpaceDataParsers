@@ -169,14 +169,14 @@ let runTest = async () => {
       let epoch = new Date(jsonOMM.EPOCH).getTime();
 
       let temeToECEF = true;
-
+      let storeResult = true;
       let flatArray = new Float64Array(
         HEAP8.buffer,
         getValueInReferenceFrame(
           pointer,
           epoch,
           temeToECEF, //convert in Cesium
-          true
+          storeResult
         ), // Choice of reference frames for velocity
         3
       );
@@ -187,11 +187,11 @@ let runTest = async () => {
           oldpointer,
           epoch,
           temeToECEF, //convert in Cesium
-          true
+          storeResult
         ), // Choice of reference frames for velocity
         3
       );
-
+          /*
       for (let sFormat in sPointers) {
         sPointers[sFormat] = new Float64Array(
           HEAP8.buffer,
@@ -199,11 +199,11 @@ let runTest = async () => {
             sPointers[sFormat],
             epoch,
             temeToECEF, //convert in Cesium
-            true
+            storeResult
           ), // Choice of reference frames for velocity
           3
         );
-      }
+      }*/
       for (let sArray in sPointers) {
         let flatArrayOMM = sPointers[sArray];
 

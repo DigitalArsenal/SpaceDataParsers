@@ -13,7 +13,7 @@
     "test": "node --harmony-top-level-await --trace-deprecation --experimental-wasm-modules test/test.mjs",
     "dev": "nodemon  --harmony-top-level-await --trace-deprecation --experimental-wasm-modules test/test.mjs -w test/test.mjs -w  test/omm.test.mjs -w  test/satcat.test.mjs -w src/index.mjs -w ./src/parsers/omm.converter.mjs",
     "update:schema": "./node_modules/.bin/ajv migrate -s ./test/_root_IDLDocument.schema.json",
-    "build:sgp4:wasm": "cd ./src/SGP4Propagator && npm run build && sed -i -E 's/__dirname//' ./wasmmodule.mjs"
+    "build:sgp4:wasm": "cd ./src/SGP4Propagator && npm run build"
   },
   "repository": {
     "type": "git",
