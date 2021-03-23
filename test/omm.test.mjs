@@ -1,9 +1,5 @@
 import tape from "tape";
-import {
-  readTLE,
-  writeOMM,
-  readOMM
-} from "../src/index.mjs";
+import { readTLE, writeOMM, readOMM } from "../src/index.mjs";
 
 import schema from "../src/class/OMM.schema.mjs";
 
@@ -25,29 +21,42 @@ process.on("uncaughtException", (err) => {
 
 let runTest = async () => {
   let OMMS = {
-    xml: (await readOMM(
-      readFileSync("./test/data/spacedatastandards/omm.xml"),
-      "xml"
-    )).results,
-    csv: (await readOMM(
-      readFileSync("./test/data/spacedatastandards/omm.csv", {
-        encoding: "utf8",
-      }),
-      "csv"
-    )).results,
-    json: (await readOMM(
-      readFileSync("./test/data/spacedatastandards/omm.json", {
-        encoding: "utf8",
-      }),
-      "json"
-    )).results,
-    fb: (await readOMM(
-      readFileSync("./test/data/spacedatastandards/omm.fbs")
-    )).results,
+    /* xml: (
+      await readOMM(
+        readFileSync("./test/data/spacedatastandards/omm.xml"),
+        "xml"
+      )
+    ).results,
+    csv: (
+      await readOMM(
+        readFileSync("./test/data/spacedatastandards/omm.csv", {
+          encoding: "utf8",
+        }),
+        "csv"
+      )
+    ).results,
+    json: (
+      await readOMM(
+        readFileSync("./test/data/spacedatastandards/omm.json", {
+          encoding: "utf8",
+        }),
+        "json"
+      )
+    ).results,
+    fb: (await readOMM(readFileSync("./test/data/spacedatastandards/omm.fbs")))
+      .results,*/
+    tle: (
+      await readOMM(
+        readFileSync("../../TestData/oneweb.txt", {
+          encoding: "utf8",
+        }),
+        "tle"
+      )
+    ).results,
   };
 
   let LEGACY = await readTLE(
-    readFileSync("./test/data/spacedatastandards/3le.txt", {
+    readFileSync("../../TestData/oneweb.txt", {
       encoding: "utf8",
     }),
     schema
@@ -72,15 +81,7 @@ let runTest = async () => {
     describeObject,
   } = mm;
 
-  let {
-    freePtr,
-    free,
-    deletePtr,
-    malloc,
-    HEAP8,
-    HEAPU8,
-    stackAlloc,
-  } = mm.wasm;
+  let { freePtr, free, deletePtr, malloc, HEAP8, HEAPU8, stackAlloc } = mm.wasm;
 
   const registerOMM = (jsonOMM) =>
     registerEntityOMM(
@@ -153,7 +154,10 @@ let runTest = async () => {
       for (let sFormat in OMMS) {
         sPointers[sFormat] = registerOMM(OMMS[sFormat][i]);
       }
-
+      if (sPointers["tle"] === pointer) {
+        console.log(sPointers["tle"]);
+        console.log(pointer);
+      }
       let epoch = new Date(jsonOMM.EPOCH).getTime();
 
       let flatArray = new Float64Array(
@@ -182,6 +186,7 @@ let runTest = async () => {
       for (let sArray in sPointers) {
         let flatArrayOMM = sPointers[sArray];
         for (let ii = 0; ii < flatArray.length; ii++) {
+          console.log(flatArray[ii], flatArrayOMM[ii]);
           if (flatArray[ii] !== flatArrayOMM[ii]) passes = false;
         }
       }
@@ -220,18 +225,20 @@ let runTest = async () => {
       return _omm;
     };
 
-    t.equal(JSON.stringify(LEGACY.tle.map(mfunc)[0]),
+    t.equal(
+      JSON.stringify(LEGACY.tle.map(mfunc)[0]),
       JSON.stringify(redOMM.map(mfunc)[0])
     );
   });
-
+  /*
   tape("Size Prefixed File I/O Test", function (t) {
     t.plan(1);
 
     writeFileSync(
       "./test/data/spacedatastandards/omm.sizePrefixed.fbs",
-      Buffer.concat(
-        [Buffer.from('NOISEANDRANDOMSTUFF'), writeOMM(
+      Buffer.concat([
+        Buffer.from("NOISEANDRANDOMSTUFF"),
+        writeOMM(
           LEGACY.tle.map((_omm) => {
             _omm.USER_DEFINED_OBJECT_DESIGNATOR =
               new Date().toISOString() +
@@ -240,8 +247,8 @@ let runTest = async () => {
             delete _omm.CHECKSUM;
             return _omm;
           })
-        )]
-      )
+        ),
+      ])
     );
 
     let redOMM = readOMM(
@@ -258,11 +265,11 @@ let runTest = async () => {
       return _omm;
     };
 
-    t.equal(JSON.stringify(LEGACY.tle.map(mfunc)[0]),
+    t.equal(
+      JSON.stringify(LEGACY.tle.map(mfunc)[0]),
       JSON.stringify(redOMM.map(mfunc)[0])
     );
-
-  });
+  });*/
 };
 
 export { runTest };
