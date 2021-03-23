@@ -7,6 +7,7 @@ import btoa from "btoa";
 import { writeFileSync, readFileSync, createReadStream, fstat } from "fs";
 import { tmpdir } from "os";
 import sgp4module from "../src/SGP4Propagator/sgp4propagator.mjs";
+import oldsgp4module from "../src/OldSGP4Propagator/sgp4propagator.mjs";
 
 process.on("uncaughtException", (err) => {
   console.log(
@@ -64,6 +65,7 @@ let runTest = async () => {
   LEGACY.tle = LEGACY.results;
 
   let mm = await sgp4module;
+  let oldModule = await oldsgp4module;
 
   let {
     sizeOfsatelliteCatalog,
@@ -81,8 +83,13 @@ let runTest = async () => {
     describeObject,
   } = mm;
 
-  let { freePtr, free, deletePtr, malloc, HEAP8, HEAPU8, stackAlloc } = mm.wasm;
+  let {
+    registerEntity: oldRegisterEntity,
+    getValueInReferenceFrame: oldGetValueInReferenceFrame,
+  } = oldModule;
 
+  let { freePtr, free, deletePtr, malloc, HEAP8, HEAPU8, stackAlloc } = mm.wasm;
+  let { HEAP8: OldHEAP8 } = oldModule;
   const registerOMM = (jsonOMM) =>
     registerEntityOMM(
       null, //jsonOMM.OBJECT_ID,
@@ -148,6 +155,7 @@ let runTest = async () => {
       let jsonOMM = LEGACY.tle[i];
 
       let pointer = registerEntity(tle[0], tle[1], true, 0, 0, 0, null);
+      let oldpointer = oldRegisterEntity(tle[0], tle[1], true, 0, 0, 0, null);
 
       let sPointers = {};
 
@@ -164,6 +172,16 @@ let runTest = async () => {
         HEAP8.buffer,
         getValueInReferenceFrame(
           pointer,
+          epoch,
+          false, //convert in Cesium
+          true
+        ), // Choice of reference frames for velocity
+        3
+      );
+      let oldFlatArray = new Float64Array(
+        OldHEAP8.buffer,
+        oldGetValueInReferenceFrame(
+          oldpointer,
           epoch,
           true, //convert in Cesium
           true
@@ -185,9 +203,11 @@ let runTest = async () => {
       }
       for (let sArray in sPointers) {
         let flatArrayOMM = sPointers[sArray];
+
         for (let ii = 0; ii < flatArray.length; ii++) {
-          console.log(flatArray[ii], flatArrayOMM[ii]);
+          console.log(flatArray[ii], flatArrayOMM[ii], oldFlatArray[ii]);
           if (flatArray[ii] !== flatArrayOMM[ii]) passes = false;
+          if (flatArray[ii] !== oldFlatArray[ii]) passes = false;
         }
       }
     }

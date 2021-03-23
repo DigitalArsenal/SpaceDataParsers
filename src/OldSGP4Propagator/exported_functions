@@ -1,0 +1,15 @@
+[
+"_sizeOfsatelliteCatalog",
+"_generateEphemeris",
+"_registerEntity",
+"_propagate",
+"_describeObject",
+"_getValue",
+"_getValueInReferenceFrame",
+"_free",
+"_freePtr",
+"_deletePtr",
+"_removeAll",
+"_removeEntity",
+"_getSatAzElRange"
+]
