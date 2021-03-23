@@ -180,6 +180,7 @@ let runTest = async () => {
         ), // Choice of reference frames for velocity
         3
       );
+
       let oldFlatArray = new Float64Array(
         OldHEAP8.buffer,
         oldGetValueInReferenceFrame(
