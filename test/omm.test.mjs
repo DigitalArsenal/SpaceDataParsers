@@ -180,6 +180,7 @@ let runTest = async () => {
         ), // Choice of reference frames for velocity
         3
       );
+      flatArray = new Float64Array(flatArray);
 
       let oldFlatArray = new Float64Array(
         OldHEAP8.buffer,
@@ -191,9 +192,10 @@ let runTest = async () => {
         ), // Choice of reference frames for velocity
         3
       );
-          /*
+      oldFlatArray = new Float64Array(oldFlatArray);
+
       for (let sFormat in sPointers) {
-        sPointers[sFormat] = new Float64Array(
+        let fArray = new Float64Array(
           HEAP8.buffer,
           getValueInReferenceFrame(
             sPointers[sFormat],
@@ -203,7 +205,8 @@ let runTest = async () => {
           ), // Choice of reference frames for velocity
           3
         );
-      }*/
+        sPointers[sFormat] = new Float64Array(fArray);
+      }
       for (let sArray in sPointers) {
         let flatArrayOMM = sPointers[sArray];
 
