@@ -8,9 +8,9 @@
   },
   "scripts": {
     "install": "git submodule init && git submodule update",
-    "build": "./node_modules/.bin/rollup  -c rollup.config.js",
+    "build": "./node_modules/.bin/rollup  -c rollup.config.js && cd src/SGP4Propagator && npm run build",
     "pkg": "./node_modules/.bin/pkg ./build/test.js --options max_old_space_size=4096 -t node14-linux-x64,node14-win-x64,node14-macos-x64 --debug --out-path build",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --harmony-top-level-await --trace-deprecation --experimental-wasm-modules test/test.mjs",
     "dev": "nodemon  --harmony-top-level-await --trace-deprecation --experimental-wasm-modules test/test.mjs -w test/test.mjs -w  test/omm.test.mjs -w  test/satcat.test.mjs -w src/index.mjs -w ./src/parsers/omm.converter.mjs",
     "update:schema": "./node_modules/.bin/ajv migrate -s ./test/_root_IDLDocument.schema.json",
     "build:sgp4:wasm": "cd ./src/SGP4Propagator && npm run build && sed -i -E 's/__dirname//' ./wasmmodule.mjs"
