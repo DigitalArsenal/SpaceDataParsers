@@ -1,0 +1,28 @@
+{
+  "name": "spacedata_conversion",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "better-sqlite3": "^7.0.1",
+    "bignumber": "^1.1.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.1.0",
+    "structurae": "^3.0.6"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  },
+  "scripts": {
+    "start": "node index.mjs",
+    "dev": "./node_modules/.bin/nodemon index.mjs",
+    "start:binary": "node bindex.mjs",
+    "dev:binary": "node bindex.mjs",
+    "dev:flatbuffer:cpp": "cd flatbuffer/cpp && ../../node_modules/.bin/nodemon --exec \"./build.sh\" -w *.cpp",
+    "dev:flatbuffer:js": "cd flatbuffer/js && ../../node_modules/.bin/nodemon converter.mjs -w converter.mjs",
+    "dev:struct:js": "cd struct/js && ../../node_modules/.bin/nodemon converter.mjs -w converter.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
