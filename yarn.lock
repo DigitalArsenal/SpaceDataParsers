@@ -1568,6 +1568,11 @@
     "flatted" "^3.1.0"
     "rimraf" "^3.0.2"
 
+"flatbuffers@^2.0.6":
+  "integrity" "sha512-QTTZTXTbVfuOVQu2X6eLOw4vefUxnFJZxAKeN3rEPhjEzBtIbehimJLfVGHPM8iX0Na+9i76SBEg0skf0c0sCA=="
+  "resolved" "https://registry.npmjs.org/flatbuffers/-/flatbuffers-2.0.6.tgz"
+  "version" "2.0.6"
+
 "flatted@^3.1.0":
   "integrity" "sha512-WIWGi2L3DyTUvUrwRKgGi9TwxQMUEqPOPQBVi71R96jZXJdFskXEmf54BoZaS1kknGODoIGASGEzBUYdyMCBJg=="
   "resolved" "https://registry.npmjs.org/flatted/-/flatted-3.2.5.tgz"

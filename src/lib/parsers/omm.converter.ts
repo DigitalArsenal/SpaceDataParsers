@@ -1,6 +1,9 @@
 import { tle as ntle } from "../parsers/legacy";
 import ncsv from "neat-csv";
 import flatbufferScalartypes from "./flatbuffer.scalartypes";
+import * as flatbuffers from "flatbuffers";
+import { OMMCOLLECTION, OMMCOLLECTIONT } from "@/lib/OMM/OMMCOLLECTION";
+import { OMM, OMMT } from "@/lib/OMM/OMM";
 const useAsNumber = ["#/definitions/ephemerisType"]; //Hack until we can formalize fields between each format
 
 const numCheck = (schema: any, pkey: string, pval: any) => {
@@ -11,6 +14,7 @@ const numCheck = (schema: any, pkey: string, pval: any) => {
 let tagTemplate = (tagName: string) => new RegExp(`<${tagName}[^>]*>([\\s\\S]*?)<\\/${tagName}>`, "gi");
 
 const xml = (input: string, schema: any) => {
+  throw Error("TODO");
   let results = [];
   let xmlOMMArray = input.toString().match(tagTemplate("omm")) || [];
   let schemaTags = Object.keys(schema.definitions.OMM.properties);
@@ -29,28 +33,35 @@ const xml = (input: string, schema: any) => {
   return { results };
 };
 
-const json = (input: any, schema: any) => {
+const json = (input: any, schema: any): OMMCOLLECTIONT => {
+  throw Error("TODO");
   let results = (JSON.parse(input)).map((r: any) => {
     for (let p in r) {
       r[p] = numCheck(schema, p, r[p]);
     }
     return r;
   });
-  return { results };
+  return results;
 };
 
-const csv = async (input: any, schema: any) => {
-  let results = (await ncsv(input)).map((row) => {
+const csv = async (input: any, schema: any): Promise<OMMCOLLECTIONT> => {
+  let results = new OMMCOLLECTIONT();
+  let intermediateResults = (await ncsv(input));
+  intermediateResults.forEach((row) => {
+    let newOMM: OMMT = new OMMT();
     for (let prop in row) {
-      row[prop] = numCheck(schema, prop, row[prop]);
+      if (newOMM.hasOwnProperty(prop)) {
+        //@ts-ignore
+        newOMM[prop] = numCheck(schema, prop, row[prop]);
+      }
     }
-    return row;
+    results.RECORDS.push(newOMM);
   });
-
-  return { results };
+  return results;
 };
 
 const tle = (input: any): Promise<any> => {
+  throw Error("TODO");
   return new Promise((resolve) => {
     let isRStream = input.hasOwnProperty("_readableState");
     input = isRStream
@@ -85,4 +96,9 @@ const tle = (input: any): Promise<any> => {
   });
 };
 
-export { numCheck, xml, json, csv, tle };
+const fbs = async (input: Uint8Array): Promise<OMMCOLLECTIONT> => {
+  let ommcollection = new OMMCOLLECTIONT();
+  OMMCOLLECTION.getSizePrefixedRootAsOMMCOLLECTION(new flatbuffers.ByteBuffer(input)).unpackTo(ommcollection);
+  return ommcollection;
+}
+export { numCheck, xml, json, csv, tle, fbs };

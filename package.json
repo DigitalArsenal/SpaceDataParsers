@@ -54,6 +54,7 @@
   "dependencies": {
     "@types/bignumber.js": "^5.0.0",
     "bignumber.js": "^9.0.2",
+    "flatbuffers": "^2.0.6",
     "neat-csv": "^7.0.0",
     "stream-browserify": "^3.0.0"
   }
