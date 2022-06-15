@@ -1,22 +1,31 @@
-import { parse } from './main'
+import { parse } from "./main"
 import { LegacyFormat } from "./lib/legacyformat.enum";
+import { SerializationFormat } from "./lib/serialization.enum";
+import { readFileSync } from "fs";
 
-test('parse TLE', () => {
+let tle = {
+  csv: readFileSync("./test/data/celestrak/catalog.csv")
+}
+
+test("parse TLE", async () => {
   let { TLE } = LegacyFormat;
-  expect(parse(TLE)).toBe(TLE);
-});
+  for (let format in tle) {
+    expect(await parse(tle[format], TLE, SerializationFormat[format])).toBe(TLE);
+  }
 
-test('parse SATCAT', () => {
+});
+/*
+test("parse SATCAT", () => {
   let { SATCAT } = LegacyFormat;
   expect(parse(SATCAT)).toBe(SATCAT);
 });
 
-test('parse VCM', () => {
+test("parse VCM", () => {
   let { VCM } = LegacyFormat;
   expect(parse(VCM)).toBe(VCM);
 });
 
-test('parse VCEPH', () => {
+test("parse VCEPH", () => {
   let { VCEPH } = LegacyFormat;
   expect(parse(VCEPH)).toBe(VCEPH);
-});
+});*/
