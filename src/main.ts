@@ -4,7 +4,6 @@ import { SerializationFormat } from "./lib/serialization.enum";
 import * as omm from "@/lib/parsers/omm.converter";
 import ommSchema from "@/lib/OMM/omm.schema";
 
-
 type KVI = {
   [key: string]: any
 };
@@ -14,8 +13,9 @@ export const parse = async (data: any, format: LegacyFormat, serialization: Seri
   let sFormat: string = SerializationFormat[serialization];
   if (format === LegacyFormat.TLE) {
     let parser: KVI = omm;
-    console.log(await parser[sFormat](data, ommSchema))
+    return await parser[sFormat](data, ommSchema);
   }
-  ;//await omm[SerializationFormat[serialization]](data, ));
-  return format;
+  return 'adsf'
+  //await omm[SerializationFormat[serialization]](data, ));
+
 }

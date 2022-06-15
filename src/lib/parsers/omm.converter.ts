@@ -1,10 +1,11 @@
 import { tle as ntle } from "../parsers/legacy";
 import ncsv from "neat-csv";
+import flatbufferScalartypes from "./flatbuffer.scalartypes";
 const useAsNumber = ["#/definitions/ephemerisType"]; //Hack until we can formalize fields between each format
 
 const numCheck = (schema: any, pkey: string, pval: any) => {
   let sD = schema.definitions.OMM.properties[pkey];
-  return sD?.type === "number" || useAsNumber.indexOf(sD?.$ref) > -1 ? parseFloat(pval) ?? null : pval ?? null;
+  return ~flatbufferScalartypes.indexOf(sD?.type) || useAsNumber.indexOf(sD?.$ref) > -1 ? parseFloat(pval) ?? null : pval ?? null;
 };
 
 let tagTemplate = (tagName: string) => new RegExp(`<${tagName}[^>]*>([\\s\\S]*?)<\\/${tagName}>`, "gi");
@@ -35,7 +36,6 @@ const json = (input: any, schema: any) => {
     }
     return r;
   });
-
   return { results };
 };
 
