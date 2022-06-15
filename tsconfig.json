@@ -1,5 +1,11 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
     "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -26,7 +32,8 @@
     "lib": [
       "ES6",
       "DOM"
-    ]
+    ],
+    "typeRoots": ["./src/types", "node_modules/@types"]
   },
   "include": [
     "src/**/*.ts"

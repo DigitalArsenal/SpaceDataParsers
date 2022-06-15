@@ -1,9 +1,22 @@
-import { greet } from './main'
+import { parse } from './main'
+import { LegacyFormat } from "./lib/legacyformat.enum";
 
-test('the data is peanut butter', () => {
-  expect(1).toBe(1)
+test('parse TLE', () => {
+  let { TLE } = LegacyFormat;
+  expect(parse(TLE)).toBe(TLE);
 });
 
-test('greeting', () => {
-  expect(greet('Foo')).toBe('Hello Foo')
+test('parse SATCAT', () => {
+  let { SATCAT } = LegacyFormat;
+  expect(parse(SATCAT)).toBe(SATCAT);
+});
+
+test('parse VCM', () => {
+  let { VCM } = LegacyFormat;
+  expect(parse(VCM)).toBe(VCM);
+});
+
+test('parse VCEPH', () => {
+  let { VCEPH } = LegacyFormat;
+  expect(parse(VCEPH)).toBe(VCEPH);
 });

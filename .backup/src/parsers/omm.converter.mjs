@@ -1,5 +1,5 @@
-import { tle, satcat, vcm } from "../parsers/legacy.mjs";
-import csv from "neat-csv";
+import { tle as ntle, satcat, vcm } from "../parsers/legacy.mjs";
+import * as ncsv from "neat-csv";
 const useAsNumber = ["#/definitions/ephemerisType"]; //Hack until we can formalize fields between each format
 
 const numCheck = (schema, pkey, pval) => {
@@ -9,7 +9,7 @@ const numCheck = (schema, pkey, pval) => {
 
 let tagTemplate = (tagName) => new RegExp(`<${tagName}[^>]*>([\\s\\S]*?)<\\/${tagName}>`, "gi");
 
-const readOMMXML = (input, schema) => {
+const xml = (input, schema) => {
   let results = [];
   let xmlOMMArray = input.toString().match(tagTemplate("omm"));
   let schemaTags = Object.keys(schema.definitions.OMM.properties);
@@ -28,7 +28,7 @@ const readOMMXML = (input, schema) => {
   return { results };
 };
 
-const readOMMJSON = (input, schema) => {
+const json = (input, schema) => {
   let results = (JSON.parse(input)).map((r) => {
     for (let p in r) {
       r[p] = numCheck(schema, p, r[p]);
@@ -39,8 +39,8 @@ const readOMMJSON = (input, schema) => {
   return { results };
 };
 
-const readOMMCSV = async (input, schema) => {
-  let results = (await csv(input)).map((row) => {
+const csv = async (input, schema) => {
+  let results = (await ncsv(input)).map((row) => {
     for (let prop in row) {
       row[prop] = numCheck(schema, prop, row[prop]);
     }
@@ -53,7 +53,7 @@ const readOMMCSV = async (input, schema) => {
 /*
     let rStream = */
 
-const readTLE = (input, schema) => {
+const tle = (input, schema) => {
   return new Promise((resolve, reject) => {
     let isRStream = input.hasOwnProperty("_readableState");
     input = isRStream
@@ -70,7 +70,7 @@ const readTLE = (input, schema) => {
           }
         },
       };
-    let tles = new tle(input);
+    let tles = new ntle(input);
     let started = false;
     const init = async () => {
       if (started) return;
@@ -88,4 +88,4 @@ const readTLE = (input, schema) => {
   });
 };
 
-export { numCheck, readOMMXML, readOMMJSON, readOMMCSV, readTLE };
+export { numCheck, xml, json, csv, tle };

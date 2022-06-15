@@ -1,10 +1,9 @@
-export const delayMillis = (delayMs: number): Promise<void> => new Promise(resolve => setTimeout(resolve, delayMs));
+import { LegacyFormat } from "./lib/legacyformat.enum";
+import { ReadableStream } from "stream/web";
+import * as omm from "@/lib/parsers/omm.converter";
 
-export const greet = (name: string): string => `Hello ${name}`
-
-export const foo = async (): Promise<boolean> => {
-  console.log(greet('World'))
-  await delayMillis(1000)
-  console.log('done')
-  return true
+export const parse = (format: LegacyFormat): LegacyFormat => {
+  const rS: ReadableStream = new ReadableStream();
+  console.log(rS, format, omm);
+  return format;
 }

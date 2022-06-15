@@ -1,4 +1,4 @@
 #!/usr/bin/env node
-import { foo } from './main'
+import { parse } from './main';
 
-foo()
+console.log(parse);
