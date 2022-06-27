@@ -3,7 +3,7 @@ import ncsv from "neat-csv";
 import flatbufferScalartypes from "./flatbuffer.scalartypes";
 import * as flatbuffers from "flatbuffers";
 import { OMMCOLLECTION, OMMCOLLECTIONT } from "@/lib/OMM/OMMCOLLECTION";
-import { OMM, OMMT } from "@/lib/OMM/OMM";
+import { OMMT } from "@/lib/OMM/OMM";
 const useAsNumber = ["#/definitions/ephemerisType"]; //Hack until we can formalize fields between each format
 
 const numCheck = (schema: any, pkey: string, pval: any) => {
@@ -98,7 +98,7 @@ const tle = (input: any): Promise<any> => {
 
 const fbs = async (input: Uint8Array): Promise<OMMCOLLECTIONT> => {
   let ommcollection = new OMMCOLLECTIONT();
-  OMMCOLLECTION.getSizePrefixedRootAsOMMCOLLECTION(new flatbuffers.ByteBuffer(input)).unpackTo(ommcollection);
+  OMMCOLLECTION.getRootAsOMMCOLLECTION(new flatbuffers.ByteBuffer(input)).unpackTo(ommcollection);
   return ommcollection;
 }
 export { numCheck, xml, json, csv, tle, fbs };

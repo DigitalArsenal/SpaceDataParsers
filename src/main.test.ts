@@ -8,14 +8,24 @@ let results = {
   //satcat: JSON.parse(readFileSync("./test/data/celestrak/satcat.json", "utf-8"))
 }
 
+let tleFBSPath = "./test/data/celestrak/catalog.fbs";
+
 let tle = {
   csv: readFileSync("./test/data/celestrak/catalog.csv", "utf-8"),
-  fbs: readFileSync("./test/data/celestrak/catalog.fbs")
+  fbs: readFileSync(tleFBSPath)
 }
+
 /*
 let satcat = {
   csv: readFileSync("./test/data/celestrak/satcat.csv", "utf-8"),
 }*/
+
+beforeAll(async () => {
+  writeFileSync(tleFBSPath, await parse(tle.csv,
+    LegacyFormat.TLE,
+    SerializationFormat.csv, SerializationFormat.fbs));
+
+});
 
 test("parse TLE", async () => {
   let { TLE } = LegacyFormat;
