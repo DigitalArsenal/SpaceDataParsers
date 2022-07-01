@@ -3,7 +3,9 @@ import ncsv from "neat-csv";
 import flatbufferScalartypes from "./flatbuffer.scalartypes";
 import * as flatbuffers from "flatbuffers";
 import { OMMCOLLECTION, OMMCOLLECTIONT } from "@/lib/OMM/OMMCOLLECTION";
-import { OMMT } from "@/lib/OMM/OMM";
+import { OMM, OMMT } from "@/lib/OMM/OMM";
+import { decode } from "html-entities";
+
 const useAsNumber = ["#/definitions/ephemerisType"]; //Hack until we can formalize fields between each format
 
 const numCheck = (schema: any, pkey: string, pval: any) => {
@@ -13,9 +15,8 @@ const numCheck = (schema: any, pkey: string, pval: any) => {
 
 let tagTemplate = (tagName: string) => new RegExp(`<${tagName}[^>]*>([\\s\\S]*?)<\\/${tagName}>`, "gi");
 
-const xml = (input: string, schema: any) => {
-  throw Error("TODO");
-  let results = [];
+const xml = (input: string, schema: any): OMMCOLLECTIONT => {
+  let resultsOMMCOLLECTIONT = new OMMCOLLECTIONT;
   let xmlOMMArray = input.toString().match(tagTemplate("omm")) || [];
   let schemaTags = Object.keys(schema.definitions.OMM.properties);
   for (let x = 0; x < xmlOMMArray.length; x++) {
@@ -24,28 +25,34 @@ const xml = (input: string, schema: any) => {
       let tagMatch = [...xmlOMMArray[x].matchAll(tagTemplate(schemaTags[s]))];
       if (tagMatch.length) {
         for (let t = 0; t < tagMatch.length; t++) {
-          iOMM[schemaTags[s]] = numCheck(schema, schemaTags[s], tagMatch[t][1]);
+          iOMM[schemaTags[s]] = numCheck(schema, schemaTags[s], decode(tagMatch[t][1]));
         }
       }
     }
-    results.push(iOMM);
+    resultsOMMCOLLECTIONT.RECORDS.push(iOMM);
   }
-  return { results };
+  return resultsOMMCOLLECTIONT;
 };
 
-const json = (input: any, schema: any): OMMCOLLECTIONT => {
-  throw Error("TODO");
-  let results = (JSON.parse(input)).map((r: any) => {
+const json = (input: string | Array<OMM>, schema: any): OMMCOLLECTIONT => {
+
+  if (typeof input === "string") {
+    input = JSON.parse(input)
+  };
+
+  let resultsOMMCOLLECTIONT = new OMMCOLLECTIONT;
+  resultsOMMCOLLECTIONT.RECORDS = ((input) as Array<OMM>).map((r: any) => {
     for (let p in r) {
       r[p] = numCheck(schema, p, r[p]);
     }
     return r;
   });
-  return results;
+
+  return resultsOMMCOLLECTIONT;
 };
 
 const csv = async (input: any, schema: any): Promise<OMMCOLLECTIONT> => {
-  let results = new OMMCOLLECTIONT();
+  let resultsOMMCOLLECTIONT = new OMMCOLLECTIONT();
   let intermediateResults = (await ncsv(input));
   intermediateResults.forEach((row) => {
     let newOMM: OMMT = new OMMT();
@@ -55,9 +62,9 @@ const csv = async (input: any, schema: any): Promise<OMMCOLLECTIONT> => {
         newOMM[prop] = numCheck(schema, prop, row[prop]);
       }
     }
-    results.RECORDS.push(newOMM);
+    resultsOMMCOLLECTIONT.RECORDS.push(newOMM);
   });
-  return results;
+  return resultsOMMCOLLECTIONT;
 };
 
 const tle = (input: any): Promise<any> => {

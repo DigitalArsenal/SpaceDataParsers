@@ -9,7 +9,12 @@ type KVI = {
   [key: string]: any
 };
 
-export const parse = async (data: any, format: LegacyFormat, serialization: SerializationFormat, resultSerialization: SerializationFormat.json | SerializationFormat.fbs = SerializationFormat.json): Promise<any> => {
+export const parse = async (
+  data: any,
+  format: LegacyFormat,
+  serialization: SerializationFormat,
+  resultSerialization: SerializationFormat.json | SerializationFormat.fbs = SerializationFormat.json
+): Promise<any> => {
   let sFormat: string = SerializationFormat[serialization];
   if (format === LegacyFormat.TLE) {
     let parser: KVI = omm;
