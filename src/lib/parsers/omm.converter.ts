@@ -52,7 +52,7 @@ const json = (input: string | Array<OMM>, schema: any): OMMCOLLECTIONT => {
 };
 
 const csv = async (input: any, schema: any): Promise<OMMCOLLECTIONT> => {
-  let resultsOMMCOLLECTIONT = new OMMCOLLECTIONT();
+  let resultsOMMCOLLECTIONT = new OMMCOLLECTIONT;
   let intermediateResults = (await ncsv(input));
   intermediateResults.forEach((row) => {
     let newOMM: OMMT = new OMMT();
@@ -67,8 +67,7 @@ const csv = async (input: any, schema: any): Promise<OMMCOLLECTIONT> => {
   return resultsOMMCOLLECTIONT;
 };
 
-const tle = (input: any): Promise<any> => {
-  throw Error("TODO");
+const txt = (input: any): Promise<any> => {
   return new Promise((resolve) => {
     let isRStream = input.hasOwnProperty("_readableState");
     input = isRStream
@@ -91,9 +90,9 @@ const tle = (input: any): Promise<any> => {
       if (started) return;
       started = true;
       let stop = await tles.readLines();
-      let results = tles.lines.map(tles.format.OMM);
-      let raw = tles.lines;
-      resolve({ results, raw, stop });
+      let resultsOMMCOLLECTIONT = new OMMCOLLECTIONT;
+      resultsOMMCOLLECTIONT.RECORDS = tles.lines.map(tles.format.OMM);
+      resolve(resultsOMMCOLLECTIONT);
     };
     if (!isRStream) {
       init();
@@ -104,8 +103,8 @@ const tle = (input: any): Promise<any> => {
 };
 
 const fbs = async (input: Uint8Array): Promise<OMMCOLLECTIONT> => {
-  let ommcollection = new OMMCOLLECTIONT();
+  let ommcollection = new OMMCOLLECTIONT;
   OMMCOLLECTION.getRootAsOMMCOLLECTION(new flatbuffers.ByteBuffer(input)).unpackTo(ommcollection);
   return ommcollection;
 }
-export { numCheck, xml, json, csv, tle, fbs };
+export { numCheck, xml, json, csv, txt, txt as tle, fbs };

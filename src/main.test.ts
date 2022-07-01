@@ -13,7 +13,7 @@ let tleFBSPath = "./test/data/celestrak/catalog.fbs";
 let tle = {
   "csv": readFileSync("./test/data/celestrak/catalog.csv", "utf-8"),
   "xml": readFileSync("./test/data/celestrak/catalog.xml", "utf-8"),
-  //"tle": readFileSync("./test/data/celestrak/catalog.tle.txt", "utf-8"),
+  "txt": readFileSync("./test/data/celestrak/catalog.tle.txt", "utf-8"),
   "json": jsonResults.tle,
   "fbs": null
 }
@@ -31,21 +31,28 @@ beforeAll(async () => {
 
 });
 
+let tleFormatCheck = (records) => records.filter(r => {
+  return r.OBJECT_NAME.length < 24 && r.NORAD_CAT_ID.toString().length < 6
+});
+
 test("parse TLE", async () => {
   let { TLE } = LegacyFormat;
   for (let format in tle) {
-    console.log(`Testing FileType: ${format}`);
-    expect(jsonResults.tle)
+    let resultCheck = format === "txt" ? tleFormatCheck(jsonResults.tle) : jsonResults.tle;
+    let toCheck = (await parse(tle[format],
+      TLE,
+      SerializationFormat[format])).RECORDS.map((r, i) => {
+        let rObj = {};
+        for (let prop in jsonResults.tle[0]) {
+          rObj[prop] = r[prop];
+        }
+        return rObj;
+      });
+
+    expect(resultCheck)
       .toStrictEqual(
-        (await parse(tle[format],
-          TLE,
-          SerializationFormat[format])).RECORDS.map((r, i) => {
-            let rObj = {};
-            for (let prop in jsonResults.tle[0]) {
-              rObj[prop] = r[prop];
-            }
-            return rObj;
-          }));
+        format === "txt" ? tleFormatCheck(toCheck) : toCheck
+      );
   }
 });
 
