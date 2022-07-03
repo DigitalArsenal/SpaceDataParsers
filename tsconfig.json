@@ -6,7 +6,7 @@
         "./src/*"
       ]
     },
-    "target": "es6",
+    "target": "ESNext",
     "module": "commonjs",
     "moduleResolution": "node",
     "declaration": true,

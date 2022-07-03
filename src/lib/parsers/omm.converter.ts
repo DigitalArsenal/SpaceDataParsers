@@ -1,5 +1,5 @@
 import { tle as ntle } from "../parsers/legacy";
-import ncsv from "neat-csv";
+import * as ncsv from "csv/sync";
 import flatbufferScalartypes from "./flatbuffer.scalartypes";
 import * as flatbuffers from "flatbuffers";
 import { OMMCOLLECTION as _OMMCOLLECTION, OMMCOLLECTIONT as OMMCOLLECTION } from "@/lib/OMM/OMMCOLLECTION";
@@ -52,8 +52,11 @@ const json = (input: string | Array<OMM>, schema: any): OMMCOLLECTION => {
 
 const csv = async (input: any, schema: any): Promise<OMMCOLLECTION> => {
   let resultsOMMCOLLECTION = new OMMCOLLECTION;
-  let intermediateResults = (await ncsv(input));
-  intermediateResults.forEach((row) => {
+  let intermediateResults = (await ncsv.parse(input, {
+    columns: true,
+    skip_empty_lines: true
+  }));
+  intermediateResults.forEach((row: any) => {
     let newOMM: OMM = new OMM();
     for (let prop in row) {
       if (newOMM.hasOwnProperty(prop)) {
@@ -89,6 +92,7 @@ const txt = (input: any): Promise<any> => {
       if (started) return;
       started = true;
       let stop = await tles.readLines();
+      if (!stop) return;
       let resultsOMMCOLLECTION = new OMMCOLLECTION;
       resultsOMMCOLLECTION.RECORDS = tles.lines.map(tles.format.OMM);
       resolve(resultsOMMCOLLECTION);
