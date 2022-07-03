@@ -2,8 +2,8 @@ import { tle as ntle } from "../parsers/legacy";
 import ncsv from "neat-csv";
 import flatbufferScalartypes from "./flatbuffer.scalartypes";
 import * as flatbuffers from "flatbuffers";
-import { OMMCOLLECTION, OMMCOLLECTIONT } from "@/lib/OMM/OMMCOLLECTION";
-import { OMM, OMMT } from "@/lib/OMM/OMM";
+import { OMMCOLLECTION as _OMMCOLLECTION, OMMCOLLECTIONT as OMMCOLLECTION } from "@/lib/OMM/OMMCOLLECTION";
+import { OMMT as OMM } from "@/lib/OMM/OMM";
 import { decode } from "html-entities";
 
 const useAsNumber = ["#/definitions/ephemerisType"]; //Hack until we can formalize fields between each format
@@ -15,8 +15,8 @@ const numCheck = (schema: any, pkey: string, pval: any) => {
 
 let tagTemplate = (tagName: string) => new RegExp(`<${tagName}[^>]*>([\\s\\S]*?)<\\/${tagName}>`, "gi");
 
-const xml = (input: string, schema: any): OMMCOLLECTIONT => {
-  let resultsOMMCOLLECTIONT = new OMMCOLLECTIONT;
+const xml = (input: string, schema: any): OMMCOLLECTION => {
+  let resultsOMMCOLLECTION = new OMMCOLLECTION;
   let xmlOMMArray = input.toString().match(tagTemplate("omm")) || [];
   let schemaTags = Object.keys(schema.definitions.OMM.properties);
   for (let x = 0; x < xmlOMMArray.length; x++) {
@@ -29,42 +29,41 @@ const xml = (input: string, schema: any): OMMCOLLECTIONT => {
         }
       }
     }
-    resultsOMMCOLLECTIONT.RECORDS.push(iOMM);
+    resultsOMMCOLLECTION.RECORDS.push(iOMM);
   }
-  return resultsOMMCOLLECTIONT;
+  return resultsOMMCOLLECTION;
 };
 
-const json = (input: string | Array<OMM>, schema: any): OMMCOLLECTIONT => {
-
+const json = (input: string | Array<OMM>, schema: any): OMMCOLLECTION => {
   if (typeof input === "string") {
     input = JSON.parse(input)
   };
 
-  let resultsOMMCOLLECTIONT = new OMMCOLLECTIONT;
-  resultsOMMCOLLECTIONT.RECORDS = ((input) as Array<OMM>).map((r: any) => {
+  let resultsOMMCOLLECTION = new OMMCOLLECTION;
+  resultsOMMCOLLECTION.RECORDS = ((input) as Array<OMM>).map((r: any) => {
     for (let p in r) {
       r[p] = numCheck(schema, p, r[p]);
     }
     return r;
   });
 
-  return resultsOMMCOLLECTIONT;
+  return resultsOMMCOLLECTION;
 };
 
-const csv = async (input: any, schema: any): Promise<OMMCOLLECTIONT> => {
-  let resultsOMMCOLLECTIONT = new OMMCOLLECTIONT;
+const csv = async (input: any, schema: any): Promise<OMMCOLLECTION> => {
+  let resultsOMMCOLLECTION = new OMMCOLLECTION;
   let intermediateResults = (await ncsv(input));
   intermediateResults.forEach((row) => {
-    let newOMM: OMMT = new OMMT();
+    let newOMM: OMM = new OMM();
     for (let prop in row) {
       if (newOMM.hasOwnProperty(prop)) {
         //@ts-ignore
         newOMM[prop] = numCheck(schema, prop, row[prop]);
       }
     }
-    resultsOMMCOLLECTIONT.RECORDS.push(newOMM);
+    resultsOMMCOLLECTION.RECORDS.push(newOMM);
   });
-  return resultsOMMCOLLECTIONT;
+  return resultsOMMCOLLECTION;
 };
 
 const txt = (input: any): Promise<any> => {
@@ -90,9 +89,9 @@ const txt = (input: any): Promise<any> => {
       if (started) return;
       started = true;
       let stop = await tles.readLines();
-      let resultsOMMCOLLECTIONT = new OMMCOLLECTIONT;
-      resultsOMMCOLLECTIONT.RECORDS = tles.lines.map(tles.format.OMM);
-      resolve(resultsOMMCOLLECTIONT);
+      let resultsOMMCOLLECTION = new OMMCOLLECTION;
+      resultsOMMCOLLECTION.RECORDS = tles.lines.map(tles.format.OMM);
+      resolve(resultsOMMCOLLECTION);
     };
     if (!isRStream) {
       init();
@@ -102,9 +101,34 @@ const txt = (input: any): Promise<any> => {
   });
 };
 
-const fbs = async (input: Uint8Array): Promise<OMMCOLLECTIONT> => {
-  let ommcollection = new OMMCOLLECTIONT;
-  OMMCOLLECTION.getRootAsOMMCOLLECTION(new flatbuffers.ByteBuffer(input)).unpackTo(ommcollection);
+const kvn = async (input: string, schema: any): Promise<OMMCOLLECTION> => {
+  let lines = input.split(/\r?\n/g);
+  let resultsOMMCOLLECTION = new OMMCOLLECTION;
+  let _OMM: OMM = new OMM;
+
+  for (let i = 0; i < lines.length; i++) {
+
+    let [predicate, value] = lines[i].split("=").map(x => x.trim());
+
+    if (predicate === "CCSDS_OMM_VERS") {
+      if (_OMM.CCSDS_OMM_VERS) {
+        resultsOMMCOLLECTION.RECORDS.push(_OMM);
+      }
+      _OMM = new OMM;
+    }
+
+    if (_OMM.hasOwnProperty(predicate)) {
+      //@ts-ignore
+      _OMM[predicate] = numCheck(schema, predicate, value);
+    }
+  }
+  resultsOMMCOLLECTION.RECORDS.push(_OMM);
+  return resultsOMMCOLLECTION;
+}
+
+const fbs = async (input: Uint8Array): Promise<OMMCOLLECTION> => {
+  let ommcollection = new OMMCOLLECTION;
+  _OMMCOLLECTION.getRootAsOMMCOLLECTION(new flatbuffers.ByteBuffer(input)).unpackTo(ommcollection);
   return ommcollection;
 }
-export { numCheck, xml, json, csv, txt, txt as tle, fbs };
+export { numCheck, xml, json, csv, txt, txt as tle, kvn, fbs };

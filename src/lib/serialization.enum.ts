@@ -3,5 +3,6 @@ export enum SerializationFormat {
     fbs,
     json,
     txt,
+    kvn,
     xml
 }

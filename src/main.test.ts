@@ -14,9 +14,10 @@ let tle = {
   "csv": readFileSync("./test/data/celestrak/catalog.csv", "utf-8"),
   "xml": readFileSync("./test/data/celestrak/catalog.xml", "utf-8"),
   "txt": readFileSync("./test/data/celestrak/catalog.tle.txt", "utf-8"),
+  "kvn": readFileSync("./test/data/celestrak/catalog.kvn.txt", "utf-8"),
   "json": jsonResults.tle,
   "fbs": null
-}
+};
 
 /*
 let satcat = {
@@ -48,7 +49,6 @@ test("parse TLE", async () => {
         }
         return rObj;
       });
-
     expect(resultCheck)
       .toStrictEqual(
         format === "txt" ? tleFormatCheck(toCheck) : toCheck
