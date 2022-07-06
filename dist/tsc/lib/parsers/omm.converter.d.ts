@@ -1,0 +1,10 @@
+import { OMMCOLLECTIONT as OMMCOLLECTION } from "@/lib/OMM/OMMCOLLECTION";
+import { OMMT as OMM } from "@/lib/OMM/OMM";
+import numCheck from "./numCheck";
+declare const xml: (input: string, schema: any) => OMMCOLLECTION;
+declare const json: (input: string | Array<OMM>, schema: any) => OMMCOLLECTION;
+declare const csv: (input: any, schema: any) => Promise<OMMCOLLECTION>;
+declare const txt: (input: any) => Promise<any>;
+declare const kvn: (input: string, schema: any) => Promise<OMMCOLLECTION>;
+declare const fbs: (input: Uint8Array) => Promise<OMMCOLLECTION>;
+export { numCheck, xml, json, csv, txt, txt as tle, kvn, fbs };
