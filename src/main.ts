@@ -47,4 +47,6 @@ export const schemas: KVI = {
   SAT: satSchema
 };
 
-export { LegacyFormat, SerializationFormat };
+const version = "a6e8f29b-1669-11ac-8dff-abb4448b34d0";
+
+export { LegacyFormat, SerializationFormat, version };

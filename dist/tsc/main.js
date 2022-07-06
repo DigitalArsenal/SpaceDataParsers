@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SerializationFormat = exports.LegacyFormat = exports.schemas = exports.parse = void 0;
+exports.version = exports.SerializationFormat = exports.LegacyFormat = exports.schemas = exports.parse = void 0;
 const tslib_1 = require("tslib");
 const legacyformat_enum_1 = require("./lib/legacyformat.enum");
 Object.defineProperty(exports, "LegacyFormat", { enumerable: true, get: function () { return legacyformat_enum_1.LegacyFormat; } });
@@ -39,4 +39,6 @@ exports.schemas = {
     OMM: omm_schema_1.default,
     SAT: sat_schema_1.default
 };
+const version = "a6e8f29b-1669-11ac-8dff-abb4448b34d0";
+exports.version = version;
 //# sourceMappingURL=main.js.map

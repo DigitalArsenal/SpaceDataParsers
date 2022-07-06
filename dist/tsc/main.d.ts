@@ -5,4 +5,5 @@ declare type KVI = {
 };
 export declare const parse: (data: any, format: LegacyFormat, serialization: SerializationFormat, resultSerialization?: SerializationFormat.json | SerializationFormat.fbs) => Promise<any>;
 export declare const schemas: KVI;
-export { LegacyFormat, SerializationFormat };
+declare const version = "a6e8f29b-1669-11ac-8dff-abb4448b34d0";
+export { LegacyFormat, SerializationFormat, version };
