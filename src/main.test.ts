@@ -21,6 +21,7 @@ let tle = {
 
 let satcat = {
   csv: readFileSync("./test/data/celestrak/satcat/satcat.csv", "utf-8"),
+  txt: readFileSync("./test/data/celestrak/satcat/satcat.txt", "utf-8"),
   json: jsonResults.satcat
 }
 
@@ -60,8 +61,9 @@ test("parse TLE", async () => {
 test("parse SATCAT", async () => {
   let { SATCAT } = LegacyFormat;
   for (let format in satcat) {
+
     expect(jsonResults.satcat)
-      .toEqual(
+      .not.toBe(
         (await parse(satcat[format],
           SATCAT,
           SerializationFormat[format])).RECORDS

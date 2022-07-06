@@ -5,7 +5,7 @@ export namespace satcat_map {
     const PAYLOAD: number[];
     const OPS_STATUS_CODE: number[];
     const OBJECT_NAME: number[];
-    const ORIGINATOR: number[];
+    const OWNER: number[];
     const LAUNCH_DATE: number[];
     const LAUNCH_SITE: number[];
     const DECAY_DATE: number[];
@@ -28,8 +28,8 @@ export namespace satcat_transform {
     export { PAYLOAD_1 as PAYLOAD };
     export function LAUNCH_SITE_1(d: any): any;
     export { LAUNCH_SITE_1 as LAUNCH_SITE };
-    export function ORIGINATOR_1(d: any): any;
-    export { ORIGINATOR_1 as ORIGINATOR };
+    export function OWNER(d: any): any;
+    export { OWNER as OWNER };
     export function OBJECT_NAME_1(d: any): any;
     export { OBJECT_NAME_1 as OBJECT_NAME };
     export function OBJECT_ID_1(d: any): any;
@@ -81,4 +81,4 @@ export namespace tle_transform {
 }
 declare function dpAParse(value: any): number;
 declare function decimalAssumed(value: any): any;
-export {};
+export { };

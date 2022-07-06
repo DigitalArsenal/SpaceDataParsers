@@ -144,7 +144,7 @@ class satcat extends lineReader {
             _satcat[prop] = satcat_transform[prop]
               //@ts-ignore
               ? satcat_transform[prop](value, _satcat)
-              : new bignumber(value);
+              : (new bignumber(value)).toNumber();
           } else {
             _satcat[prop] = _satcat[prop];
           }

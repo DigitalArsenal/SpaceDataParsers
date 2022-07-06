@@ -24,7 +24,7 @@ const satcat_map = {
   PAYLOAD: [20, 21],
   OPS_STATUS_CODE: [21, 22],
   OBJECT_NAME: [23, 47],
-  ORIGINATOR: [49, 54],
+  OWNER: [49, 54],
   LAUNCH_DATE: [56, 66],
   LAUNCH_SITE: [68, 73],
   DECAY_DATE: [75, 85],
@@ -61,7 +61,7 @@ const satcat_transform = {
   MULTIPLE_NAMES: (d) => d.trim() === "M",
   PAYLOAD: (d) => d.trim() === "*",
   LAUNCH_SITE: (d) => d.trim(),
-  ORIGINATOR: (d) => d.trim(),
+  OWNER: (d) => d.trim(),
   OBJECT_NAME: (d) => d.trim(),
   OBJECT_ID: (d) => d.trim(),
   OPS_STATUS_CODE: (d) => {
