@@ -22,8 +22,9 @@
   "scripts": {
     "cli": "ts-node src/cli.ts",
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
-    "test": "jest",
-    "test:dev": "jest --watch",
+    "test": "npm run test:clear && jest --detectOpenHandles --forceExit",
+    "test:clear": "jest --clearCache",
+    "test:dev": "npm run test:clear && jest --watch --detectOpenHandles --forceExit",
     "clean": "rm -rf dist build package",
     "ts-node": "ts-node",
     "docs": "typedoc --entryPoints src/main.ts",

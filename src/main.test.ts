@@ -23,11 +23,14 @@ let tle = {
 
 let satcat = {
   csv: readFileSync("./test/data/celestrak/satcat/satcat.csv", "utf-8"),
+  json: jsonResults.satcat
 }
 
 beforeAll(async () => {
   writeFileSync(tleFBSPath, await parse(tle.csv,
     LegacyFormat.TLE,
+
+
     SerializationFormat.csv, SerializationFormat.fbs));
   tle.fbs = readFileSync(tleFBSPath);
 
@@ -36,7 +39,6 @@ beforeAll(async () => {
 let tleFormatCheck = (records) => records.filter(r => {
   return r.OBJECT_NAME.length < 24 && r.NORAD_CAT_ID.toString().length < 6
 });
-/*
 test("parse TLE", async () => {
   let { TLE } = LegacyFormat;
   for (let format in tle) {
@@ -57,7 +59,6 @@ test("parse TLE", async () => {
   }
 });
 
-*/
 test("parse SATCAT", async () => {
   let { SATCAT } = LegacyFormat;
   for (let format in satcat) {

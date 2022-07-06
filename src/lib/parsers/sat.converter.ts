@@ -1,17 +1,9 @@
 import { satcat } from "../parsers/legacy";
 import * as ncsv from "csv/sync";
-import flatbufferScalartypes from "./flatbuffer.scalartypes";
 import * as flatbuffers from "flatbuffers";
 import { SATCATCOLLECTION as _SATCOLLECTION, SATCATCOLLECTIONT as SATCOLLECTION } from "@/lib/SAT/SATCATCOLLECTION";
 import { SATCATT as SAT } from "@/lib/SAT/SATCAT";
-
-const useAsNumber = ["#/definitions/ephemerisType"]; //Hack until we can formalize fields between each format
-
-const numCheck = (schema: any, pkey: string, pval: any) => {
-  let sD = schema.definitions.SATCAT.properties[pkey];
-  return ~flatbufferScalartypes.indexOf(sD?.type) || useAsNumber.indexOf(sD?.$ref) > -1 ? parseFloat(pval) ?? null : pval ?? null;
-};
-
+import numCheck from "./numCheck";
 
 const json = (input: string | Array<SAT>, schema: any): SATCOLLECTION => {
   if (typeof input === "string") {
@@ -21,7 +13,7 @@ const json = (input: string | Array<SAT>, schema: any): SATCOLLECTION => {
   let resultsSATCOLLECTION = new SATCOLLECTION;
   resultsSATCOLLECTION.RECORDS = ((input) as Array<SAT>).map((r: any) => {
     for (let p in r) {
-      r[p] = numCheck(schema, p, r[p]);
+      r[p] = numCheck(schema.definitions.SATCAT, p, r[p]);
     }
     return r;
   });
@@ -40,7 +32,7 @@ const csv = async (input: any, schema: any): Promise<SATCOLLECTION> => {
     for (let prop in row) {
       if (newSAT.hasOwnProperty(prop)) {
         //@ts-ignore
-        newSAT[prop] = numCheck(schema, prop, row[prop]);
+        newSAT[prop] = numCheck(schema.definitions.SATCAT, prop, row[prop]);
       }
     }
     resultsSATCOLLECTION.RECORDS.push(newSAT);

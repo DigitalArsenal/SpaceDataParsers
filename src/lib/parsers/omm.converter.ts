@@ -1,17 +1,10 @@
 import { tle as ntle } from "../parsers/legacy";
 import * as ncsv from "csv/sync";
-import flatbufferScalartypes from "./flatbuffer.scalartypes";
 import * as flatbuffers from "flatbuffers";
 import { OMMCOLLECTION as _OMMCOLLECTION, OMMCOLLECTIONT as OMMCOLLECTION } from "@/lib/OMM/OMMCOLLECTION";
 import { OMMT as OMM } from "@/lib/OMM/OMM";
 import { decode } from "html-entities";
-
-const useAsNumber = ["#/definitions/ephemerisType"]; //Hack until we can formalize fields between each format
-
-const numCheck = (schema: any, pkey: string, pval: any) => {
-  let sD = schema.definitions.OMM.properties[pkey];
-  return ~flatbufferScalartypes.indexOf(sD?.type) || useAsNumber.indexOf(sD?.$ref) > -1 ? parseFloat(pval) ?? null : pval ?? null;
-};
+import numCheck from "./numCheck";
 
 let tagTemplate = (tagName: string) => new RegExp(`<${tagName}[^>]*>([\\s\\S]*?)<\\/${tagName}>`, "gi");
 
@@ -25,7 +18,7 @@ const xml = (input: string, schema: any): OMMCOLLECTION => {
       let tagMatch = [...xmlOMMArray[x].matchAll(tagTemplate(schemaTags[s]))];
       if (tagMatch.length) {
         for (let t = 0; t < tagMatch.length; t++) {
-          iOMM[schemaTags[s]] = numCheck(schema, schemaTags[s], decode(tagMatch[t][1]));
+          iOMM[schemaTags[s]] = numCheck(schema.definitions.OMM, schemaTags[s], decode(tagMatch[t][1]));
         }
       }
     }
@@ -42,7 +35,7 @@ const json = (input: string | Array<OMM>, schema: any): OMMCOLLECTION => {
   let resultsOMMCOLLECTION = new OMMCOLLECTION;
   resultsOMMCOLLECTION.RECORDS = ((input) as Array<OMM>).map((r: any) => {
     for (let p in r) {
-      r[p] = numCheck(schema, p, r[p]);
+      r[p] = numCheck(schema.definitions.OMM, p, r[p]);
     }
     return r;
   });
@@ -61,7 +54,7 @@ const csv = async (input: any, schema: any): Promise<OMMCOLLECTION> => {
     for (let prop in row) {
       if (newOMM.hasOwnProperty(prop)) {
         //@ts-ignore
-        newOMM[prop] = numCheck(schema, prop, row[prop]);
+        newOMM[prop] = numCheck(schema.definitions.OMM, prop, row[prop]);
       }
     }
     resultsOMMCOLLECTION.RECORDS.push(newOMM);
@@ -123,7 +116,7 @@ const kvn = async (input: string, schema: any): Promise<OMMCOLLECTION> => {
 
     if (_OMM.hasOwnProperty(predicate)) {
       //@ts-ignore
-      _OMM[predicate] = numCheck(schema, predicate, value);
+      _OMM[predicate] = numCheck(schema.definitions.OMM, predicate, value);
     }
   }
   resultsOMMCOLLECTION.RECORDS.push(_OMM);
