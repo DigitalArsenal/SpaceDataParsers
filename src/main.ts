@@ -41,3 +41,10 @@ export const parse = async (
     return satCollection;
   }
 };
+
+export const schemas: KVI = {
+  OMM: ommSchema,
+  SAT: satSchema
+};
+
+export { LegacyFormat, SerializationFormat };

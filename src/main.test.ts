@@ -2,8 +2,6 @@ import { parse } from "./main"
 import { LegacyFormat } from "./lib/legacyformat.enum";
 import { SerializationFormat } from "./lib/serialization.enum";
 import { readFileSync, writeFile, writeFileSync } from "fs";
-import { SATCATCOLLECTIONT as SATCATCOLLECTION } from "./lib/SAT/SATCATCOLLECTION";
-import { SATCATT as SATCAT } from "./lib/SAT/SATCAT";
 
 let jsonResults = {
   tle: JSON.parse(readFileSync("./test/data/celestrak/catalog/catalog.json", "utf-8")),
