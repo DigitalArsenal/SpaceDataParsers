@@ -1,28 +1,28 @@
 import { satcat } from "../parsers/legacy";
 import * as ncsv from "csv/sync";
 import * as flatbuffers from "flatbuffers";
-import { SATCATCOLLECTION as _SATCOLLECTION, SATCATCOLLECTIONT as SATCOLLECTION } from "@/lib/SAT/SATCATCOLLECTION";
+import { SATCATCOLLECTION as _SATCATCOLLECTION, SATCATCOLLECTIONT as SATCATCOLLECTION } from "@/lib/SAT/SATCATCOLLECTION";
 import { SATCATT as SAT } from "@/lib/SAT/SATCAT";
 import numCheck from "./numCheck";
 
-const json = (input: string | Array<SAT>, schema: any): SATCOLLECTION => {
+const json = (input: string | Array<SAT>, schema: any): SATCATCOLLECTION => {
   if (typeof input === "string") {
     input = JSON.parse(input)
   };
 
-  let resultsSATCOLLECTION = new SATCOLLECTION;
-  resultsSATCOLLECTION.RECORDS = ((input) as Array<SAT>).map((r: any) => {
+  let resultsSATCATCOLLECTION = new SATCATCOLLECTION;
+  resultsSATCATCOLLECTION.RECORDS = ((input) as Array<SAT>).map((r: any) => {
     for (let p in r) {
       r[p] = numCheck(schema.definitions.SATCAT, p, r[p]);
     }
     return r;
   });
 
-  return resultsSATCOLLECTION;
+  return resultsSATCATCOLLECTION;
 };
 
-const csv = async (input: any, schema: any): Promise<SATCOLLECTION> => {
-  let resultsSATCOLLECTION = new SATCOLLECTION;
+const csv = async (input: any, schema: any): Promise<SATCATCOLLECTION> => {
+  let resultsSATCATCOLLECTION = new SATCATCOLLECTION;
   let intermediateResults = (await ncsv.parse(input, {
     columns: true,
     skip_empty_lines: true
@@ -35,9 +35,9 @@ const csv = async (input: any, schema: any): Promise<SATCOLLECTION> => {
         newSAT[prop] = numCheck(schema.definitions.SATCAT, prop, row[prop]);
       }
     }
-    resultsSATCOLLECTION.RECORDS.push(newSAT);
+    resultsSATCATCOLLECTION.RECORDS.push(newSAT);
   });
-  return resultsSATCOLLECTION;
+  return resultsSATCATCOLLECTION;
 };
 
 const txt = (input: any): Promise<any> => {
@@ -64,9 +64,9 @@ const txt = (input: any): Promise<any> => {
       started = true;
       let stop = await satCat.readLines();
       if (!stop) return;
-      let resultsSATCOLLECTION = new SATCOLLECTION;
-      resultsSATCOLLECTION.RECORDS = satCat.lines.map(satCat.format.CAT) as Array<any>;
-      resolve(resultsSATCOLLECTION);
+      let resultsSATCATCOLLECTION = new SATCATCOLLECTION;
+      resultsSATCATCOLLECTION.RECORDS = satCat.lines.map(satCat.format.CAT) as Array<any>;
+      resolve(resultsSATCATCOLLECTION);
     };
     if (!isRStream) {
       init();
@@ -77,9 +77,9 @@ const txt = (input: any): Promise<any> => {
 };
 
 
-const fbs = async (input: Uint8Array): Promise<SATCOLLECTION> => {
-  let satCollection = new SATCOLLECTION;
-  _SATCOLLECTION.getRootAsSATCATCOLLECTION(new flatbuffers.ByteBuffer(input)).unpackTo(satCollection);
+const fbs = async (input: Uint8Array): Promise<SATCATCOLLECTION> => {
+  let satCollection = new SATCATCOLLECTION;
+  _SATCATCOLLECTION.getRootAsSATCATCOLLECTION(new flatbuffers.ByteBuffer(input)).unpackTo(satCollection);
   return satCollection;
 }
 export { numCheck, json, csv, txt, fbs };

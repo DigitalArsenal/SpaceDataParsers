@@ -9,6 +9,7 @@ let jsonResults = {
 }
 
 let tleFBSPath = "./test/data/celestrak/catalog/catalog.fbs";
+let satFBSPath = "./test/data/celestrak/satcat/satcat.txt";
 
 let tle = {
   "csv": readFileSync("./test/data/celestrak/catalog/catalog.csv", "utf-8"),
@@ -22,22 +23,30 @@ let tle = {
 let satcat = {
   csv: readFileSync("./test/data/celestrak/satcat/satcat.csv", "utf-8"),
   txt: readFileSync("./test/data/celestrak/satcat/satcat.txt", "utf-8"),
-  json: jsonResults.satcat
+  json: jsonResults.satcat,
+  "fbs": null
 }
 
 beforeAll(async () => {
+  let { TLE, SATCAT } = LegacyFormat;
   writeFileSync(tleFBSPath, await parse(tle.csv,
-    LegacyFormat.TLE,
-
-
+    TLE,
     SerializationFormat.csv, SerializationFormat.fbs));
+  writeFileSync(satFBSPath, await parse(satcat.csv,
+    SATCAT,
+    SerializationFormat.csv, SerializationFormat.fbs));
+
   tle.fbs = readFileSync(tleFBSPath);
+  satcat.fbs = readFileSync(satFBSPath);
 
 });
 
 let tleFormatCheck = (records) => records.filter(r => {
   return r.OBJECT_NAME.length < 24 && r.NORAD_CAT_ID.toString().length < 6
 });
+
+/**/
+
 test("parse TLE", async () => {
   let { TLE } = LegacyFormat;
   for (let format in tle) {
@@ -58,10 +67,13 @@ test("parse TLE", async () => {
   }
 });
 
+
 test("parse SATCAT", async () => {
   let { SATCAT } = LegacyFormat;
   for (let format in satcat) {
-
+    console.log((await parse(satcat[format],
+      SATCAT,
+      SerializationFormat[format])).RECORDS[0])
     expect(jsonResults.satcat)
       .not.toBe(
         (await parse(satcat[format],

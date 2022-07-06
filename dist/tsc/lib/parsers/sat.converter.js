@@ -14,18 +14,18 @@ const json = (input, schema) => {
         input = JSON.parse(input);
     }
     ;
-    let resultsSATCOLLECTION = new SATCATCOLLECTION_1.SATCATCOLLECTIONT;
-    resultsSATCOLLECTION.RECORDS = (input).map((r) => {
+    let resultsSATCATCOLLECTION = new SATCATCOLLECTION_1.SATCATCOLLECTIONT;
+    resultsSATCATCOLLECTION.RECORDS = (input).map((r) => {
         for (let p in r) {
             r[p] = (0, numCheck_1.default)(schema.definitions.SATCAT, p, r[p]);
         }
         return r;
     });
-    return resultsSATCOLLECTION;
+    return resultsSATCATCOLLECTION;
 };
 exports.json = json;
 const csv = async (input, schema) => {
-    let resultsSATCOLLECTION = new SATCATCOLLECTION_1.SATCATCOLLECTIONT;
+    let resultsSATCATCOLLECTION = new SATCATCOLLECTION_1.SATCATCOLLECTIONT;
     let intermediateResults = (await ncsv.parse(input, {
         columns: true,
         skip_empty_lines: true
@@ -38,9 +38,9 @@ const csv = async (input, schema) => {
                 newSAT[prop] = (0, numCheck_1.default)(schema.definitions.SATCAT, prop, row[prop]);
             }
         }
-        resultsSATCOLLECTION.RECORDS.push(newSAT);
+        resultsSATCATCOLLECTION.RECORDS.push(newSAT);
     });
-    return resultsSATCOLLECTION;
+    return resultsSATCATCOLLECTION;
 };
 exports.csv = csv;
 const txt = (input) => {
@@ -70,9 +70,9 @@ const txt = (input) => {
             let stop = await satCat.readLines();
             if (!stop)
                 return;
-            let resultsSATCOLLECTION = new SATCATCOLLECTION_1.SATCATCOLLECTIONT;
-            resultsSATCOLLECTION.RECORDS = satCat.lines.map(satCat.format.CAT);
-            resolve(resultsSATCOLLECTION);
+            let resultsSATCATCOLLECTION = new SATCATCOLLECTION_1.SATCATCOLLECTIONT;
+            resultsSATCATCOLLECTION.RECORDS = satCat.lines.map(satCat.format.CAT);
+            resolve(resultsSATCATCOLLECTION);
         };
         if (!isRStream) {
             init();
