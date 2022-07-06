@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.fbs = exports.kvn = exports.tle = exports.txt = exports.csv = exports.json = exports.xml = exports.numCheck = void 0;
 const tslib_1 = require("tslib");
 const legacy_1 = require("../parsers/legacy");
-const ncsv = tslib_1.__importStar(require("csv/sync"));
+const sync_1 = require("csv-parse/browser/esm/sync");
 const flatbuffers = tslib_1.__importStar(require("flatbuffers"));
 const OMMCOLLECTION_1 = require("@/lib/OMM/OMMCOLLECTION");
 const OMM_1 = require("@/lib/OMM/OMM");
@@ -47,7 +47,7 @@ const json = (input, schema) => {
 exports.json = json;
 const csv = async (input, schema) => {
     let resultsOMMCOLLECTION = new OMMCOLLECTION_1.OMMCOLLECTIONT;
-    let intermediateResults = (await ncsv.parse(input, {
+    let intermediateResults = (await (0, sync_1.parse)(input, {
         columns: true,
         skip_empty_lines: true
     }));

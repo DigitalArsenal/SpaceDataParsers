@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.fbs = exports.txt = exports.csv = exports.json = exports.numCheck = void 0;
 const tslib_1 = require("tslib");
 const legacy_1 = require("../parsers/legacy");
-const ncsv = tslib_1.__importStar(require("csv/sync"));
+const sync_1 = require("csv-parse/browser/esm/sync");
 const flatbuffers = tslib_1.__importStar(require("flatbuffers"));
 const SATCATCOLLECTION_1 = require("@/lib/SAT/SATCATCOLLECTION");
 const SATCAT_1 = require("@/lib/SAT/SATCAT");
@@ -26,7 +26,7 @@ const json = (input, schema) => {
 exports.json = json;
 const csv = async (input, schema) => {
     let resultsSATCATCOLLECTION = new SATCATCOLLECTION_1.SATCATCOLLECTIONT;
-    let intermediateResults = (await ncsv.parse(input, {
+    let intermediateResults = (await (0, sync_1.parse)(input, {
         columns: true,
         skip_empty_lines: true
     }));

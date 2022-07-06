@@ -1,5 +1,5 @@
 import { satcat } from "../parsers/legacy";
-import * as ncsv from "csv/sync";
+import { parse as csvparse } from 'csv-parse/browser/esm/sync';
 import * as flatbuffers from "flatbuffers";
 import { SATCATCOLLECTION as _SATCATCOLLECTION, SATCATCOLLECTIONT as SATCATCOLLECTION } from "@/lib/SAT/SATCATCOLLECTION";
 import { SATCATT as SAT } from "@/lib/SAT/SATCAT";
@@ -23,7 +23,7 @@ const json = (input: string | Array<SAT>, schema: any): SATCATCOLLECTION => {
 
 const csv = async (input: any, schema: any): Promise<SATCATCOLLECTION> => {
   let resultsSATCATCOLLECTION = new SATCATCOLLECTION;
-  let intermediateResults = (await ncsv.parse(input, {
+  let intermediateResults = (await csvparse(input, {
     columns: true,
     skip_empty_lines: true
   }));

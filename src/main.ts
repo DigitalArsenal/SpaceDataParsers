@@ -8,7 +8,6 @@ import { OMMCOLLECTIONT as OMMCOLLECTION } from "./lib/OMM/OMMCOLLECTION";
 import { SATCATCOLLECTIONT as SATCATCOLLECTION } from "./lib/SAT/SATCATCOLLECTION";
 import * as flatbuffers from "flatbuffers";
 
-
 type KVI = {
   [key: string]: any
 };

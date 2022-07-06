@@ -1,5 +1,5 @@
 import { tle as ntle } from "../parsers/legacy";
-import * as ncsv from "csv/sync";
+import { parse as csvparse } from 'csv-parse/browser/esm/sync';
 import * as flatbuffers from "flatbuffers";
 import { OMMCOLLECTION as _OMMCOLLECTION, OMMCOLLECTIONT as OMMCOLLECTION } from "@/lib/OMM/OMMCOLLECTION";
 import { OMMT as OMM } from "@/lib/OMM/OMM";
@@ -45,7 +45,7 @@ const json = (input: string | Array<OMM>, schema: any): OMMCOLLECTION => {
 
 const csv = async (input: any, schema: any): Promise<OMMCOLLECTION> => {
   let resultsOMMCOLLECTION = new OMMCOLLECTION;
-  let intermediateResults = (await ncsv.parse(input, {
+  let intermediateResults = (await csvparse(input, {
     columns: true,
     skip_empty_lines: true
   }));

@@ -71,9 +71,6 @@ test("parse TLE", async () => {
 test("parse SATCAT", async () => {
   let { SATCAT } = LegacyFormat;
   for (let format in satcat) {
-    console.log((await parse(satcat[format],
-      SATCAT,
-      SerializationFormat[format])).RECORDS[0])
     expect(jsonResults.satcat)
       .not.toBe(
         (await parse(satcat[format],
