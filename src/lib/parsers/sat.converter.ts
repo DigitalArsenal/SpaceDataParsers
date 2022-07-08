@@ -1,23 +1,25 @@
-import { satcat } from "../parsers/legacy";
 import { parse as csvparse } from 'csv-parse/browser/esm/sync';
 import * as flatbuffers from "flatbuffers";
 import { SATCATCOLLECTION as _SATCATCOLLECTION, SATCATCOLLECTIONT as SATCATCOLLECTION } from "@/lib/SAT/SATCATCOLLECTION";
 import { SATCATT as SAT } from "@/lib/SAT/SATCAT";
 import numCheck from "./numCheck";
 
-const json = (input: string | Array<SAT>, schema: any): SATCATCOLLECTION => {
+const json = async (input: string | Array<SAT>, schema: any): Promise<SATCATCOLLECTION> => {
   if (typeof input === "string") {
     input = JSON.parse(input)
   };
 
   let resultsSATCATCOLLECTION = new SATCATCOLLECTION;
-  resultsSATCATCOLLECTION.RECORDS = ((input) as Array<SAT>).map((r: any) => {
-    for (let p in r) {
-      r[p] = numCheck(schema.definitions.SATCAT, p, r[p]);
+  for (let i = 0; i < input.length; i++) {
+    let newSAT: any = new SAT();
+    for (let p in input[i] as any) {
+      let inputSat: any = input[i];
+      if (newSAT.hasOwnProperty(p)) {
+        newSAT[p] = numCheck(schema.definitions.SATCAT, p, inputSat[p]);
+      }
     }
-    return r;
-  });
-
+    resultsSATCATCOLLECTION.RECORDS.push(newSAT);
+  };
   return resultsSATCATCOLLECTION;
 };
 
@@ -27,7 +29,7 @@ const csv = async (input: any, schema: any): Promise<SATCATCOLLECTION> => {
     columns: true,
     skip_empty_lines: true
   }));
-  intermediateResults.forEach((row: any) => {
+  intermediateResults.forEach((row: any, i: number) => {
     let newSAT: SAT = new SAT();
     for (let prop in row) {
       if (newSAT.hasOwnProperty(prop)) {
@@ -40,6 +42,7 @@ const csv = async (input: any, schema: any): Promise<SATCATCOLLECTION> => {
   return resultsSATCATCOLLECTION;
 };
 
+/*
 const txt = (input: any): Promise<any> => {
   return new Promise((resolve) => {
     let isRStream = input.hasOwnProperty("_readableState");
@@ -75,11 +78,11 @@ const txt = (input: any): Promise<any> => {
     }
   });
 };
-
+*/
 
 const fbs = async (input: Uint8Array): Promise<SATCATCOLLECTION> => {
   let satCollection = new SATCATCOLLECTION;
   _SATCATCOLLECTION.getRootAsSATCATCOLLECTION(new flatbuffers.ByteBuffer(input)).unpackTo(satCollection);
   return satCollection;
 }
-export { numCheck, json, csv, txt, fbs };
+export { numCheck, json, csv, /*txt,*/ fbs };

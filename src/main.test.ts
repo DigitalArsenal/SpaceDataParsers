@@ -5,7 +5,7 @@ import { readFileSync, writeFile, writeFileSync } from "fs";
 
 let jsonResults = {
   tle: JSON.parse(readFileSync("./test/data/celestrak/catalog/catalog.json", "utf-8")),
-  satcat: JSON.parse(readFileSync("./test/data/celestrak/satcat/satcat.json", "utf-8"))
+  satcat: JSON.parse(readFileSync("./test/data/celestrak/satcat/satcat_short.json", "utf-8"))
 }
 
 let tleFBSPath = "./test/data/celestrak/catalog/catalog.fbs";
@@ -21,8 +21,7 @@ let tle = {
 };
 
 let satcat = {
-  csv: readFileSync("./test/data/celestrak/satcat/satcat.csv", "utf-8"),
-  txt: readFileSync("./test/data/celestrak/satcat/satcat.txt", "utf-8"),
+  csv: readFileSync("./test/data/celestrak/satcat/satcat_short.csv", "utf-8"),
   json: jsonResults.satcat,
   "fbs": null
 }
@@ -32,10 +31,12 @@ beforeAll(async () => {
   writeFileSync(tleFBSPath, await parse(tle.csv,
     TLE,
     SerializationFormat.csv, SerializationFormat.fbs));
+  writeFileSync(satFBSPath, await parse(satcat.json,
+    SATCAT,
+    SerializationFormat.json, SerializationFormat.fbs));
   writeFileSync(satFBSPath, await parse(satcat.csv,
     SATCAT,
     SerializationFormat.csv, SerializationFormat.fbs));
-
   tle.fbs = readFileSync(tleFBSPath);
   satcat.fbs = readFileSync(satFBSPath);
 
@@ -45,7 +46,7 @@ let tleFormatCheck = (records) => records.filter(r => {
   return r.OBJECT_NAME.length < 24 && r.NORAD_CAT_ID.toString().length < 6
 });
 
-/**/
+
 
 test("parse TLE", async () => {
   let { TLE } = LegacyFormat;
@@ -67,16 +68,17 @@ test("parse TLE", async () => {
   }
 });
 
-
+/**/
 test("parse SATCAT", async () => {
   let { SATCAT } = LegacyFormat;
   for (let format in satcat) {
-    expect(jsonResults.satcat)
-      .not.toBe(
-        (await parse(satcat[format],
-          SATCAT,
-          SerializationFormat[format])).RECORDS
-      );
+    if (format === "fbs") {
+      let results = (await parse(satcat[format],
+        SATCAT,
+        SerializationFormat[format])).RECORDS;
+      expect(jsonResults.satcat)
+        .toEqual(results);
+    }
   }
 });
 

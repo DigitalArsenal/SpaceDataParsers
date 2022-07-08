@@ -49,93 +49,88 @@ NORAD_CAT_ID():number {
   return offset ? this.bb!.readUint32(this.bb_pos + offset) : 0;
 }
 
-MULTIPLE_NAMES():boolean {
-  const offset = this.bb!.__offset(this.bb_pos, 10);
-  return offset ? !!this.bb!.readInt8(this.bb_pos + offset) : false;
-}
-
 OBJECT_TYPE():objType {
-  const offset = this.bb!.__offset(this.bb_pos, 12);
+  const offset = this.bb!.__offset(this.bb_pos, 10);
   return offset ? this.bb!.readInt8(this.bb_pos + offset) : objType.UNKNOWN;
 }
 
 OPS_STATUS_CODE():opsStatusCode {
-  const offset = this.bb!.__offset(this.bb_pos, 14);
+  const offset = this.bb!.__offset(this.bb_pos, 12);
   return offset ? this.bb!.readInt8(this.bb_pos + offset) : opsStatusCode.UNKNOWN;
 }
 
 OWNER():string|null
 OWNER(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
 OWNER(optionalEncoding?:any):string|Uint8Array|null {
-  const offset = this.bb!.__offset(this.bb_pos, 16);
+  const offset = this.bb!.__offset(this.bb_pos, 14);
   return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
 }
 
 LAUNCH_DATE():string|null
 LAUNCH_DATE(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
 LAUNCH_DATE(optionalEncoding?:any):string|Uint8Array|null {
-  const offset = this.bb!.__offset(this.bb_pos, 18);
+  const offset = this.bb!.__offset(this.bb_pos, 16);
   return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
 }
 
 LAUNCH_SITE():string|null
 LAUNCH_SITE(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
 LAUNCH_SITE(optionalEncoding?:any):string|Uint8Array|null {
-  const offset = this.bb!.__offset(this.bb_pos, 20);
+  const offset = this.bb!.__offset(this.bb_pos, 18);
   return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
 }
 
 DECAY_DATE():string|null
 DECAY_DATE(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
 DECAY_DATE(optionalEncoding?:any):string|Uint8Array|null {
-  const offset = this.bb!.__offset(this.bb_pos, 22);
+  const offset = this.bb!.__offset(this.bb_pos, 20);
   return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
 }
 
-PERIOD():number {
+PERIOD():number|null {
+  const offset = this.bb!.__offset(this.bb_pos, 22);
+  return offset ? this.bb!.readFloat64(this.bb_pos + offset) : null;
+}
+
+INCLINATION():number|null {
   const offset = this.bb!.__offset(this.bb_pos, 24);
-  return offset ? this.bb!.readFloat32(this.bb_pos + offset) : 0.0;
+  return offset ? this.bb!.readFloat64(this.bb_pos + offset) : null;
 }
 
-INCLINATION():number {
+APOGEE():number|null {
   const offset = this.bb!.__offset(this.bb_pos, 26);
-  return offset ? this.bb!.readFloat32(this.bb_pos + offset) : 0.0;
+  return offset ? this.bb!.readFloat64(this.bb_pos + offset) : null;
 }
 
-APOGEE():number {
+PERIGEE():number|null {
   const offset = this.bb!.__offset(this.bb_pos, 28);
-  return offset ? this.bb!.readFloat32(this.bb_pos + offset) : 0.0;
+  return offset ? this.bb!.readFloat64(this.bb_pos + offset) : null;
 }
 
-PERIGEE():number {
+RCS():number|null {
   const offset = this.bb!.__offset(this.bb_pos, 30);
-  return offset ? this.bb!.readFloat32(this.bb_pos + offset) : 0.0;
-}
-
-RCS():number {
-  const offset = this.bb!.__offset(this.bb_pos, 32);
-  return offset ? this.bb!.readFloat32(this.bb_pos + offset) : 0.0;
+  return offset ? this.bb!.readFloat64(this.bb_pos + offset) : null;
 }
 
 DATA_STATUS_CODE():orbitalStatusCode {
-  const offset = this.bb!.__offset(this.bb_pos, 34);
+  const offset = this.bb!.__offset(this.bb_pos, 32);
   return offset ? this.bb!.readInt8(this.bb_pos + offset) : orbitalStatusCode.NO_CURRENT_ELEMENTS;
 }
 
 ORBIT_CENTER():string|null
 ORBIT_CENTER(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
 ORBIT_CENTER(optionalEncoding?:any):string|Uint8Array|null {
-  const offset = this.bb!.__offset(this.bb_pos, 36);
+  const offset = this.bb!.__offset(this.bb_pos, 34);
   return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
 }
 
 ORBIT_TYPE():orbitType {
-  const offset = this.bb!.__offset(this.bb_pos, 38);
+  const offset = this.bb!.__offset(this.bb_pos, 36);
   return offset ? this.bb!.readInt8(this.bb_pos + offset) : orbitType.ORBIT;
 }
 
 static startSATCAT(builder:flatbuffers.Builder) {
-  builder.startObject(18);
+  builder.startObject(17);
 }
 
 static addOBJECT_NAME(builder:flatbuffers.Builder, OBJECT_NAMEOffset:flatbuffers.Offset) {
@@ -150,64 +145,60 @@ static addNORAD_CAT_ID(builder:flatbuffers.Builder, NORAD_CAT_ID:number) {
   builder.addFieldInt32(2, NORAD_CAT_ID, 0);
 }
 
-static addMULTIPLE_NAMES(builder:flatbuffers.Builder, MULTIPLE_NAMES:boolean) {
-  builder.addFieldInt8(3, +MULTIPLE_NAMES, +false);
-}
-
 static addOBJECT_TYPE(builder:flatbuffers.Builder, OBJECT_TYPE:objType) {
-  builder.addFieldInt8(4, OBJECT_TYPE, objType.UNKNOWN);
+  builder.addFieldInt8(3, OBJECT_TYPE, objType.UNKNOWN);
 }
 
 static addOPS_STATUS_CODE(builder:flatbuffers.Builder, OPS_STATUS_CODE:opsStatusCode) {
-  builder.addFieldInt8(5, OPS_STATUS_CODE, opsStatusCode.UNKNOWN);
+  builder.addFieldInt8(4, OPS_STATUS_CODE, opsStatusCode.UNKNOWN);
 }
 
 static addOWNER(builder:flatbuffers.Builder, OWNEROffset:flatbuffers.Offset) {
-  builder.addFieldOffset(6, OWNEROffset, 0);
+  builder.addFieldOffset(5, OWNEROffset, 0);
 }
 
 static addLAUNCH_DATE(builder:flatbuffers.Builder, LAUNCH_DATEOffset:flatbuffers.Offset) {
-  builder.addFieldOffset(7, LAUNCH_DATEOffset, 0);
+  builder.addFieldOffset(6, LAUNCH_DATEOffset, 0);
 }
 
 static addLAUNCH_SITE(builder:flatbuffers.Builder, LAUNCH_SITEOffset:flatbuffers.Offset) {
-  builder.addFieldOffset(8, LAUNCH_SITEOffset, 0);
+  builder.addFieldOffset(7, LAUNCH_SITEOffset, 0);
 }
 
 static addDECAY_DATE(builder:flatbuffers.Builder, DECAY_DATEOffset:flatbuffers.Offset) {
-  builder.addFieldOffset(9, DECAY_DATEOffset, 0);
+  builder.addFieldOffset(8, DECAY_DATEOffset, 0);
 }
 
 static addPERIOD(builder:flatbuffers.Builder, PERIOD:number) {
-  builder.addFieldFloat32(10, PERIOD, 0.0);
+  builder.addFieldFloat64(9, PERIOD, 0);
 }
 
 static addINCLINATION(builder:flatbuffers.Builder, INCLINATION:number) {
-  builder.addFieldFloat32(11, INCLINATION, 0.0);
+  builder.addFieldFloat64(10, INCLINATION, 0);
 }
 
 static addAPOGEE(builder:flatbuffers.Builder, APOGEE:number) {
-  builder.addFieldFloat32(12, APOGEE, 0.0);
+  builder.addFieldFloat64(11, APOGEE, 0);
 }
 
 static addPERIGEE(builder:flatbuffers.Builder, PERIGEE:number) {
-  builder.addFieldFloat32(13, PERIGEE, 0.0);
+  builder.addFieldFloat64(12, PERIGEE, 0);
 }
 
 static addRCS(builder:flatbuffers.Builder, RCS:number) {
-  builder.addFieldFloat32(14, RCS, 0.0);
+  builder.addFieldFloat64(13, RCS, 0);
 }
 
 static addDATA_STATUS_CODE(builder:flatbuffers.Builder, DATA_STATUS_CODE:orbitalStatusCode) {
-  builder.addFieldInt8(15, DATA_STATUS_CODE, orbitalStatusCode.NO_CURRENT_ELEMENTS);
+  builder.addFieldInt8(14, DATA_STATUS_CODE, orbitalStatusCode.NO_CURRENT_ELEMENTS);
 }
 
 static addORBIT_CENTER(builder:flatbuffers.Builder, ORBIT_CENTEROffset:flatbuffers.Offset) {
-  builder.addFieldOffset(16, ORBIT_CENTEROffset, 0);
+  builder.addFieldOffset(15, ORBIT_CENTEROffset, 0);
 }
 
 static addORBIT_TYPE(builder:flatbuffers.Builder, ORBIT_TYPE:orbitType) {
-  builder.addFieldInt8(17, ORBIT_TYPE, orbitType.ORBIT);
+  builder.addFieldInt8(16, ORBIT_TYPE, orbitType.ORBIT);
 }
 
 static endSATCAT(builder:flatbuffers.Builder):flatbuffers.Offset {
@@ -223,23 +214,27 @@ static finishSizePrefixedSATCATBuffer(builder:flatbuffers.Builder, offset:flatbu
   builder.finish(offset, '$SAT', true);
 }
 
-static createSATCAT(builder:flatbuffers.Builder, OBJECT_NAMEOffset:flatbuffers.Offset, OBJECT_IDOffset:flatbuffers.Offset, NORAD_CAT_ID:number, MULTIPLE_NAMES:boolean, OBJECT_TYPE:objType, OPS_STATUS_CODE:opsStatusCode, OWNEROffset:flatbuffers.Offset, LAUNCH_DATEOffset:flatbuffers.Offset, LAUNCH_SITEOffset:flatbuffers.Offset, DECAY_DATEOffset:flatbuffers.Offset, PERIOD:number, INCLINATION:number, APOGEE:number, PERIGEE:number, RCS:number, DATA_STATUS_CODE:orbitalStatusCode, ORBIT_CENTEROffset:flatbuffers.Offset, ORBIT_TYPE:orbitType):flatbuffers.Offset {
+static createSATCAT(builder:flatbuffers.Builder, OBJECT_NAMEOffset:flatbuffers.Offset, OBJECT_IDOffset:flatbuffers.Offset, NORAD_CAT_ID:number, OBJECT_TYPE:objType, OPS_STATUS_CODE:opsStatusCode, OWNEROffset:flatbuffers.Offset, LAUNCH_DATEOffset:flatbuffers.Offset, LAUNCH_SITEOffset:flatbuffers.Offset, DECAY_DATEOffset:flatbuffers.Offset, PERIOD:number|null, INCLINATION:number|null, APOGEE:number|null, PERIGEE:number|null, RCS:number|null, DATA_STATUS_CODE:orbitalStatusCode, ORBIT_CENTEROffset:flatbuffers.Offset, ORBIT_TYPE:orbitType):flatbuffers.Offset {
   SATCAT.startSATCAT(builder);
   SATCAT.addOBJECT_NAME(builder, OBJECT_NAMEOffset);
   SATCAT.addOBJECT_ID(builder, OBJECT_IDOffset);
   SATCAT.addNORAD_CAT_ID(builder, NORAD_CAT_ID);
-  SATCAT.addMULTIPLE_NAMES(builder, MULTIPLE_NAMES);
   SATCAT.addOBJECT_TYPE(builder, OBJECT_TYPE);
   SATCAT.addOPS_STATUS_CODE(builder, OPS_STATUS_CODE);
   SATCAT.addOWNER(builder, OWNEROffset);
   SATCAT.addLAUNCH_DATE(builder, LAUNCH_DATEOffset);
   SATCAT.addLAUNCH_SITE(builder, LAUNCH_SITEOffset);
   SATCAT.addDECAY_DATE(builder, DECAY_DATEOffset);
-  SATCAT.addPERIOD(builder, PERIOD);
-  SATCAT.addINCLINATION(builder, INCLINATION);
-  SATCAT.addAPOGEE(builder, APOGEE);
-  SATCAT.addPERIGEE(builder, PERIGEE);
-  SATCAT.addRCS(builder, RCS);
+  if (PERIOD !== null)
+    SATCAT.addPERIOD(builder, PERIOD);
+  if (INCLINATION !== null)
+    SATCAT.addINCLINATION(builder, INCLINATION);
+  if (APOGEE !== null)
+    SATCAT.addAPOGEE(builder, APOGEE);
+  if (PERIGEE !== null)
+    SATCAT.addPERIGEE(builder, PERIGEE);
+  if (RCS !== null)
+    SATCAT.addRCS(builder, RCS);
   SATCAT.addDATA_STATUS_CODE(builder, DATA_STATUS_CODE);
   SATCAT.addORBIT_CENTER(builder, ORBIT_CENTEROffset);
   SATCAT.addORBIT_TYPE(builder, ORBIT_TYPE);
@@ -251,7 +246,6 @@ unpack(): SATCATT {
     this.OBJECT_NAME(),
     this.OBJECT_ID(),
     this.NORAD_CAT_ID(),
-    this.MULTIPLE_NAMES(),
     this.OBJECT_TYPE(),
     this.OPS_STATUS_CODE(),
     this.OWNER(),
@@ -274,7 +268,6 @@ unpackTo(_o: SATCATT): void {
   _o.OBJECT_NAME = this.OBJECT_NAME();
   _o.OBJECT_ID = this.OBJECT_ID();
   _o.NORAD_CAT_ID = this.NORAD_CAT_ID();
-  _o.MULTIPLE_NAMES = this.MULTIPLE_NAMES();
   _o.OBJECT_TYPE = this.OBJECT_TYPE();
   _o.OPS_STATUS_CODE = this.OPS_STATUS_CODE();
   _o.OWNER = this.OWNER();
@@ -297,18 +290,17 @@ constructor(
   public OBJECT_NAME: string|Uint8Array|null = null,
   public OBJECT_ID: string|Uint8Array|null = null,
   public NORAD_CAT_ID: number = 0,
-  public MULTIPLE_NAMES: boolean = false,
   public OBJECT_TYPE: objType = objType.UNKNOWN,
   public OPS_STATUS_CODE: opsStatusCode = opsStatusCode.UNKNOWN,
   public OWNER: string|Uint8Array|null = null,
   public LAUNCH_DATE: string|Uint8Array|null = null,
   public LAUNCH_SITE: string|Uint8Array|null = null,
   public DECAY_DATE: string|Uint8Array|null = null,
-  public PERIOD: number = 0.0,
-  public INCLINATION: number = 0.0,
-  public APOGEE: number = 0.0,
-  public PERIGEE: number = 0.0,
-  public RCS: number = 0.0,
+  public PERIOD: number|null = null,
+  public INCLINATION: number|null = null,
+  public APOGEE: number|null = null,
+  public PERIGEE: number|null = null,
+  public RCS: number|null = null,
   public DATA_STATUS_CODE: orbitalStatusCode = orbitalStatusCode.NO_CURRENT_ELEMENTS,
   public ORBIT_CENTER: string|Uint8Array|null = null,
   public ORBIT_TYPE: orbitType = orbitType.ORBIT
@@ -328,7 +320,6 @@ pack(builder:flatbuffers.Builder): flatbuffers.Offset {
     OBJECT_NAME,
     OBJECT_ID,
     this.NORAD_CAT_ID,
-    this.MULTIPLE_NAMES,
     this.OBJECT_TYPE,
     this.OPS_STATUS_CODE,
     OWNER,
