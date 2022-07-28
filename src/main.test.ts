@@ -3,9 +3,21 @@ import { LegacyFormat } from "./lib/legacyformat.enum";
 import { SerializationFormat } from "./lib/serialization.enum";
 import { readFileSync, writeFile, writeFileSync } from "fs";
 
+const nullHack = (a) => {
+  return a.map(c => {
+    for (let x in c) {
+      if (c[x] === null) {
+        c[x] = 0;
+      }
+    }
+    return c;
+  });
+}
+
+
 let jsonResults = {
   tle: JSON.parse(readFileSync("./test/data/celestrak/catalog/catalog.json", "utf-8")),
-  satcat: JSON.parse(readFileSync("./test/data/celestrak/satcat/satcat_short.json", "utf-8"))
+  satcat: nullHack(JSON.parse(readFileSync("./test/data/celestrak/satcat/satcat.json", "utf-8")))
 }
 
 let tleFBSPath = "./test/data/celestrak/catalog/catalog.fbs";
@@ -21,7 +33,7 @@ let tle = {
 };
 
 let satcat = {
-  csv: readFileSync("./test/data/celestrak/satcat/satcat_short.csv", "utf-8"),
+  csv: readFileSync("./test/data/celestrak/satcat/satcat.csv", "utf-8"),
   json: jsonResults.satcat,
   "fbs": null
 }
@@ -34,9 +46,9 @@ beforeAll(async () => {
   writeFileSync(satFBSPath, await parse(satcat.json,
     SATCAT,
     SerializationFormat.json, SerializationFormat.fbs));
-  writeFileSync(satFBSPath, await parse(satcat.csv,
+  /*writeFileSync(satFBSPath, await parse(satcat.csv,
     SATCAT,
-    SerializationFormat.csv, SerializationFormat.fbs));
+    SerializationFormat.csv, SerializationFormat.fbs));*/
   tle.fbs = readFileSync(tleFBSPath);
   satcat.fbs = readFileSync(satFBSPath);
 

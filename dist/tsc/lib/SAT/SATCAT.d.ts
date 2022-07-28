@@ -1,8 +1,8 @@
 import * as flatbuffers from 'flatbuffers';
-import { objType } from './objType';
+import { dataStatusCode } from './dataStatusCode';
+import { objectType } from './objectType';
 import { opsStatusCode } from './opsStatusCode';
 import { orbitType } from './orbitType';
-import { orbitalStatusCode } from './orbitalStatusCode';
 export declare class SATCAT {
     bb: flatbuffers.ByteBuffer | null;
     bb_pos: number;
@@ -15,8 +15,7 @@ export declare class SATCAT {
     OBJECT_ID(): string | null;
     OBJECT_ID(optionalEncoding: flatbuffers.Encoding): string | Uint8Array | null;
     NORAD_CAT_ID(): number;
-    MULTIPLE_NAMES(): boolean;
-    OBJECT_TYPE(): objType;
+    OBJECT_TYPE(): objectType;
     OPS_STATUS_CODE(): opsStatusCode;
     OWNER(): string | null;
     OWNER(optionalEncoding: flatbuffers.Encoding): string | Uint8Array | null;
@@ -31,7 +30,7 @@ export declare class SATCAT {
     APOGEE(): number;
     PERIGEE(): number;
     RCS(): number;
-    DATA_STATUS_CODE(): orbitalStatusCode;
+    DATA_STATUS_CODE(): dataStatusCode;
     ORBIT_CENTER(): string | null;
     ORBIT_CENTER(optionalEncoding: flatbuffers.Encoding): string | Uint8Array | null;
     ORBIT_TYPE(): orbitType;
@@ -39,8 +38,7 @@ export declare class SATCAT {
     static addOBJECT_NAME(builder: flatbuffers.Builder, OBJECT_NAMEOffset: flatbuffers.Offset): void;
     static addOBJECT_ID(builder: flatbuffers.Builder, OBJECT_IDOffset: flatbuffers.Offset): void;
     static addNORAD_CAT_ID(builder: flatbuffers.Builder, NORAD_CAT_ID: number): void;
-    static addMULTIPLE_NAMES(builder: flatbuffers.Builder, MULTIPLE_NAMES: boolean): void;
-    static addOBJECT_TYPE(builder: flatbuffers.Builder, OBJECT_TYPE: objType): void;
+    static addOBJECT_TYPE(builder: flatbuffers.Builder, OBJECT_TYPE: objectType): void;
     static addOPS_STATUS_CODE(builder: flatbuffers.Builder, OPS_STATUS_CODE: opsStatusCode): void;
     static addOWNER(builder: flatbuffers.Builder, OWNEROffset: flatbuffers.Offset): void;
     static addLAUNCH_DATE(builder: flatbuffers.Builder, LAUNCH_DATEOffset: flatbuffers.Offset): void;
@@ -51,13 +49,13 @@ export declare class SATCAT {
     static addAPOGEE(builder: flatbuffers.Builder, APOGEE: number): void;
     static addPERIGEE(builder: flatbuffers.Builder, PERIGEE: number): void;
     static addRCS(builder: flatbuffers.Builder, RCS: number): void;
-    static addDATA_STATUS_CODE(builder: flatbuffers.Builder, DATA_STATUS_CODE: orbitalStatusCode): void;
+    static addDATA_STATUS_CODE(builder: flatbuffers.Builder, DATA_STATUS_CODE: dataStatusCode): void;
     static addORBIT_CENTER(builder: flatbuffers.Builder, ORBIT_CENTEROffset: flatbuffers.Offset): void;
     static addORBIT_TYPE(builder: flatbuffers.Builder, ORBIT_TYPE: orbitType): void;
     static endSATCAT(builder: flatbuffers.Builder): flatbuffers.Offset;
     static finishSATCATBuffer(builder: flatbuffers.Builder, offset: flatbuffers.Offset): void;
     static finishSizePrefixedSATCATBuffer(builder: flatbuffers.Builder, offset: flatbuffers.Offset): void;
-    static createSATCAT(builder: flatbuffers.Builder, OBJECT_NAMEOffset: flatbuffers.Offset, OBJECT_IDOffset: flatbuffers.Offset, NORAD_CAT_ID: number, MULTIPLE_NAMES: boolean, OBJECT_TYPE: objType, OPS_STATUS_CODE: opsStatusCode, OWNEROffset: flatbuffers.Offset, LAUNCH_DATEOffset: flatbuffers.Offset, LAUNCH_SITEOffset: flatbuffers.Offset, DECAY_DATEOffset: flatbuffers.Offset, PERIOD: number, INCLINATION: number, APOGEE: number, PERIGEE: number, RCS: number, DATA_STATUS_CODE: orbitalStatusCode, ORBIT_CENTEROffset: flatbuffers.Offset, ORBIT_TYPE: orbitType): flatbuffers.Offset;
+    static createSATCAT(builder: flatbuffers.Builder, OBJECT_NAMEOffset: flatbuffers.Offset, OBJECT_IDOffset: flatbuffers.Offset, NORAD_CAT_ID: number, OBJECT_TYPE: objectType, OPS_STATUS_CODE: opsStatusCode, OWNEROffset: flatbuffers.Offset, LAUNCH_DATEOffset: flatbuffers.Offset, LAUNCH_SITEOffset: flatbuffers.Offset, DECAY_DATEOffset: flatbuffers.Offset, PERIOD: number, INCLINATION: number, APOGEE: number, PERIGEE: number, RCS: number, DATA_STATUS_CODE: dataStatusCode, ORBIT_CENTEROffset: flatbuffers.Offset, ORBIT_TYPE: orbitType): flatbuffers.Offset;
     unpack(): SATCATT;
     unpackTo(_o: SATCATT): void;
 }
@@ -65,8 +63,7 @@ export declare class SATCATT {
     OBJECT_NAME: string | Uint8Array | null;
     OBJECT_ID: string | Uint8Array | null;
     NORAD_CAT_ID: number;
-    MULTIPLE_NAMES: boolean;
-    OBJECT_TYPE: objType;
+    OBJECT_TYPE: objectType;
     OPS_STATUS_CODE: opsStatusCode;
     OWNER: string | Uint8Array | null;
     LAUNCH_DATE: string | Uint8Array | null;
@@ -77,9 +74,9 @@ export declare class SATCATT {
     APOGEE: number;
     PERIGEE: number;
     RCS: number;
-    DATA_STATUS_CODE: orbitalStatusCode;
+    DATA_STATUS_CODE: dataStatusCode;
     ORBIT_CENTER: string | Uint8Array | null;
     ORBIT_TYPE: orbitType;
-    constructor(OBJECT_NAME?: string | Uint8Array | null, OBJECT_ID?: string | Uint8Array | null, NORAD_CAT_ID?: number, MULTIPLE_NAMES?: boolean, OBJECT_TYPE?: objType, OPS_STATUS_CODE?: opsStatusCode, OWNER?: string | Uint8Array | null, LAUNCH_DATE?: string | Uint8Array | null, LAUNCH_SITE?: string | Uint8Array | null, DECAY_DATE?: string | Uint8Array | null, PERIOD?: number, INCLINATION?: number, APOGEE?: number, PERIGEE?: number, RCS?: number, DATA_STATUS_CODE?: orbitalStatusCode, ORBIT_CENTER?: string | Uint8Array | null, ORBIT_TYPE?: orbitType);
+    constructor(OBJECT_NAME?: string | Uint8Array | null, OBJECT_ID?: string | Uint8Array | null, NORAD_CAT_ID?: number, OBJECT_TYPE?: objectType, OPS_STATUS_CODE?: opsStatusCode, OWNER?: string | Uint8Array | null, LAUNCH_DATE?: string | Uint8Array | null, LAUNCH_SITE?: string | Uint8Array | null, DECAY_DATE?: string | Uint8Array | null, PERIOD?: number, INCLINATION?: number, APOGEE?: number, PERIGEE?: number, RCS?: number, DATA_STATUS_CODE?: dataStatusCode, ORBIT_CENTER?: string | Uint8Array | null, ORBIT_TYPE?: orbitType);
     pack(builder: flatbuffers.Builder): flatbuffers.Offset;
 }

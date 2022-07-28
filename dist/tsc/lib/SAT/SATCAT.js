@@ -4,10 +4,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SATCATT = exports.SATCAT = void 0;
 const tslib_1 = require("tslib");
 const flatbuffers = tslib_1.__importStar(require("flatbuffers"));
-const objType_1 = require("./objType");
+const dataStatusCode_1 = require("./dataStatusCode");
+const objectType_1 = require("./objectType");
 const opsStatusCode_1 = require("./opsStatusCode");
 const orbitType_1 = require("./orbitType");
-const orbitalStatusCode_1 = require("./orbitalStatusCode");
 class SATCAT {
     bb = null;
     bb_pos = 0;
@@ -38,68 +38,64 @@ class SATCAT {
         const offset = this.bb.__offset(this.bb_pos, 8);
         return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
     }
-    MULTIPLE_NAMES() {
-        const offset = this.bb.__offset(this.bb_pos, 10);
-        return offset ? !!this.bb.readInt8(this.bb_pos + offset) : false;
-    }
     OBJECT_TYPE() {
-        const offset = this.bb.__offset(this.bb_pos, 12);
-        return offset ? this.bb.readInt8(this.bb_pos + offset) : objType_1.objType.UNKNOWN;
+        const offset = this.bb.__offset(this.bb_pos, 10);
+        return offset ? this.bb.readInt8(this.bb_pos + offset) : objectType_1.objectType.UNKNOWN;
     }
     OPS_STATUS_CODE() {
-        const offset = this.bb.__offset(this.bb_pos, 14);
+        const offset = this.bb.__offset(this.bb_pos, 12);
         return offset ? this.bb.readInt8(this.bb_pos + offset) : opsStatusCode_1.opsStatusCode.UNKNOWN;
     }
     OWNER(optionalEncoding) {
-        const offset = this.bb.__offset(this.bb_pos, 16);
+        const offset = this.bb.__offset(this.bb_pos, 14);
         return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
     }
     LAUNCH_DATE(optionalEncoding) {
-        const offset = this.bb.__offset(this.bb_pos, 18);
+        const offset = this.bb.__offset(this.bb_pos, 16);
         return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
     }
     LAUNCH_SITE(optionalEncoding) {
-        const offset = this.bb.__offset(this.bb_pos, 20);
+        const offset = this.bb.__offset(this.bb_pos, 18);
         return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
     }
     DECAY_DATE(optionalEncoding) {
-        const offset = this.bb.__offset(this.bb_pos, 22);
+        const offset = this.bb.__offset(this.bb_pos, 20);
         return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
     }
     PERIOD() {
-        const offset = this.bb.__offset(this.bb_pos, 24);
-        return offset ? this.bb.readFloat32(this.bb_pos + offset) : 0.0;
+        const offset = this.bb.__offset(this.bb_pos, 22);
+        return offset ? this.bb.readFloat64(this.bb_pos + offset) : 0.0;
     }
     INCLINATION() {
-        const offset = this.bb.__offset(this.bb_pos, 26);
-        return offset ? this.bb.readFloat32(this.bb_pos + offset) : 0.0;
+        const offset = this.bb.__offset(this.bb_pos, 24);
+        return offset ? this.bb.readFloat64(this.bb_pos + offset) : 0.0;
     }
     APOGEE() {
-        const offset = this.bb.__offset(this.bb_pos, 28);
-        return offset ? this.bb.readFloat32(this.bb_pos + offset) : 0.0;
+        const offset = this.bb.__offset(this.bb_pos, 26);
+        return offset ? this.bb.readFloat64(this.bb_pos + offset) : 0.0;
     }
     PERIGEE() {
-        const offset = this.bb.__offset(this.bb_pos, 30);
-        return offset ? this.bb.readFloat32(this.bb_pos + offset) : 0.0;
+        const offset = this.bb.__offset(this.bb_pos, 28);
+        return offset ? this.bb.readFloat64(this.bb_pos + offset) : 0.0;
     }
     RCS() {
-        const offset = this.bb.__offset(this.bb_pos, 32);
-        return offset ? this.bb.readFloat32(this.bb_pos + offset) : 0.0;
+        const offset = this.bb.__offset(this.bb_pos, 30);
+        return offset ? this.bb.readFloat64(this.bb_pos + offset) : 0.0;
     }
     DATA_STATUS_CODE() {
-        const offset = this.bb.__offset(this.bb_pos, 34);
-        return offset ? this.bb.readInt8(this.bb_pos + offset) : orbitalStatusCode_1.orbitalStatusCode.NO_CURRENT_ELEMENTS;
+        const offset = this.bb.__offset(this.bb_pos, 32);
+        return offset ? this.bb.readInt8(this.bb_pos + offset) : dataStatusCode_1.dataStatusCode.NO_CURRENT_ELEMENTS;
     }
     ORBIT_CENTER(optionalEncoding) {
-        const offset = this.bb.__offset(this.bb_pos, 36);
+        const offset = this.bb.__offset(this.bb_pos, 34);
         return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
     }
     ORBIT_TYPE() {
-        const offset = this.bb.__offset(this.bb_pos, 38);
+        const offset = this.bb.__offset(this.bb_pos, 36);
         return offset ? this.bb.readInt8(this.bb_pos + offset) : orbitType_1.orbitType.ORBIT;
     }
     static startSATCAT(builder) {
-        builder.startObject(18);
+        builder.startObject(17);
     }
     static addOBJECT_NAME(builder, OBJECT_NAMEOffset) {
         builder.addFieldOffset(0, OBJECT_NAMEOffset, 0);
@@ -110,50 +106,47 @@ class SATCAT {
     static addNORAD_CAT_ID(builder, NORAD_CAT_ID) {
         builder.addFieldInt32(2, NORAD_CAT_ID, 0);
     }
-    static addMULTIPLE_NAMES(builder, MULTIPLE_NAMES) {
-        builder.addFieldInt8(3, +MULTIPLE_NAMES, +false);
-    }
     static addOBJECT_TYPE(builder, OBJECT_TYPE) {
-        builder.addFieldInt8(4, OBJECT_TYPE, objType_1.objType.UNKNOWN);
+        builder.addFieldInt8(3, OBJECT_TYPE, objectType_1.objectType.UNKNOWN);
     }
     static addOPS_STATUS_CODE(builder, OPS_STATUS_CODE) {
-        builder.addFieldInt8(5, OPS_STATUS_CODE, opsStatusCode_1.opsStatusCode.UNKNOWN);
+        builder.addFieldInt8(4, OPS_STATUS_CODE, opsStatusCode_1.opsStatusCode.UNKNOWN);
     }
     static addOWNER(builder, OWNEROffset) {
-        builder.addFieldOffset(6, OWNEROffset, 0);
+        builder.addFieldOffset(5, OWNEROffset, 0);
     }
     static addLAUNCH_DATE(builder, LAUNCH_DATEOffset) {
-        builder.addFieldOffset(7, LAUNCH_DATEOffset, 0);
+        builder.addFieldOffset(6, LAUNCH_DATEOffset, 0);
     }
     static addLAUNCH_SITE(builder, LAUNCH_SITEOffset) {
-        builder.addFieldOffset(8, LAUNCH_SITEOffset, 0);
+        builder.addFieldOffset(7, LAUNCH_SITEOffset, 0);
     }
     static addDECAY_DATE(builder, DECAY_DATEOffset) {
-        builder.addFieldOffset(9, DECAY_DATEOffset, 0);
+        builder.addFieldOffset(8, DECAY_DATEOffset, 0);
     }
     static addPERIOD(builder, PERIOD) {
-        builder.addFieldFloat32(10, PERIOD, 0.0);
+        builder.addFieldFloat64(9, PERIOD, 0.0);
     }
     static addINCLINATION(builder, INCLINATION) {
-        builder.addFieldFloat32(11, INCLINATION, 0.0);
+        builder.addFieldFloat64(10, INCLINATION, 0.0);
     }
     static addAPOGEE(builder, APOGEE) {
-        builder.addFieldFloat32(12, APOGEE, 0.0);
+        builder.addFieldFloat64(11, APOGEE, 0.0);
     }
     static addPERIGEE(builder, PERIGEE) {
-        builder.addFieldFloat32(13, PERIGEE, 0.0);
+        builder.addFieldFloat64(12, PERIGEE, 0.0);
     }
     static addRCS(builder, RCS) {
-        builder.addFieldFloat32(14, RCS, 0.0);
+        builder.addFieldFloat64(13, RCS, 0.0);
     }
     static addDATA_STATUS_CODE(builder, DATA_STATUS_CODE) {
-        builder.addFieldInt8(15, DATA_STATUS_CODE, orbitalStatusCode_1.orbitalStatusCode.NO_CURRENT_ELEMENTS);
+        builder.addFieldInt8(14, DATA_STATUS_CODE, dataStatusCode_1.dataStatusCode.NO_CURRENT_ELEMENTS);
     }
     static addORBIT_CENTER(builder, ORBIT_CENTEROffset) {
-        builder.addFieldOffset(16, ORBIT_CENTEROffset, 0);
+        builder.addFieldOffset(15, ORBIT_CENTEROffset, 0);
     }
     static addORBIT_TYPE(builder, ORBIT_TYPE) {
-        builder.addFieldInt8(17, ORBIT_TYPE, orbitType_1.orbitType.ORBIT);
+        builder.addFieldInt8(16, ORBIT_TYPE, orbitType_1.orbitType.ORBIT);
     }
     static endSATCAT(builder) {
         const offset = builder.endObject();
@@ -165,12 +158,11 @@ class SATCAT {
     static finishSizePrefixedSATCATBuffer(builder, offset) {
         builder.finish(offset, '$SAT', true);
     }
-    static createSATCAT(builder, OBJECT_NAMEOffset, OBJECT_IDOffset, NORAD_CAT_ID, MULTIPLE_NAMES, OBJECT_TYPE, OPS_STATUS_CODE, OWNEROffset, LAUNCH_DATEOffset, LAUNCH_SITEOffset, DECAY_DATEOffset, PERIOD, INCLINATION, APOGEE, PERIGEE, RCS, DATA_STATUS_CODE, ORBIT_CENTEROffset, ORBIT_TYPE) {
+    static createSATCAT(builder, OBJECT_NAMEOffset, OBJECT_IDOffset, NORAD_CAT_ID, OBJECT_TYPE, OPS_STATUS_CODE, OWNEROffset, LAUNCH_DATEOffset, LAUNCH_SITEOffset, DECAY_DATEOffset, PERIOD, INCLINATION, APOGEE, PERIGEE, RCS, DATA_STATUS_CODE, ORBIT_CENTEROffset, ORBIT_TYPE) {
         SATCAT.startSATCAT(builder);
         SATCAT.addOBJECT_NAME(builder, OBJECT_NAMEOffset);
         SATCAT.addOBJECT_ID(builder, OBJECT_IDOffset);
         SATCAT.addNORAD_CAT_ID(builder, NORAD_CAT_ID);
-        SATCAT.addMULTIPLE_NAMES(builder, MULTIPLE_NAMES);
         SATCAT.addOBJECT_TYPE(builder, OBJECT_TYPE);
         SATCAT.addOPS_STATUS_CODE(builder, OPS_STATUS_CODE);
         SATCAT.addOWNER(builder, OWNEROffset);
@@ -188,13 +180,12 @@ class SATCAT {
         return SATCAT.endSATCAT(builder);
     }
     unpack() {
-        return new SATCATT(this.OBJECT_NAME(), this.OBJECT_ID(), this.NORAD_CAT_ID(), this.MULTIPLE_NAMES(), this.OBJECT_TYPE(), this.OPS_STATUS_CODE(), this.OWNER(), this.LAUNCH_DATE(), this.LAUNCH_SITE(), this.DECAY_DATE(), this.PERIOD(), this.INCLINATION(), this.APOGEE(), this.PERIGEE(), this.RCS(), this.DATA_STATUS_CODE(), this.ORBIT_CENTER(), this.ORBIT_TYPE());
+        return new SATCATT(this.OBJECT_NAME(), this.OBJECT_ID(), this.NORAD_CAT_ID(), this.OBJECT_TYPE(), this.OPS_STATUS_CODE(), this.OWNER(), this.LAUNCH_DATE(), this.LAUNCH_SITE(), this.DECAY_DATE(), this.PERIOD(), this.INCLINATION(), this.APOGEE(), this.PERIGEE(), this.RCS(), this.DATA_STATUS_CODE(), this.ORBIT_CENTER(), this.ORBIT_TYPE());
     }
     unpackTo(_o) {
         _o.OBJECT_NAME = this.OBJECT_NAME();
         _o.OBJECT_ID = this.OBJECT_ID();
         _o.NORAD_CAT_ID = this.NORAD_CAT_ID();
-        _o.MULTIPLE_NAMES = this.MULTIPLE_NAMES();
         _o.OBJECT_TYPE = this.OBJECT_TYPE();
         _o.OPS_STATUS_CODE = this.OPS_STATUS_CODE();
         _o.OWNER = this.OWNER();
@@ -216,7 +207,6 @@ class SATCATT {
     OBJECT_NAME;
     OBJECT_ID;
     NORAD_CAT_ID;
-    MULTIPLE_NAMES;
     OBJECT_TYPE;
     OPS_STATUS_CODE;
     OWNER;
@@ -231,11 +221,10 @@ class SATCATT {
     DATA_STATUS_CODE;
     ORBIT_CENTER;
     ORBIT_TYPE;
-    constructor(OBJECT_NAME = null, OBJECT_ID = null, NORAD_CAT_ID = 0, MULTIPLE_NAMES = false, OBJECT_TYPE = objType_1.objType.UNKNOWN, OPS_STATUS_CODE = opsStatusCode_1.opsStatusCode.UNKNOWN, OWNER = null, LAUNCH_DATE = null, LAUNCH_SITE = null, DECAY_DATE = null, PERIOD = 0.0, INCLINATION = 0.0, APOGEE = 0.0, PERIGEE = 0.0, RCS = 0.0, DATA_STATUS_CODE = orbitalStatusCode_1.orbitalStatusCode.NO_CURRENT_ELEMENTS, ORBIT_CENTER = null, ORBIT_TYPE = orbitType_1.orbitType.ORBIT) {
+    constructor(OBJECT_NAME = null, OBJECT_ID = null, NORAD_CAT_ID = 0, OBJECT_TYPE = objectType_1.objectType.UNKNOWN, OPS_STATUS_CODE = opsStatusCode_1.opsStatusCode.UNKNOWN, OWNER = null, LAUNCH_DATE = null, LAUNCH_SITE = null, DECAY_DATE = null, PERIOD = 0.0, INCLINATION = 0.0, APOGEE = 0.0, PERIGEE = 0.0, RCS = 0.0, DATA_STATUS_CODE = dataStatusCode_1.dataStatusCode.NO_CURRENT_ELEMENTS, ORBIT_CENTER = null, ORBIT_TYPE = orbitType_1.orbitType.ORBIT) {
         this.OBJECT_NAME = OBJECT_NAME;
         this.OBJECT_ID = OBJECT_ID;
         this.NORAD_CAT_ID = NORAD_CAT_ID;
-        this.MULTIPLE_NAMES = MULTIPLE_NAMES;
         this.OBJECT_TYPE = OBJECT_TYPE;
         this.OPS_STATUS_CODE = OPS_STATUS_CODE;
         this.OWNER = OWNER;
@@ -259,7 +248,7 @@ class SATCATT {
         const LAUNCH_SITE = (this.LAUNCH_SITE !== null ? builder.createString(this.LAUNCH_SITE) : 0);
         const DECAY_DATE = (this.DECAY_DATE !== null ? builder.createString(this.DECAY_DATE) : 0);
         const ORBIT_CENTER = (this.ORBIT_CENTER !== null ? builder.createString(this.ORBIT_CENTER) : 0);
-        return SATCAT.createSATCAT(builder, OBJECT_NAME, OBJECT_ID, this.NORAD_CAT_ID, this.MULTIPLE_NAMES, this.OBJECT_TYPE, this.OPS_STATUS_CODE, OWNER, LAUNCH_DATE, LAUNCH_SITE, DECAY_DATE, this.PERIOD, this.INCLINATION, this.APOGEE, this.PERIGEE, this.RCS, this.DATA_STATUS_CODE, ORBIT_CENTER, this.ORBIT_TYPE);
+        return SATCAT.createSATCAT(builder, OBJECT_NAME, OBJECT_ID, this.NORAD_CAT_ID, this.OBJECT_TYPE, this.OPS_STATUS_CODE, OWNER, LAUNCH_DATE, LAUNCH_SITE, DECAY_DATE, this.PERIOD, this.INCLINATION, this.APOGEE, this.PERIGEE, this.RCS, this.DATA_STATUS_CODE, ORBIT_CENTER, this.ORBIT_TYPE);
     }
 }
 exports.SATCATT = SATCATT;

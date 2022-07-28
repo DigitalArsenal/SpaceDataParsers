@@ -49,14 +49,14 @@ MANEUVERABLE():boolean {
   return offset ? !!this.bb!.readInt8(this.bb_pos + offset) : false;
 }
 
-SIZE():number|null {
+SIZE():number {
   const offset = this.bb!.__offset(this.bb_pos, 12);
-  return offset ? this.bb!.readFloat64(this.bb_pos + offset) : null;
+  return offset ? this.bb!.readFloat64(this.bb_pos + offset) : 0.0;
 }
 
-MASS():number|null {
+MASS():number {
   const offset = this.bb!.__offset(this.bb_pos, 14);
-  return offset ? this.bb!.readFloat64(this.bb_pos + offset) : null;
+  return offset ? this.bb!.readFloat64(this.bb_pos + offset) : 0.0;
 }
 
 MASS_TYPE():massType {
@@ -85,11 +85,11 @@ static addMANEUVERABLE(builder:flatbuffers.Builder, MANEUVERABLE:boolean) {
 }
 
 static addSIZE(builder:flatbuffers.Builder, SIZE:number) {
-  builder.addFieldFloat64(4, SIZE, 0);
+  builder.addFieldFloat64(4, SIZE, 0.0);
 }
 
 static addMASS(builder:flatbuffers.Builder, MASS:number) {
-  builder.addFieldFloat64(5, MASS, 0);
+  builder.addFieldFloat64(5, MASS, 0.0);
 }
 
 static addMASS_TYPE(builder:flatbuffers.Builder, MASS_TYPE:massType) {
@@ -101,16 +101,14 @@ static endPAYLOAD(builder:flatbuffers.Builder):flatbuffers.Offset {
   return offset;
 }
 
-static createPAYLOAD(builder:flatbuffers.Builder, OBJECT_IDOffset:flatbuffers.Offset, OBJECT_NAMEOffset:flatbuffers.Offset, DEPLOYMENT_DATEOffset:flatbuffers.Offset, MANEUVERABLE:boolean, SIZE:number|null, MASS:number|null, MASS_TYPE:massType):flatbuffers.Offset {
+static createPAYLOAD(builder:flatbuffers.Builder, OBJECT_IDOffset:flatbuffers.Offset, OBJECT_NAMEOffset:flatbuffers.Offset, DEPLOYMENT_DATEOffset:flatbuffers.Offset, MANEUVERABLE:boolean, SIZE:number, MASS:number, MASS_TYPE:massType):flatbuffers.Offset {
   PAYLOAD.startPAYLOAD(builder);
   PAYLOAD.addOBJECT_ID(builder, OBJECT_IDOffset);
   PAYLOAD.addOBJECT_NAME(builder, OBJECT_NAMEOffset);
   PAYLOAD.addDEPLOYMENT_DATE(builder, DEPLOYMENT_DATEOffset);
   PAYLOAD.addMANEUVERABLE(builder, MANEUVERABLE);
-  if (SIZE !== null)
-    PAYLOAD.addSIZE(builder, SIZE);
-  if (MASS !== null)
-    PAYLOAD.addMASS(builder, MASS);
+  PAYLOAD.addSIZE(builder, SIZE);
+  PAYLOAD.addMASS(builder, MASS);
   PAYLOAD.addMASS_TYPE(builder, MASS_TYPE);
   return PAYLOAD.endPAYLOAD(builder);
 }
@@ -145,8 +143,8 @@ constructor(
   public OBJECT_NAME: string|Uint8Array|null = null,
   public DEPLOYMENT_DATE: string|Uint8Array|null = null,
   public MANEUVERABLE: boolean = false,
-  public SIZE: number|null = null,
-  public MASS: number|null = null,
+  public SIZE: number = 0.0,
+  public MASS: number = 0.0,
   public MASS_TYPE: massType = massType.DRY
 ){}
 

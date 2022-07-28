@@ -11,14 +11,18 @@ var orbitType;
     /**
      *1
      */
-    orbitType[orbitType["DOCKED"] = 1] = "DOCKED";
+    orbitType[orbitType["LANDING"] = 1] = "LANDING";
     /**
      *2
      */
-    orbitType[orbitType["LANDING"] = 2] = "LANDING";
+    orbitType[orbitType["IMPACT"] = 2] = "IMPACT";
     /**
      *3
      */
-    orbitType[orbitType["IMPACT"] = 3] = "IMPACT";
+    orbitType[orbitType["DOCKED"] = 3] = "DOCKED";
+    /**
+     *4
+     */
+    orbitType[orbitType["ROUNDTRIP"] = 4] = "ROUNDTRIP";
 })(orbitType = exports.orbitType || (exports.orbitType = {}));
 //# sourceMappingURL=orbitType.js.map

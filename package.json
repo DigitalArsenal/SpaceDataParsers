@@ -24,7 +24,7 @@
         "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
         "test": "npm run test:clear && jest --detectOpenHandles --forceExit",
         "test:clear": "jest --clearCache",
-        "test:dev": "npm run test:clear && jest --watch --detectOpenHandles --forceExit",
+        "test:dev": "npm run test:clear && jest --runInBand --watch --detectOpenHandles --forceExit",
         "clean": "rm -rf dist build package",
         "ts-node": "ts-node",
         "docs": "typedoc --entryPoints src/main.ts",
@@ -36,7 +36,10 @@
         "esbuild-browser:watch": "esbuild src/browser.ts --bundle --format=esm --watch --outfile=dist/esbuild/browser.mjs",
         "esbuild-node": "esbuild src/cli.ts --bundle --platform=node --minify --sourcemap=external --outfile=dist/esbuild/cli.js",
         "esbuild-node:dev": "esbuild src/cli.ts --bundle --platform=node --sourcemap=external --outfile=dist/esbuild/cli.js",
-        "esbuild-node:watch": "esbuild src/cli.ts --bundle --platform=node --watch --sourcemap=external --outfile=dist/esbuild/cli.js && npm run test"
+        "esbuild-node:watch": "esbuild src/cli.ts --bundle --platform=node --watch --sourcemap=external --outfile=dist/esbuild/cli.js && npm run test",
+        "refresh:data:csv": "wget -O test/data/celestrak/satcat/satcat.csv \"https://celestrak.org/satcat/rsm.php?SPECIAL=full-catalog&FORMAT=csv\"",
+        "refresh:data:json": "wget -O test/data/celestrak/satcat/satcat.json \"https://celestrak.org/satcat/rsm.php?SPECIAL=full-catalog&FORMAT=json\"",
+        "refresh:data": "npm run refresh:data:csv && npm run refresh:data:json"
     },
     "devDependencies": {
         "@esbuild-plugins/node-globals-polyfill": "^0.1.1",

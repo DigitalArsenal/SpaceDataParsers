@@ -29,7 +29,7 @@ const csv = async (input: any, schema: any): Promise<SATCATCOLLECTION> => {
     columns: true,
     skip_empty_lines: true
   }));
-  intermediateResults.forEach((row: any, i: number) => {
+  intermediateResults.forEach((row: any) => {
     let newSAT: SAT = new SAT();
     for (let prop in row) {
       if (newSAT.hasOwnProperty(prop)) {

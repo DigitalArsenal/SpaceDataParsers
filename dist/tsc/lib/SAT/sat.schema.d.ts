@@ -1,7 +1,7 @@
 declare const _default: {
     $schema: string;
     definitions: {
-        objType: {
+        objectType: {
             type: string;
             enum: string[];
         };
@@ -9,11 +9,7 @@ declare const _default: {
             type: string;
             enum: string[];
         };
-        orbitalStatusCode: {
-            type: string;
-            enum: string[];
-        };
-        orbitCenter: {
+        dataStatusCode: {
             type: string;
             enum: string[];
         };
@@ -38,9 +34,6 @@ declare const _default: {
                     type: string;
                     minimum: number;
                     maximum: number;
-                };
-                MULTIPLE_NAMES: {
-                    type: string;
                 };
                 OBJECT_TYPE: {
                     $ref: string;

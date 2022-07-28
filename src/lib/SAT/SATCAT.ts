@@ -87,29 +87,29 @@ DECAY_DATE(optionalEncoding?:any):string|Uint8Array|null {
   return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
 }
 
-PERIOD():number|null {
+PERIOD():number {
   const offset = this.bb!.__offset(this.bb_pos, 22);
-  return offset ? this.bb!.readFloat64(this.bb_pos + offset) : null;
+  return offset ? this.bb!.readFloat64(this.bb_pos + offset) : 0.0;
 }
 
-INCLINATION():number|null {
+INCLINATION():number {
   const offset = this.bb!.__offset(this.bb_pos, 24);
-  return offset ? this.bb!.readFloat64(this.bb_pos + offset) : null;
+  return offset ? this.bb!.readFloat64(this.bb_pos + offset) : 0.0;
 }
 
-APOGEE():number|null {
+APOGEE():number {
   const offset = this.bb!.__offset(this.bb_pos, 26);
-  return offset ? this.bb!.readFloat64(this.bb_pos + offset) : null;
+  return offset ? this.bb!.readFloat64(this.bb_pos + offset) : 0.0;
 }
 
-PERIGEE():number|null {
+PERIGEE():number {
   const offset = this.bb!.__offset(this.bb_pos, 28);
-  return offset ? this.bb!.readFloat64(this.bb_pos + offset) : null;
+  return offset ? this.bb!.readFloat64(this.bb_pos + offset) : 0.0;
 }
 
-RCS():number|null {
+RCS():number {
   const offset = this.bb!.__offset(this.bb_pos, 30);
-  return offset ? this.bb!.readFloat64(this.bb_pos + offset) : null;
+  return offset ? this.bb!.readFloat64(this.bb_pos + offset) : 0.0;
 }
 
 DATA_STATUS_CODE():dataStatusCode {
@@ -170,23 +170,23 @@ static addDECAY_DATE(builder:flatbuffers.Builder, DECAY_DATEOffset:flatbuffers.O
 }
 
 static addPERIOD(builder:flatbuffers.Builder, PERIOD:number) {
-  builder.addFieldFloat64(9, PERIOD, 0);
+  builder.addFieldFloat64(9, PERIOD, 0.0);
 }
 
 static addINCLINATION(builder:flatbuffers.Builder, INCLINATION:number) {
-  builder.addFieldFloat64(10, INCLINATION, 0);
+  builder.addFieldFloat64(10, INCLINATION, 0.0);
 }
 
 static addAPOGEE(builder:flatbuffers.Builder, APOGEE:number) {
-  builder.addFieldFloat64(11, APOGEE, 0);
+  builder.addFieldFloat64(11, APOGEE, 0.0);
 }
 
 static addPERIGEE(builder:flatbuffers.Builder, PERIGEE:number) {
-  builder.addFieldFloat64(12, PERIGEE, 0);
+  builder.addFieldFloat64(12, PERIGEE, 0.0);
 }
 
 static addRCS(builder:flatbuffers.Builder, RCS:number) {
-  builder.addFieldFloat64(13, RCS, 0);
+  builder.addFieldFloat64(13, RCS, 0.0);
 }
 
 static addDATA_STATUS_CODE(builder:flatbuffers.Builder, DATA_STATUS_CODE:dataStatusCode) {
@@ -214,7 +214,7 @@ static finishSizePrefixedSATCATBuffer(builder:flatbuffers.Builder, offset:flatbu
   builder.finish(offset, '$SAT', true);
 }
 
-static createSATCAT(builder:flatbuffers.Builder, OBJECT_NAMEOffset:flatbuffers.Offset, OBJECT_IDOffset:flatbuffers.Offset, NORAD_CAT_ID:number, OBJECT_TYPE:objectType, OPS_STATUS_CODE:opsStatusCode, OWNEROffset:flatbuffers.Offset, LAUNCH_DATEOffset:flatbuffers.Offset, LAUNCH_SITEOffset:flatbuffers.Offset, DECAY_DATEOffset:flatbuffers.Offset, PERIOD:number|null, INCLINATION:number|null, APOGEE:number|null, PERIGEE:number|null, RCS:number|null, DATA_STATUS_CODE:dataStatusCode, ORBIT_CENTEROffset:flatbuffers.Offset, ORBIT_TYPE:orbitType):flatbuffers.Offset {
+static createSATCAT(builder:flatbuffers.Builder, OBJECT_NAMEOffset:flatbuffers.Offset, OBJECT_IDOffset:flatbuffers.Offset, NORAD_CAT_ID:number, OBJECT_TYPE:objectType, OPS_STATUS_CODE:opsStatusCode, OWNEROffset:flatbuffers.Offset, LAUNCH_DATEOffset:flatbuffers.Offset, LAUNCH_SITEOffset:flatbuffers.Offset, DECAY_DATEOffset:flatbuffers.Offset, PERIOD:number, INCLINATION:number, APOGEE:number, PERIGEE:number, RCS:number, DATA_STATUS_CODE:dataStatusCode, ORBIT_CENTEROffset:flatbuffers.Offset, ORBIT_TYPE:orbitType):flatbuffers.Offset {
   SATCAT.startSATCAT(builder);
   SATCAT.addOBJECT_NAME(builder, OBJECT_NAMEOffset);
   SATCAT.addOBJECT_ID(builder, OBJECT_IDOffset);
@@ -225,16 +225,11 @@ static createSATCAT(builder:flatbuffers.Builder, OBJECT_NAMEOffset:flatbuffers.O
   SATCAT.addLAUNCH_DATE(builder, LAUNCH_DATEOffset);
   SATCAT.addLAUNCH_SITE(builder, LAUNCH_SITEOffset);
   SATCAT.addDECAY_DATE(builder, DECAY_DATEOffset);
-  if (PERIOD !== null)
-    SATCAT.addPERIOD(builder, PERIOD);
-  if (INCLINATION !== null)
-    SATCAT.addINCLINATION(builder, INCLINATION);
-  if (APOGEE !== null)
-    SATCAT.addAPOGEE(builder, APOGEE);
-  if (PERIGEE !== null)
-    SATCAT.addPERIGEE(builder, PERIGEE);
-  if (RCS !== null)
-    SATCAT.addRCS(builder, RCS);
+  SATCAT.addPERIOD(builder, PERIOD);
+  SATCAT.addINCLINATION(builder, INCLINATION);
+  SATCAT.addAPOGEE(builder, APOGEE);
+  SATCAT.addPERIGEE(builder, PERIGEE);
+  SATCAT.addRCS(builder, RCS);
   SATCAT.addDATA_STATUS_CODE(builder, DATA_STATUS_CODE);
   SATCAT.addORBIT_CENTER(builder, ORBIT_CENTEROffset);
   SATCAT.addORBIT_TYPE(builder, ORBIT_TYPE);
@@ -296,11 +291,11 @@ constructor(
   public LAUNCH_DATE: string|Uint8Array|null = null,
   public LAUNCH_SITE: string|Uint8Array|null = null,
   public DECAY_DATE: string|Uint8Array|null = null,
-  public PERIOD: number|null = null,
-  public INCLINATION: number|null = null,
-  public APOGEE: number|null = null,
-  public PERIGEE: number|null = null,
-  public RCS: number|null = null,
+  public PERIOD: number = 0.0,
+  public INCLINATION: number = 0.0,
+  public APOGEE: number = 0.0,
+  public PERIGEE: number = 0.0,
+  public RCS: number = 0.0,
   public DATA_STATUS_CODE: dataStatusCode = dataStatusCode.NO_CURRENT_ELEMENTS,
   public ORBIT_CENTER: string|Uint8Array|null = null,
   public ORBIT_TYPE: orbitType = orbitType.ORBIT

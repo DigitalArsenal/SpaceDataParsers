@@ -3,25 +3,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = {
     "$schema": "https://json-schema.org/draft/2019-09/schema",
     "definitions": {
-        "objType": {
+        "objectType": {
             "type": "string",
-            "enum": ["PAYLOAD", "DEBRIS", "ROCKET_BODY", "UNKNOWN"]
+            "enum": ["PAYLOAD", "ROCKET_BODY", "DEBRIS", "UNKNOWN"]
         },
         "opsStatusCode": {
             "type": "string",
             "enum": ["OPERATIONAL", "NONOPERATIONAL", "PARTIALLY_OPERATIONAL", "BACKUP_STANDBY", "SPARE", "EXTENDED_MISSION", "DECAYED", "UNKNOWN"]
         },
-        "orbitalStatusCode": {
+        "dataStatusCode": {
             "type": "string",
-            "enum": ["NO_CURRENT_ELEMENTS", "NO_INITIAL_ELEMENTS", "NO_ELEMENTS_AVAILABLE", "PERMANENTLY_DOCKED", "DOCKED_TO_INTERNATIONAL_SPACE_STATION", "IN_ORBIT"]
-        },
-        "orbitCenter": {
-            "type": "string",
-            "enum": ["ASTEROID", "EARTH", "EARTH_LAGRANGE", "EARTH_MOON_BARYCENTER", "JUPITER", "MARS", "MERCURY", "MOON_EARTH", "NEPTUNE", "PLUTO", "SATURN", "SOLAR_SYSTEM_ESCAPE", "SUN", "URANUS", "VENUS"]
+            "enum": ["NO_CURRENT_ELEMENTS", "NO_INITIAL_ELEMENTS", "NO_ELEMENTS_AVAILABLE", "OK"]
         },
         "orbitType": {
             "type": "string",
-            "enum": ["ORBIT", "DOCKED", "LANDING", "IMPACT"]
+            "enum": ["ORBIT", "LANDING", "IMPACT", "DOCKED", "ROUNDTRIP"]
         },
         "massType": {
             "type": "string",
@@ -39,11 +35,8 @@ exports.default = {
                 "NORAD_CAT_ID": {
                     "type": "integer", "minimum": 0, "maximum": 4294967295
                 },
-                "MULTIPLE_NAMES": {
-                    "type": "boolean"
-                },
                 "OBJECT_TYPE": {
-                    "$ref": "#/definitions/objType"
+                    "$ref": "#/definitions/objectType"
                 },
                 "OPS_STATUS_CODE": {
                     "$ref": "#/definitions/opsStatusCode"
@@ -76,7 +69,7 @@ exports.default = {
                     "type": "number"
                 },
                 "DATA_STATUS_CODE": {
-                    "$ref": "#/definitions/orbitalStatusCode"
+                    "$ref": "#/definitions/dataStatusCode"
                 },
                 "ORBIT_CENTER": {
                     "type": "string"

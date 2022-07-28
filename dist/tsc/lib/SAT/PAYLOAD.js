@@ -38,11 +38,11 @@ class PAYLOAD {
     }
     SIZE() {
         const offset = this.bb.__offset(this.bb_pos, 12);
-        return offset ? this.bb.readFloat32(this.bb_pos + offset) : 0.0;
+        return offset ? this.bb.readFloat64(this.bb_pos + offset) : 0.0;
     }
     MASS() {
         const offset = this.bb.__offset(this.bb_pos, 14);
-        return offset ? this.bb.readFloat32(this.bb_pos + offset) : 0.0;
+        return offset ? this.bb.readFloat64(this.bb_pos + offset) : 0.0;
     }
     MASS_TYPE() {
         const offset = this.bb.__offset(this.bb_pos, 16);
@@ -64,10 +64,10 @@ class PAYLOAD {
         builder.addFieldInt8(3, +MANEUVERABLE, +false);
     }
     static addSIZE(builder, SIZE) {
-        builder.addFieldFloat32(4, SIZE, 0.0);
+        builder.addFieldFloat64(4, SIZE, 0.0);
     }
     static addMASS(builder, MASS) {
-        builder.addFieldFloat32(5, MASS, 0.0);
+        builder.addFieldFloat64(5, MASS, 0.0);
     }
     static addMASS_TYPE(builder, MASS_TYPE) {
         builder.addFieldInt8(6, MASS_TYPE, massType_1.massType.DRY);
