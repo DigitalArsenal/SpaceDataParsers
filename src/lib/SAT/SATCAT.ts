@@ -2,10 +2,10 @@
 
 import * as flatbuffers from 'flatbuffers';
 
-import { objType } from './objType';
+import { dataStatusCode } from './dataStatusCode';
+import { objectType } from './objectType';
 import { opsStatusCode } from './opsStatusCode';
 import { orbitType } from './orbitType';
-import { orbitalStatusCode } from './orbitalStatusCode';
 
 
 export class SATCAT {
@@ -49,9 +49,9 @@ NORAD_CAT_ID():number {
   return offset ? this.bb!.readUint32(this.bb_pos + offset) : 0;
 }
 
-OBJECT_TYPE():objType {
+OBJECT_TYPE():objectType {
   const offset = this.bb!.__offset(this.bb_pos, 10);
-  return offset ? this.bb!.readInt8(this.bb_pos + offset) : objType.UNKNOWN;
+  return offset ? this.bb!.readInt8(this.bb_pos + offset) : objectType.UNKNOWN;
 }
 
 OPS_STATUS_CODE():opsStatusCode {
@@ -112,9 +112,9 @@ RCS():number|null {
   return offset ? this.bb!.readFloat64(this.bb_pos + offset) : null;
 }
 
-DATA_STATUS_CODE():orbitalStatusCode {
+DATA_STATUS_CODE():dataStatusCode {
   const offset = this.bb!.__offset(this.bb_pos, 32);
-  return offset ? this.bb!.readInt8(this.bb_pos + offset) : orbitalStatusCode.NO_CURRENT_ELEMENTS;
+  return offset ? this.bb!.readInt8(this.bb_pos + offset) : dataStatusCode.NO_CURRENT_ELEMENTS;
 }
 
 ORBIT_CENTER():string|null
@@ -145,8 +145,8 @@ static addNORAD_CAT_ID(builder:flatbuffers.Builder, NORAD_CAT_ID:number) {
   builder.addFieldInt32(2, NORAD_CAT_ID, 0);
 }
 
-static addOBJECT_TYPE(builder:flatbuffers.Builder, OBJECT_TYPE:objType) {
-  builder.addFieldInt8(3, OBJECT_TYPE, objType.UNKNOWN);
+static addOBJECT_TYPE(builder:flatbuffers.Builder, OBJECT_TYPE:objectType) {
+  builder.addFieldInt8(3, OBJECT_TYPE, objectType.UNKNOWN);
 }
 
 static addOPS_STATUS_CODE(builder:flatbuffers.Builder, OPS_STATUS_CODE:opsStatusCode) {
@@ -189,8 +189,8 @@ static addRCS(builder:flatbuffers.Builder, RCS:number) {
   builder.addFieldFloat64(13, RCS, 0);
 }
 
-static addDATA_STATUS_CODE(builder:flatbuffers.Builder, DATA_STATUS_CODE:orbitalStatusCode) {
-  builder.addFieldInt8(14, DATA_STATUS_CODE, orbitalStatusCode.NO_CURRENT_ELEMENTS);
+static addDATA_STATUS_CODE(builder:flatbuffers.Builder, DATA_STATUS_CODE:dataStatusCode) {
+  builder.addFieldInt8(14, DATA_STATUS_CODE, dataStatusCode.NO_CURRENT_ELEMENTS);
 }
 
 static addORBIT_CENTER(builder:flatbuffers.Builder, ORBIT_CENTEROffset:flatbuffers.Offset) {
@@ -214,7 +214,7 @@ static finishSizePrefixedSATCATBuffer(builder:flatbuffers.Builder, offset:flatbu
   builder.finish(offset, '$SAT', true);
 }
 
-static createSATCAT(builder:flatbuffers.Builder, OBJECT_NAMEOffset:flatbuffers.Offset, OBJECT_IDOffset:flatbuffers.Offset, NORAD_CAT_ID:number, OBJECT_TYPE:objType, OPS_STATUS_CODE:opsStatusCode, OWNEROffset:flatbuffers.Offset, LAUNCH_DATEOffset:flatbuffers.Offset, LAUNCH_SITEOffset:flatbuffers.Offset, DECAY_DATEOffset:flatbuffers.Offset, PERIOD:number|null, INCLINATION:number|null, APOGEE:number|null, PERIGEE:number|null, RCS:number|null, DATA_STATUS_CODE:orbitalStatusCode, ORBIT_CENTEROffset:flatbuffers.Offset, ORBIT_TYPE:orbitType):flatbuffers.Offset {
+static createSATCAT(builder:flatbuffers.Builder, OBJECT_NAMEOffset:flatbuffers.Offset, OBJECT_IDOffset:flatbuffers.Offset, NORAD_CAT_ID:number, OBJECT_TYPE:objectType, OPS_STATUS_CODE:opsStatusCode, OWNEROffset:flatbuffers.Offset, LAUNCH_DATEOffset:flatbuffers.Offset, LAUNCH_SITEOffset:flatbuffers.Offset, DECAY_DATEOffset:flatbuffers.Offset, PERIOD:number|null, INCLINATION:number|null, APOGEE:number|null, PERIGEE:number|null, RCS:number|null, DATA_STATUS_CODE:dataStatusCode, ORBIT_CENTEROffset:flatbuffers.Offset, ORBIT_TYPE:orbitType):flatbuffers.Offset {
   SATCAT.startSATCAT(builder);
   SATCAT.addOBJECT_NAME(builder, OBJECT_NAMEOffset);
   SATCAT.addOBJECT_ID(builder, OBJECT_IDOffset);
@@ -290,7 +290,7 @@ constructor(
   public OBJECT_NAME: string|Uint8Array|null = null,
   public OBJECT_ID: string|Uint8Array|null = null,
   public NORAD_CAT_ID: number = 0,
-  public OBJECT_TYPE: objType = objType.UNKNOWN,
+  public OBJECT_TYPE: objectType = objectType.UNKNOWN,
   public OPS_STATUS_CODE: opsStatusCode = opsStatusCode.UNKNOWN,
   public OWNER: string|Uint8Array|null = null,
   public LAUNCH_DATE: string|Uint8Array|null = null,
@@ -301,7 +301,7 @@ constructor(
   public APOGEE: number|null = null,
   public PERIGEE: number|null = null,
   public RCS: number|null = null,
-  public DATA_STATUS_CODE: orbitalStatusCode = orbitalStatusCode.NO_CURRENT_ELEMENTS,
+  public DATA_STATUS_CODE: dataStatusCode = dataStatusCode.NO_CURRENT_ELEMENTS,
   public ORBIT_CENTER: string|Uint8Array|null = null,
   public ORBIT_TYPE: orbitType = orbitType.ORBIT
 ){}
