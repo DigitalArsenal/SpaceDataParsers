@@ -1,74 +1,37 @@
 {
-    "name": "spacedataparsers",
-    "version": "1.0.0+1659720238575",
-    "description": "Parsers for Space Data Messages",
-    "author": "digitalarsenal.io, inc.",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/DigitalArsenal/SpaceDataParsers.git"
-    },
-    "license": "MIT",
-    "keywords": [
-        "typescript",
-        "boilerplate",
-        "esbuild"
-    ],
-    "main": "./dist/tsc/main.js",
-    "types": "./dist/tsc/main.d.ts",
-    "browser": "./dist/esbuild/browser.js",
-    "bin": {
-        "my-cli-tool": "./dist/esbuild/cli.js"
-    },
-    "scripts": {
-        "cli": "ts-node src/cli.ts",
-        "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
-        "test": "npm run test:clear && jest --detectOpenHandles --forceExit",
-        "test:clear": "jest --clearCache",
-        "test:dev": "npm run test:clear && jest --runInBand --watch --detectOpenHandles --forceExit",
-        "clean": "rm -rf dist build package",
-        "ts-node": "ts-node",
-        "docs": "typedoc --entryPoints src/main.ts",
-        "build": "tsc -p tsconfig.json",
-        "build:version": "node --max-old-space-size=4096 --experimental-json-modules --no-warnings --loader ts-node/esm ./scripts/version.ts",
-        "build-all": "npm run clean && npm run build && npm run esbuild-node && npm run esbuild-browser && npm run esbuild-cjs && npm run build:version",
-        "esbuild-browser": "esbuild src/browser.ts --bundle --format=esm --minify --sourcemap=external --define:window=globalThis --outfile=dist/esbuild/browser.mjs",
-        "esbuild-cjs": "esbuild src/browser.ts --bundle --format=cjs --minify --sourcemap=external --define:window=globalThis --outfile=dist/esbuild/browser.cjs",
-        "esbuild-browser:dev": "esbuild src/browser.ts --bundle --format=esm --define:window=globalThis --outfile=dist/esbuild/browser.mjs",
-        "esbuild-browser:watch": "esbuild src/browser.ts --bundle --format=esm --watch --outfile=dist/esbuild/browser.mjs",
-        "esbuild-node": "esbuild src/cli.ts --bundle --platform=node --minify --sourcemap=external --outfile=dist/esbuild/cli.js",
-        "esbuild-node:dev": "esbuild src/cli.ts --bundle --platform=node --sourcemap=external --outfile=dist/esbuild/cli.js",
-        "esbuild-node:watch": "esbuild src/cli.ts --bundle --platform=node --watch --sourcemap=external --outfile=dist/esbuild/cli.js && npm run test",
-        "refresh:data:csv": "wget -O test/data/celestrak/satcat/satcat.csv \"https://celestrak.org/satcat/rsm.php?SPECIAL=full-catalog&FORMAT=csv\"",
-        "refresh:data:json": "wget -O test/data/celestrak/satcat/satcat.json \"https://celestrak.org/satcat/rsm.php?SPECIAL=full-catalog&FORMAT=json\"",
-        "refresh:data": "npm run refresh:data:csv && npm run refresh:data:json"
-    },
-    "devDependencies": {
-        "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
-        "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
-        "@swc/core": "^1.2.223",
-        "@swc/jest": "^0.2.22",
-        "@types/jest": "^28.1.6",
-        "@types/node": "^18.6.4",
-        "@typescript-eslint/eslint-plugin": "^5.32.0",
-        "@typescript-eslint/parser": "^5.32.0",
-        "esbuild": "^0.14.53",
-        "eslint": "^8.21.0",
-        "jest": "^28.1.3",
-        "ts-jest": "^28.0.7",
-        "ts-node": "^10.9.1",
-        "typedoc": "^0.23.10",
-        "typescript": "^4.7.4"
-    },
-    "dependencies": {
-        "@types/bignumber.js": "^5.0.0",
-        "bignumber.js": "^9.0.2",
-        "Buffer": "^0.0.0",
-        "csv-parse": "^5.3.0",
-        "flatbuffers": "^2.0.6",
-        "html-entities": "^2.3.3",
-        "process": "^0.11.10",
-        "stream": "0.0.2",
-        "stream-browserify": "^3.0.0",
-        "util": "^0.12.4"
-    }
+  "name": "spacedataparsers",
+  "version": "1.0.0+1659720238575",
+  "description": "Parsers for Space Data Messages",
+  "author": "digitalarsenal.io, inc.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DigitalArsenal/SpaceDataParsers.git"
+  },
+  "license": "MIT",
+  "type": "module",
+  "keywords": [
+    "space",
+    "satellite",
+    "esm"
+  ],
+  "main": "./src/main.js",
+  "module": "./src/main.js",
+  "browser": "./src/browser.js",
+  "exports": {
+    ".": "./src/main.js",
+    "./browser": "./src/browser.js",
+    "./cli": "./src/cli.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "spacedataparsers": "./src/cli.js"
+  },
+  "scripts": {
+    "test": "node --test ./src/main.test.js"
+  },
+  "dependencies": {
+    "bignumber.js": "^9.0.2",
+    "csv-parse": "^5.3.0",
+    "html-entities": "^2.3.3"
+  }
 }

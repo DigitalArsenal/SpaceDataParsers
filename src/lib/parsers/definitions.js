@@ -5,8 +5,7 @@ const decimalAssumed = (value) => {
   return n.isFinite() && !n.isNaN() ? n : 0;
 };
 const dpAParse = (value) => {
-  let result =
-    (value.slice(0, 1) === "-" ? -1 : 1) *
+  let result = (value.slice(0, 1) === "-" ? -1 : 1) *
     decimalAssumed(`${value.slice(1, 6)}e${value.slice(6)}`);
   return result;
 };
@@ -16,7 +15,6 @@ const whatCentury = (digits) => {
     ? (digits < 50 ? "20" : "19") + digits.toString().padStart(2, 0)
     : null;
 };
-
 const satcat_map = {
   OBJECT_ID: [0, 11],
   NORAD_CAT_ID: [13, 18],
@@ -38,7 +36,6 @@ const satcat_map = {
   ORBIT_TYPE: [0, 0],
   TYPE: [21, 22],
 };
-
 const satcat_transform = {
   TYPE: (d, _satcat) => {
     let _payload = _satcat.PAYLOAD;
@@ -46,14 +43,15 @@ const satcat_transform = {
     let _active = [0, 2, 3, 4, 5].indexOf(_satcat.OPS_STATUS_CODE) > -1;
     if (_payload && _active) {
       return 0;
-    } else if (_payload && !_active) {
+    }
+    else if (_payload && !_active) {
       return 1;
-    } else if (!_payload && _name && _name.indexOf(" DEB") > -1) {
+    }
+    else if (!_payload && _name && _name.indexOf(" DEB") > -1) {
       return 2;
-    } else if (
-      _name &&
-      (_name.indexOf(" R/B") > -1 || _name.indexOf(" AKM") > -1)
-    ) {
+    }
+    else if (_name &&
+      (_name.indexOf(" R/B") > -1 || _name.indexOf(" AKM") > -1)) {
       return 3;
     }
     return 4;
@@ -102,21 +100,19 @@ const satcat_transform = {
       }
     }
     if (_satcat.ORBIT_TYPE === null) {
-      let _decayed =
-        _satcat.OPS_STATUS_CODE === 6 || !isNaN(_satcat.DECAY_DATE.getTime());
+      let _decayed = _satcat.OPS_STATUS_CODE === 6 || !isNaN(_satcat.DECAY_DATE.getTime());
       if (_decayed) {
         _satcat.ORBIT_TYPE = 2;
-      } else {
+      }
+      else {
         _satcat.ORBIT_TYPE =
           [0, 2, 3, 4, 5].indexOf(_satcat.OPS_STATUS_CODE) > -1 ? 0 : null;
       }
     }
     return _d;
   },
-
   RCS: (d) => (parseFloat(d) ? bignumber(d) : null),
 };
-
 const tle_map = {
   1: {
     NORAD_CAT_ID: [3, 7],
@@ -142,13 +138,13 @@ const tle_map = {
     CHECKSUM: [69],
   },
 };
-
 const tle_transform = {
   BSTAR: dpAParse,
   CLASSIFICATION_TYPE: (value) => value,
   OBJECT_ID: (value) => {
     let year = whatCentury(parseInt(value.slice(0, 2)));
-    if (!year) return "";
+    if (!year)
+      return "";
     return `${year ? year : "0000"}-${value.slice(2)}`.trim();
   },
   ECCENTRICITY: decimalAssumed,
@@ -171,25 +167,19 @@ const tle_transform = {
     tA.forEach((v, i) => {
       if (i % 2 && i !== 1) {
         tA[i] = Math.floor(tA[i - 1]);
-      } else if (i > 2) {
+      }
+      else if (i > 2) {
         tA[i] = tA[i] * (tA[i - 2] - tA[i - 1]);
       }
     });
     tA = tA.filter((v, i) => {
       return i % 2 || i == 0 || i == tA.length - 1;
     });
-
-    let dateString = (
-      new Date(Date.UTC.apply(0, tA))
-        .toISOString()
-        .replace(/z/gi, "")
-    );
-
+    let dateString = (new Date(Date.UTC.apply(0, tA))
+      .toISOString()
+      .replace(/z/gi, ""));
     let dateSeconds = (parseInt(dateString.split(":").pop().split(".")[0]) + (tA[tA.length - 1] / 1000)).toFixed(6);
-
     return `${dateString.slice(0, -6)}${dateSeconds.padStart(9, "0")}`;
-
   },
 };
-
 export { satcat_map, satcat_transform, tle_map, tle_transform };
