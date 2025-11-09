@@ -31,4 +31,4 @@ export const schemas = {
     SAT: satSchema
 };
 const version = "a6e8f29b-1669-11ac-8dff-abb4448b34d0";
-export { LegacyFormat, SerializationFormat, version };
+export default { LegacyFormat, SerializationFormat, version };
