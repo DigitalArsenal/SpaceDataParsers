@@ -1,3 +1,3 @@
 #!/usr/bin/env node
-import { parse } from './main.js';
+import { parse } from './main.mjs';
 console.log(parse);

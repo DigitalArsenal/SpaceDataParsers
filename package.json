@@ -14,11 +14,11 @@
     "satellite",
     "esm"
   ],
-  "main": "./src/main.js",
-  "module": "./src/main.js",
+  "main": "./src/main.mjs",
+  "module": "./src/main.mjs",
   "browser": "./src/browser.js",
   "exports": {
-    ".": "./src/main.js",
+    ".": "./src/main.mjs",
     "./browser": "./src/browser.js",
     "./cli": "./src/cli.js",
     "./package.json": "./package.json"
